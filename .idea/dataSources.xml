@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="Rails provemewrong: development" uuid="648baa2d-d6f7-424f-b089-5a981f49a253">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/config/database.yml</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:provemewrong_development</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="Rails provemewrong: production" uuid="885034e0-066f-4fbf-936c-c91ee1e1b6bb">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/config/database.yml</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:provemewrong_production</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="Rails provemewrong: test" uuid="5e8d3cb7-2e7a-48d3-8356-72170288681e">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/config/database.yml</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:provemewrong_test</jdbc-url>
+    </data-source>
+  </component>
+</project>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="Rails provemewrong: development" uuid="648baa2d-d6f7-424f-b089-5a981f49a253">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+      <first-sync>true</first-sync>
+    </data-source>
+    <data-source name="Rails provemewrong: production" uuid="885034e0-066f-4fbf-936c-c91ee1e1b6bb">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+      <user-name>provemewrong</user-name>
+      <user-password>df96df8fdf97df8adfefdfe4dffcdff1df8ddffadff8dfe5dffcdfefdfe7dfefdffddff8dfe5dfe4dfeddff5dfeedfebdffedfebdfe8dfebdff9dfefdff5dffadfebdff9dff9dffddfe5dff8dfeedf8ddff7df8adf8fdf94</user-password>
+    </data-source>
+    <data-source name="Rails provemewrong: test" uuid="5e8d3cb7-2e7a-48d3-8356-72170288681e">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+    </data-source>
+  </component>
+</project>
