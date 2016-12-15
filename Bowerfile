@@ -1,2 +1,6 @@
 asset 'bootstrap-sass-official'
+asset 'angular-mocks', '~> 1.6'
+asset 'angular-route', '~> 1.6'
+asset 'angular-resource', '~> 1.6'
+asset 'angular-messages', '~> 1.6'
 asset 'angular', '~> 1.6'

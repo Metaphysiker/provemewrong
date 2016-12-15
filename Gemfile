@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
 
+gem 'sprockets'
+
+gem 'angular-rails-templates'
+
 gem 'bower-rails'
 
 gem 'devise'
