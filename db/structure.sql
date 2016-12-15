@@ -46,6 +46,74 @@ CREATE TABLE ar_internal_metadata (
 
 
 --
+-- Name: argumentations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE argumentations (
+    id integer NOT NULL,
+    title character varying NOT NULL,
+    description text NOT NULL,
+    main boolean DEFAULT false,
+    argument_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: argumentations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE argumentations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: argumentations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE argumentations_id_seq OWNED BY argumentations.id;
+
+
+--
+-- Name: arguments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE arguments (
+    id integer NOT NULL,
+    title character varying NOT NULL,
+    description text NOT NULL,
+    parent_argumentation_id integer,
+    argumentation_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: arguments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE arguments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: arguments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE arguments_id_seq OWNED BY arguments.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -98,6 +166,20 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY argumentations ALTER COLUMN id SET DEFAULT nextval('argumentations_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY arguments ALTER COLUMN id SET DEFAULT nextval('arguments_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
@@ -107,6 +189,22 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 ALTER TABLE ONLY ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: argumentations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY argumentations
+    ADD CONSTRAINT argumentations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: arguments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY arguments
+    ADD CONSTRAINT arguments_pkey PRIMARY KEY (id);
 
 
 --
@@ -123,6 +221,20 @@ ALTER TABLE ONLY schema_migrations
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_argumentations_on_argument_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_argumentations_on_argument_id ON argumentations USING btree (argument_id);
+
+
+--
+-- Name: index_arguments_on_argumentation_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_arguments_on_argumentation_id ON arguments USING btree (argumentation_id);
 
 
 --
@@ -145,6 +257,6 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (re
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20161214120759');
+INSERT INTO schema_migrations (version) VALUES ('20161214120759'), ('20161215061613'), ('20161215061808');
 
 
