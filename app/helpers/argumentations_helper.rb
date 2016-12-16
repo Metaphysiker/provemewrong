@@ -1,0 +1,2 @@
+module ArgumentationsHelper
+end

@@ -11,25 +11,4 @@
     Future home of Shine's Dashboard
   </p>
   <%= link_to "Log Out", destroy_user_session_path, method: :delete %>
-
-
-  <div class="container-fluid">
-    <h1>Hello World!</h1>
-    <p>Resize the browser window to see the effect.</p>
-    <div class="row">
-      <div class="col-md-4" style="background-color:lavender;">
-      <% @argumentation.each do |argumentation| %>
-        <%= argumentation.title %>
-      <% end %>
-
-      </div>
-      <div class="col-md-8" style="background-color:lavenderblush;">
-        <% @argumentation.each do |argumentation| %>
-            <% argumentation.arguments.each do |argument| %>
-              <%= argument.title %>
-            <% end %>
-        <% end %>
-      </div>
-    </div>
-  </div>
 </section>

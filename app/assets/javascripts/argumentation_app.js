@@ -22,9 +22,13 @@ app.controller("ArgumentationController", [
 
         var argumentationId = 1;
 
-        var Customer = $resource('/argumentation/:argumentationId.json', {"argumentationId": "@argumentation_id"});
+        var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
 
         $scope.argumentation = Argumentation.get({ "argumentationId": argumentationId });
+
+        $scope.nexta = function() {
+            $scope.argumentation = Argumentation.get({ "argumentationId": 2 });
+        }
 
     }
 ]);
