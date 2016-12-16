@@ -21,7 +21,8 @@ app.controller("ArgumentationController", [
     '$scope', '$resource',
     function($scope, $resource) {
 
-        $scope.boxClass = true;
+
+
 
         var argumentationId = 1;
 
@@ -30,12 +31,16 @@ app.controller("ArgumentationController", [
         $scope.argumentation = Argumentation.get({ "argumentationId": argumentationId });
 
 
+        if ($scope.argumentation.$resolved){
+            $scope.boxClass = false;
+        } else {
+            $scope.boxClass = true;
+        };
+
+
         $scope.nexta = function() {
 
-            $scope.boxClass = false;
-            $scope.argumentation = Argumentation.get({ "argumentationId": 2 }).then(
-                $scope.boxClass = true
-            );
+            $scope.argumentation = Argumentation.get({ "argumentationId": 2 });
         }
 
     }
