@@ -2,6 +2,7 @@
   "name": "dsl-generated-dependencies",
   "dependencies": {
     "bootstrap-sass-official": "latest",
+    "angular-animate": "~> 1.6",
     "angular-mocks": "~> 1.6",
     "angular-route": "~> 1.6",
     "angular-resource": "~> 1.6",

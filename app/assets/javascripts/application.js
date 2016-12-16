@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require angular
+//= require angular-animate
 //= require angular-route
 //= require angular-resource
 //= require angular-resource

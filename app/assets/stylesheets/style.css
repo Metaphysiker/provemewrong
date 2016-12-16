@@ -1,0 +1,9 @@
+.box {
+
+}
+.circle {
+    transform: translate(4000px, 0px);
+}
+.rotate {
+    transition: all 1s ease-in-out;
+}

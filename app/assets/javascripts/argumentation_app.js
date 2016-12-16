@@ -2,7 +2,8 @@ var app = angular.module(
     'argumentation',[
     'ngRoute',
     'ngResource',
-    'templates'
+    'templates',
+    'ngAnimate'
 ]);
 
 app.config([
@@ -20,14 +21,21 @@ app.controller("ArgumentationController", [
     '$scope', '$resource',
     function($scope, $resource) {
 
+        $scope.boxClass = true;
+
         var argumentationId = 1;
 
         var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
 
         $scope.argumentation = Argumentation.get({ "argumentationId": argumentationId });
 
+
         $scope.nexta = function() {
-            $scope.argumentation = Argumentation.get({ "argumentationId": 2 });
+
+            $scope.boxClass = false;
+            $scope.argumentation = Argumentation.get({ "argumentationId": 2 }).then(
+                $scope.boxClass = true
+            );
         }
 
     }
