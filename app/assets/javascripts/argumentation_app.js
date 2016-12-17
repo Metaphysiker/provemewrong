@@ -60,15 +60,8 @@ app.controller("ArgumentationController", [
 
 
             Argumentation.get({ "argumentationId": 2 }).$promise.then(function(argumentation) {
-
                 $scope.argumentation = argumentation;
-
-                var promise2 = waitforresolved();
-                promise2.then(function(){
-                    $scope.boxClass = 3;
-                });
-
-
+                $scope.boxClass = 3;
 
             }, function(reason) {
                 alert('Failed: ' + reason);
