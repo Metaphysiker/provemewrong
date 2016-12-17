@@ -1,5 +1,5 @@
 
-    <div ng-if="!argumentation.$resolved">
+    <div class="animate-if" ng-if="!argumentation.$resolved">
 
         <!-- loading animation will go here -->
 
@@ -11,9 +11,11 @@
                 </div>
             </aside>
         </div>
+        <br>
     </div>
 
-    <div class="box rotate" ng-class="{'box': boxClass, 'circle': !boxClass} ">
+
+    <div class="box move" ng-class="{'box': boxClass == 1, 'to-right': boxClass == 2, 'to-left': boxClass == 3} ">
 
     <div ng-if="argumentation.$resolved">
 
@@ -91,9 +93,6 @@
     </div>
     <br>
 
-
-
     </div>
 
-<input type="checkbox" ng-model="boxClass" />
 

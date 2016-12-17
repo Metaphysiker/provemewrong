@@ -18,8 +18,8 @@ app.config([
 
 
 app.controller("ArgumentationController", [
-    '$scope', '$resource',
-    function($scope, $resource) {
+    '$scope', '$resource', '$q',
+    function($scope, $resource, $q) {
 
 
 
@@ -31,16 +31,69 @@ app.controller("ArgumentationController", [
         $scope.argumentation = Argumentation.get({ "argumentationId": argumentationId });
 
 
-        if ($scope.argumentation.$resolved){
-            $scope.boxClass = false;
-        } else {
-            $scope.boxClass = true;
-        };
+            $scope.boxClass = 1;
+
+
+        function nexting() {
+            return $q(function(resolve, reject) {
+                setTimeout(function() {
+                    resolve($scope.argumentation = Argumentation.get({ "argumentationId": 2 })
+                    );
+                }, 1500);
+            });
+        }
+
+        function waitforresolved() {
+            return $q(function(resolve, reject) {
+                setTimeout(function() {
+                    if($scope.argumentation.$resolved == true) {
+                        resolve();
+                    } else {
+                        reject();
+                        alert("nope");
+                    }
+                }, 1500);
+            });
+        }
+
+        function waitforanimation() {
+            return $q(function(resolve, reject) {
+                setTimeout(function() {
+                    if($scope.argumentation.$resolved == true) {
+                        resolve();
+                    }
+                }, 500);
+            });
+        }
+
+
 
 
         $scope.nexta = function() {
+            var promise1 = nexting();
 
-            $scope.argumentation = Argumentation.get({ "argumentationId": 2 });
+            $scope.boxClass = 2;
+
+
+            promise1.then(function() {
+
+
+                var promise2 = waitforresolved();
+                promise2.then(function(){
+                    $scope.boxClass = 3;
+                });
+
+
+
+            }, function(reason) {
+                alert('Failed: ' + reason);
+            });
+
+
+            //Argumentation.get({ "argumentationId": 2 }).success(function(){
+             //   $scope.boxClass = 3;
+           // });
+           // $scope.argumentation = Argumentation.get({ "argumentationId": 2 });
         }
 
     }
