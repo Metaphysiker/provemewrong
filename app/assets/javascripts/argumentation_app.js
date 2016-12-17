@@ -34,15 +34,6 @@ app.controller("ArgumentationController", [
             $scope.boxClass = 1;
 
 
-        function nexting() {
-            return $q(function(resolve, reject) {
-                setTimeout(function() {
-                    resolve($scope.argumentation = Argumentation.get({ "argumentationId": 2 })
-                    );
-                }, 1500);
-            });
-        }
-
         function waitforresolved() {
             return $q(function(resolve, reject) {
                 setTimeout(function() {
@@ -56,27 +47,21 @@ app.controller("ArgumentationController", [
             });
         }
 
-        function waitforanimation() {
-            return $q(function(resolve, reject) {
-                setTimeout(function() {
-                    if($scope.argumentation.$resolved == true) {
-                        resolve();
-                    }
-                }, 500);
-            });
-        }
-
-
 
 
         $scope.nexta = function() {
-            var promise1 = nexting();
-
-            $scope.boxClass = 2;
 
 
-            promise1.then(function() {
+            $scope.boxClass = 2
+            setTimeout(function() {
 
+            }, 2000);
+
+
+
+            Argumentation.get({ "argumentationId": 2 }).$promise.then(function(argumentation) {
+
+                $scope.argumentation = argumentation;
 
                 var promise2 = waitforresolved();
                 promise2.then(function(){
