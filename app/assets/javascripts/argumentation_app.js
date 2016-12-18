@@ -22,8 +22,7 @@ app.controller("ArgumentationController", [
     function($scope, $resource, $q) {
 
 
-
-
+        $scope.loading = false;
         var argumentationId = 1;
 
         var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
@@ -31,35 +30,17 @@ app.controller("ArgumentationController", [
         $scope.argumentation = Argumentation.get({ "argumentationId": argumentationId });
 
 
-            $scope.boxClass = 1;
-
-
-        function waitforresolved() {
-            return $q(function(resolve, reject) {
-                setTimeout(function() {
-                    if($scope.argumentation.$resolved == true) {
-                        resolve();
-                    } else {
-                        reject();
-                        alert("nope");
-                    }
-                }, 1500);
-            });
-        }
-
+        $scope.boxClass = 1;
 
 
         $scope.nexta = function() {
 
 
-            $scope.boxClass = 2
-            setTimeout(function() {
-
-            }, 2000);
-
-
+            $scope.boxClass = 2;
+            $scope.loading = true;
 
             Argumentation.get({ "argumentationId": 2 }).$promise.then(function(argumentation) {
+                $scope.loading = false;
                 $scope.argumentation = argumentation;
                 $scope.boxClass = 3;
 
