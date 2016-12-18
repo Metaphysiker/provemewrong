@@ -18,41 +18,50 @@ app.config([
 
 
 app.controller("ArgumentationController", [
-    '$scope', '$resource', '$q',
-    function($scope, $resource, $q) {
+    '$scope', '$resource', '$q','$timeout',
+    function($scope, $resource, $q, $timeout) {
 
-
+        // all vars and assignments
         $scope.loading = false;
         var argumentationId = 1;
-
         var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
-
         $scope.argumentation = Argumentation.get({ "argumentationId": argumentationId });
-
-
         $scope.boxClass = 1;
 
+        //all functionss
+        function setBoxClass(){
+            $scope.boxClass = 3;
+        }
 
-        $scope.nexta = function() {
-
-
-            $scope.boxClass = 2;
+        function get_child_argumentation(){
             $scope.loading = true;
 
+
             Argumentation.get({ "argumentationId": 2 }).$promise.then(function(argumentation) {
-                $scope.loading = false;
                 $scope.argumentation = argumentation;
-                $scope.boxClass = 3;
+                $scope.loading = false;
+
+                $timeout(function() {
+                    console.log("setloading");
+                    setBoxClass();
+                }, 500);
 
             }, function(reason) {
                 alert('Failed: ' + reason);
             });
+            console.log("Timeout occurred1");
+
+        }
 
 
-            //Argumentation.get({ "argumentationId": 2 }).success(function(){
-             //   $scope.boxClass = 3;
-           // });
-           // $scope.argumentation = Argumentation.get({ "argumentationId": 2 });
+        $scope.nexta = function() {
+
+            $scope.boxClass = 2;
+
+            setTimeout(function() {
+                console.log("Timeout occurred2");
+                get_child_argumentation();
+            }, 2000);
         }
 
     }
