@@ -4,7 +4,7 @@ class ArgumentationsController < ApplicationController
   def show
     argumentation = Argumentation.find(params[:id])
     arguments = argumentation.arguments
-   sleep 4
+    sleep 5
 
     both = {argumentation: argumentation, arguments: arguments}
     respond_to do |format|

@@ -17,6 +17,7 @@ app.config([
 ]);
 
 
+
 app.controller("ArgumentationController", [
     '$scope', '$resource', '$q','$timeout', '$anchorScroll',
     function($scope, $resource, $q, $timeout, $anchorScroll) {

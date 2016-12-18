@@ -15,32 +15,25 @@
     </div>
 
 
-    <div class="box move" ng-class="{'box': boxClass == 1, 'to-right': boxClass == 2, 'to-left': boxClass == 3} ">
+    <div class="box move" ng-class="{'box': boxClass == 1, 'to-right': boxClass == 2, 'back-to-left': boxClass == 3, 'to-left': boxClass == 4, 'back-to-right': boxClass == 5} ">
 
     <div ng-if="argumentation.$resolved">
 
+        <nav>
+            <ul class="pager">
+                <li class="previous">
+                    <a href="" ng-click="previousPage()">&larr; Zurück zu </a>
+                </li>
+            </ul>
+        </nav>
+
         <h1 class="display-3">{{ argumentation.argumentation.title }}</h1>
-        <p class="lead">Epicness reloaded</p>
+        <p class="lead text-justify">{{ argumentation.argumentation.description }}</p>
         <div class="container-fluid">
 
             <div class="row">
 
-
-                <div class="col-md-3 col-xs-12">
-
-                    <div class="panel panel-primary">
-                        <div class="panel-heading text-justify">
-                            <h3 class="panel-title">{{ argumentation.argumentation.title }}</h3>
-                        </div>
-                        <div class="panel-body text-justify">
-                            {{ argumentation.argumentation.description }}
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="col-md-3 col-xs-3">
-
+                <div class="col-md-3">
 
                     <div class="panel panel-primary">
                         <div class="panel-heading text-justify">
@@ -55,7 +48,7 @@
 
 
                 </div>
-                <div class="col-md-6 col-xs-9">
+                <div class="col-md-9">
 
                     <div class="panel panel-primary">
                         <div class="panel-heading text-justify">

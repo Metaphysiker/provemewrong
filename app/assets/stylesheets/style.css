@@ -5,12 +5,20 @@
     transform: translate(200%, 0%);
 }
 
-.to-left{
+.back-to-left{
+    transform: translate(0%, 0%);
+}
+
+.to-left {
+    transform: translate(-200%, 0%);
+}
+
+.back-to-right{
     transform: translate(0%, 0%);
 }
 
 .move {
-    transition: all 2s ease-in-out;
+    transition: all 2.5s ease-in-out;
 }
 
 
