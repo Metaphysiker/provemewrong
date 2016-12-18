@@ -6,7 +6,8 @@
 }
 
 .back-to-left{
-    transform: translate(0%, 0%);
+    /*transform: translate(0%, 0%);*/
+    animation: jumptoleft-goright 1.3s ease-in-out;
 }
 
 .to-left {
@@ -14,12 +15,34 @@
 }
 
 .back-to-right{
-    transform: translate(0%, 0%);
+    animation: jumptoright-goleft 1.3s ease-in-out;
+   /* transform: translate(0%, 0%);*/
 }
 
 .move {
-    transition: all 2.5s ease-in-out;
+    transition: all 1.3s ease-in-out;
 }
+
+
+@keyframes jumptoright-goleft {
+    0% {
+        transform: translate(200%, 0%);
+    }
+    100% {
+        transform: translate(0%, 0%);
+    }
+}
+
+@keyframes jumptoleft-goright {
+    0% {
+        transform: translate(-200%, 0%);
+    }
+    100% {
+        transform: translate(0%, 0%);
+    }
+}
+
+
 
 
 .animate-if {

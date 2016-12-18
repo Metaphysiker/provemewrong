@@ -30,11 +30,11 @@ app.controller("ArgumentationController", [
         $scope.boxClass = 1;
 
         //all functionss
-        function setBoxClass(){
-            $scope.boxClass = 3;
+        function setBoxClass(number){
+            $scope.boxClass = number;
         }
 
-        function get_child_argumentation(){
+        function get_argumentation(boxClass1){
             $scope.loading = true;
 
 
@@ -43,28 +43,26 @@ app.controller("ArgumentationController", [
                 $scope.loading = false;
 
                 $timeout(function() {
-                    console.log("setloading");
-                    setBoxClass();
-                }, 1000);
+                    console.log("setBoxClass");
+                    setBoxClass(boxClass1);
+                }, 500);
 
             }, function(reason) {
                 alert('Failed: ' + reason);
             });
-            console.log("Timeout occurred1");
 
         }
 
 
-        $scope.nexta = function() {
+        $scope.nexta = function(boxClass) {
 
 
-            $scope.boxClass = 2;
+            $scope.boxClass = boxClass;
 
             setTimeout(function() {
                 $anchorScroll();
-                console.log("Timeout occurred2");
-                get_child_argumentation();
-            }, 2000);
+                get_argumentation(boxClass + 1);
+            }, 1000);
         }
 
     }

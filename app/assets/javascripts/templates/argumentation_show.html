@@ -1,5 +1,5 @@
 
-    <div class="animate-if" ng-if="!argumentation.$resolved || loading">
+    <div class="animate-if waiting" ng-if="!argumentation.$resolved || loading">
 
         <!-- loading animation will go here -->
 
@@ -22,7 +22,7 @@
         <nav>
             <ul class="pager">
                 <li class="previous">
-                    <a href="" ng-click="previousPage()">&larr; Zurück zu </a>
+                    <a href=""  ng-click="nexta(2)">&larr; Zurück zu </a>
                 </li>
             </ul>
         </nav>
@@ -85,7 +85,7 @@
             </div>
 
             <button class="btn btn-small btn-primary"
-                    ng-click="nexta()">
+                    ng-click="nexta(4)">
                 Check next user
             </button>
 
