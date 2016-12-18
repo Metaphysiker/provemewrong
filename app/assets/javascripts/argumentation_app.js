@@ -76,8 +76,6 @@ app.controller("ArgumentationController", [
 
         $scope.nextargumentation = function(boxClass, id) {
 
-
-
             $scope.boxClass = boxClass;
 
             setTimeout(function() {
@@ -86,19 +84,6 @@ app.controller("ArgumentationController", [
             }, 1000);
         }
 
-
-
-        $scope.nextchildargumentation = function(boxClass, id) {
-
-
-
-            $scope.boxClass = boxClass;
-
-            setTimeout(function() {
-                $anchorScroll();
-                get_child_argumentation(boxClass + 1, id);
-            }, 1000);
-        }
 
     }
 ]);

@@ -27,8 +27,8 @@
             </ul>
         </nav>
 
-        <h1 class="display-3">{{ argumentation.argumentation.title }}</h1>
-        <p class="lead text-justify">{{ argumentation.argumentation.description }}</p>
+        <h1 class="display-3">{{ argumentation.title }}</h1>
+        <p class="lead text-justify">{{ argumentation.description }}</p>
         <div class="container-fluid">
 
             <div class="row">
@@ -60,7 +60,8 @@
 
                                 <br>
                                 <button class="btn btn-small btn-primary"
-                                        ng-click="nextchildargumentation(4, argument.id )">
+                                        ng-click="nextargumentation(4, argument.argumentation.id )"
+                                ng-if="argument.argumentation">
                                     To the full argument
                                 </button>
                             </div>

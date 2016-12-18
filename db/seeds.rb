@@ -15,6 +15,8 @@ if Rails.env == 'development'
   a2 = Argument.create!(title: "Some experiences cant be made with living", description: "Luckily, not everyone experiences war, but even then, experiences may difer in the situation.")
   a3 = Argument.create!(title: "Culture is intellectually important", description: "Our culture is more than just kowing some habits and virtues, but also about knowing history.")
   argu1.arguments << a1
+  argu1.arguments << a2
+  argu1.arguments << a3
 
   argu2 = Argumentation.create!(title: "Someone is rational, if the person is responsive for good reasons", description: "This argumentation has two arguments: 1. Everyone makes mistakes, but if one repeats them, he is acting irrationally. 2. Good reasons are necessary")
   a2 = Argument.create!(title: "Making mistakes is nothing special, but repeating them, knowingly is irrationally", description: "Rationality is concerned with normativity")
