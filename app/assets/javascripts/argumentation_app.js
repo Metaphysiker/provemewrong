@@ -23,9 +23,11 @@ app.controller("ArgumentationController", [
     function($scope, $resource, $q, $timeout, $anchorScroll) {
 
         // all vars and assignments
+        $scope.main_argumentation_id = 1;
         $scope.loading = false;
         var argumentationId = 1;
         var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
+        var ChildArgumentation = $resource('/get_child_argumentation/:argumentationId.json', {"argumentationId": "@argumentation_id"});
         $scope.argumentation = Argumentation.get({ "argumentationId": argumentationId });
         $scope.boxClass = 1;
 
@@ -34,17 +36,16 @@ app.controller("ArgumentationController", [
             $scope.boxClass = number;
         }
 
-        function get_argumentation(boxClass1){
+        function get_argumentation(boxClass, id){
             $scope.loading = true;
 
 
-            Argumentation.get({ "argumentationId": 2 }).$promise.then(function(argumentation) {
+            Argumentation.get({ "argumentationId": id }).$promise.then(function(argumentation) {
                 $scope.argumentation = argumentation;
                 $scope.loading = false;
 
                 $timeout(function() {
-                    console.log("setBoxClass");
-                    setBoxClass(boxClass1);
+                    setBoxClass(boxClass);
                 }, 500);
 
             }, function(reason) {
@@ -54,14 +55,48 @@ app.controller("ArgumentationController", [
         }
 
 
-        $scope.nexta = function(boxClass) {
+        function get_child_argumentation(boxClass, id){
+            $scope.loading = true;
+
+
+            ChildArgumentation.get({ "argumentationId": id }).$promise.then(function(argumentation) {
+                $scope.argumentation = argumentation;
+                $scope.loading = false;
+
+                $timeout(function() {
+                    setBoxClass(boxClass);
+                }, 500);
+
+            }, function(reason) {
+                alert('Failed: ' + reason);
+            });
+
+        }
+
+
+        $scope.nextargumentation = function(boxClass, id) {
+
 
 
             $scope.boxClass = boxClass;
 
             setTimeout(function() {
                 $anchorScroll();
-                get_argumentation(boxClass + 1);
+                get_argumentation(boxClass + 1, id);
+            }, 1000);
+        }
+
+
+
+        $scope.nextchildargumentation = function(boxClass, id) {
+
+
+
+            $scope.boxClass = boxClass;
+
+            setTimeout(function() {
+                $anchorScroll();
+                get_child_argumentation(boxClass + 1, id);
             }, 1000);
         }
 

@@ -22,7 +22,7 @@
         <nav>
             <ul class="pager">
                 <li class="previous">
-                    <a href=""  ng-click="nexta(2)">&larr; Zurück zu </a>
+                    <a href=""  ng-click="nextargumentation(2, main_argumentation_id)">&larr; Zurück zu </a>
                 </li>
             </ul>
         </nav>
@@ -56,38 +56,19 @@
                         </div>
                         <div class="panel-body text-justify">
                             <div ng-repeat="argument in argumentation.arguments">
-                                Williamsburg man bun jianbing fanny pack. Banh mi kinfolk aesthetic, farm-to-table venmo 8-bit beard woke pitchfork. Vexillologist microdosing kogi 3 wolf moon, cronut vice street art edison bulb chartreuse single-origin coffee scenester shoreditch bushwick pinterest. Taxidermy coloring book offal before they sold out marfa lyft. Lomo gastropub DIY offal banjo poke coloring book single-origin coffee. Mixtape vice asymmetrical, jianbing farm-to-table meh keytar fashion axe normcore. Skateboard raclette biodiesel vexillologist blue bottle etsy cred post-ironic leggings, tattooed pork belly.
+                                {{ argument.description }}
 
-                                Snackwave scenester shoreditch, prism blue bottle typewriter brooklyn yr banjo kombucha. Pok pok green juice succulents pork belly pabst. Actually vinyl tattooed, yuccie irony bitters beard kale chips 8-bit ugh lyft mlkshk. Air plant vape fashion axe master cleanse pinterest. Bushwick schlitz bespoke stumptown, aesthetic next level copper mug tousled ugh godard disrupt everyday carry coloring book. Leggings farm-to-table drinking vinegar kinfolk fanny pack. Drinking vinegar edison bulb green juice, cold-pressed whatever before they sold out locavore 3 wolf moon helvetica.
-
-                                Fashion axe small batch la croix, green juice pour-over brunch craft beer knausgaard. Wolf swag microdosing tattooed tofu, schlitz PBR&B. Coloring book knausgaard organic swag, microdosing hell of williamsburg salvia freegan. Vexillologist trust fund salvia four dollar toast. Tattooed banh mi trust fund stumptown, pug try-hard meggings iceland vegan. Swag kogi tofu raw denim single-origin coffee. Mixtape flannel cray kombucha wayfarers literally photo booth.
-
-                                Paleo blog lumbersexual, franzen cred scenester kitsch roof party bitters XOXO polaroid pork belly chartreuse. Gochujang selvage humblebrag bitters ethical, celiac skateboard chicharrones. Semiotics knausgaard twee jianbing literally, sartorial trust fund shoreditch man bun pabst activated charcoal. Edison bulb pitchfork green juice shabby chic. Kinfolk edison bulb VHS semiotics, direct trade chambray pickled. Banh mi snackwave poutine enamel pin, forage put a bird on it squid. Cray cardigan drinking vinegar, raw denim heirloom celiac fanny pack meggings tbh gochujang locavore vape stumptown ugh.
-                                Williamsburg man bun jianbing fanny pack. Banh mi kinfolk aesthetic, farm-to-table venmo 8-bit beard woke pitchfork. Vexillologist microdosing kogi 3 wolf moon, cronut vice street art edison bulb chartreuse single-origin coffee scenester shoreditch bushwick pinterest. Taxidermy coloring book offal before they sold out marfa lyft. Lomo gastropub DIY offal banjo poke coloring book single-origin coffee. Mixtape vice asymmetrical, jianbing farm-to-table meh keytar fashion axe normcore. Skateboard raclette biodiesel vexillologist blue bottle etsy cred post-ironic leggings, tattooed pork belly.
-
-                                Snackwave scenester shoreditch, prism blue bottle typewriter brooklyn yr banjo kombucha. Pok pok green juice succulents pork belly pabst. Actually vinyl tattooed, yuccie irony bitters beard kale chips 8-bit ugh lyft mlkshk. Air plant vape fashion axe master cleanse pinterest. Bushwick schlitz bespoke stumptown, aesthetic next level copper mug tousled ugh godard disrupt everyday carry coloring book. Leggings farm-to-table drinking vinegar kinfolk fanny pack. Drinking vinegar edison bulb green juice, cold-pressed whatever before they sold out locavore 3 wolf moon helvetica.
-
-                                Fashion axe small batch la croix, green juice pour-over brunch craft beer knausgaard. Wolf swag microdosing tattooed tofu, schlitz PBR&B. Coloring book knausgaard organic swag, microdosing hell of williamsburg salvia freegan. Vexillologist trust fund salvia four dollar toast. Tattooed banh mi trust fund stumptown, pug try-hard meggings iceland vegan. Swag kogi tofu raw denim single-origin coffee. Mixtape flannel cray kombucha wayfarers literally photo booth.
-
-                                Paleo blog lumbersexual, franzen cred scenester kitsch roof party bitters XOXO polaroid pork belly chartreuse. Gochujang selvage humblebrag bitters ethical, celiac skateboard chicharrones. Semiotics knausgaard t
-                                Williamsburg man bun jianbing fanny pack. Banh mi kinfolk aesthetic, farm-to-table venmo 8-bit beard woke pitchfork. Vexillologist microdosing kogi 3 wolf moon, cronut vice street art edison bulb chartreuse single-origin coffee scenester shoreditch bushwick pinterest. Taxidermy coloring book offal before they sold out marfa lyft. Lomo gastropub DIY offal banjo poke coloring book single-origin coffee. Mixtape vice asymmetrical, jianbing farm-to-table meh keytar fashion axe normcore. Skateboard raclette biodiesel vexillologist blue bottle etsy cred post-ironic leggings, tattooed pork belly.
-
-                                Snackwave scenester shoreditch, prism blue bottle typewriter brooklyn yr banjo kombucha. Pok pok green juice succulents pork belly pabst. Actually vinyl tattooed, yuccie irony bitters beard kale chips 8-bit ugh lyft mlkshk. Air plant vape fashion axe master cleanse pinterest. Bushwick schlitz bespoke stumptown, aesthetic next level copper mug tousled ugh godard disrupt everyday carry coloring book. Leggings farm-to-table drinking vinegar kinfolk fanny pack. Drinking vinegar edison bulb green juice, cold-pressed whatever before they sold out locavore 3 wolf moon helvetica.
-
-                                Fashion axe small batch la croix, green juice pour-over brunch craft beer knausgaard. Wolf swag microdosing tattooed tofu, schlitz PBR&B. Coloring book knausgaard organic swag, microdosing hell of williamsburg salvia freegan. Vexillologist trust fund salvia four dollar toast. Tattooed banh mi trust fund stumptown, pug try-hard meggings iceland vegan. Swag kogi tofu raw denim single-origin coffee. Mixtape flannel cray kombucha wayfarers literally photo booth.
-
-                                Paleo blog lumbersexual, franzen cred scenester kitsch roof party bitters XOXO polaroid pork belly chartreuse. Gochujang selvage humblebrag bitters ethical, celiac skateboard chicharrones. Semiotics knausgaard t
+                                <br>
+                                <button class="btn btn-small btn-primary"
+                                        ng-click="nextchildargumentation(4, argument.id )">
+                                    To the full argument
+                                </button>
                             </div>
                         </div>
                     </div>
 
                 </div>
             </div>
-
-            <button class="btn btn-small btn-primary"
-                    ng-click="nexta(4)">
-                Check next user
-            </button>
 
         </div>
 
