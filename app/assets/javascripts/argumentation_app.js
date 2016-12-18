@@ -18,8 +18,8 @@ app.config([
 
 
 app.controller("ArgumentationController", [
-    '$scope', '$resource', '$q','$timeout',
-    function($scope, $resource, $q, $timeout) {
+    '$scope', '$resource', '$q','$timeout', '$anchorScroll',
+    function($scope, $resource, $q, $timeout, $anchorScroll) {
 
         // all vars and assignments
         $scope.loading = false;
@@ -44,7 +44,7 @@ app.controller("ArgumentationController", [
                 $timeout(function() {
                     console.log("setloading");
                     setBoxClass();
-                }, 500);
+                }, 1000);
 
             }, function(reason) {
                 alert('Failed: ' + reason);
@@ -56,9 +56,11 @@ app.controller("ArgumentationController", [
 
         $scope.nexta = function() {
 
+
             $scope.boxClass = 2;
 
             setTimeout(function() {
+                $anchorScroll();
                 console.log("Timeout occurred2");
                 get_child_argumentation();
             }, 2000);
