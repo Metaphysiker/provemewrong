@@ -7,3 +7,9 @@ body { padding-top: 50px; }
 .waiting{
     margin-top: 100px;
 }
+
+.argumentlist{
+    padding: 5px;
+    margin: 5px;
+    background-color: black;
+}

@@ -27,8 +27,8 @@ app.controller("ArgumentationController", [
         $scope.loading = false;
         var argumentationId = 1;
         var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
-        var ChildArgumentation = $resource('/get_child_argumentation/:argumentationId.json', {"argumentationId": "@argumentation_id"});
         $scope.argumentation = Argumentation.get({ "argumentationId": argumentationId });
+        $scope.argumentcontent = {"description":"<-- choose Argument", "title": "Argument"};
         $scope.boxClass = 1;
 
         //all functionss
@@ -39,10 +39,10 @@ app.controller("ArgumentationController", [
         function get_argumentation(boxClass, id){
             $scope.loading = true;
 
-
             Argumentation.get({ "argumentationId": id }).$promise.then(function(argumentation) {
                 $scope.argumentation = argumentation;
                 $scope.loading = false;
+                $scope.argumentcontent = {"description":"<-- choose Argument", "title": "Argument"};
 
                 $timeout(function() {
                     setBoxClass(boxClass);
@@ -54,24 +54,10 @@ app.controller("ArgumentationController", [
 
         }
 
-
-        function get_child_argumentation(boxClass, id){
-            $scope.loading = true;
-
-
-            ChildArgumentation.get({ "argumentationId": id }).$promise.then(function(argumentation) {
-                $scope.argumentation = argumentation;
-                $scope.loading = false;
-
-                $timeout(function() {
-                    setBoxClass(boxClass);
-                }, 500);
-
-            }, function(reason) {
-                alert('Failed: ' + reason);
-            });
-
+        $scope.getcontent = function(argument){
+            $scope.argumentcontent = argument;
         }
+
 
 
         $scope.nextargumentation = function(boxClass, id) {

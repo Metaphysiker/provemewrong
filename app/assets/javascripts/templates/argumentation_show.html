@@ -22,7 +22,7 @@
         <nav>
             <ul class="pager">
                 <li class="previous">
-                    <a href=""  ng-click="nextargumentation(2, main_argumentation_id)">&larr; Zurück zu </a>
+                    <a href=""  ng-click="nextargumentation(2, main_argumentation_id)">&larr; Zurück </a>
                 </li>
             </ul>
         </nav>
@@ -34,37 +34,38 @@
             <div class="row">
 
                 <div class="col-md-3">
-
                     <div class="panel panel-primary">
                         <div class="panel-heading text-justify">
                             <h3 class="panel-title">Arguments</h3>
                         </div>
-                        <div class="panel-body text-justify">
+
+
+                        <div class="list-group">
                             <div ng-repeat="argument in argumentation.arguments">
-                                {{ argument.title }}
+                                <a class="list-group-item" ng-click="getcontent(argument)">
+                                    <h4 class="list-group-item-heading">{{ argument.title }}</h4>
+                                </a>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
+
                 <div class="col-md-9">
 
                     <div class="panel panel-primary">
                         <div class="panel-heading text-justify">
-                            <h3 class="panel-title">Placeholder for Argument</h3>
+                            <h3 class="panel-title">{{ argumentcontent.title }}</h3>
                         </div>
                         <div class="panel-body text-justify">
-                            <div ng-repeat="argument in argumentation.arguments">
-                                {{ argument.description }}
+                            {{ argumentcontent.description }}
+                            <br>
+                            <br>
 
-                                <br>
-                                <button class="btn btn-small btn-primary"
-                                        ng-click="nextargumentation(4, argument.argumentation.id )"
-                                ng-if="argument.argumentation">
-                                    To the full argument
-                                </button>
-                            </div>
+                            <button class="btn btn-small btn-primary"
+                                    ng-click="nextargumentation(4, argumentcontent.argumentation.id )"
+                                    ng-if="argumentcontent.argumentation">
+                                Show full argument
+                            </button>
                         </div>
                     </div>
 
