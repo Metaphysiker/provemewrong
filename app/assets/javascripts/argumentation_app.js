@@ -9,23 +9,69 @@ var app = angular.module(
 app.config([
     "$routeProvider",
     function($routeProvider) {
-        $routeProvider.when("/", {
-            controller: "ArgumentationController",
+        $routeProvider.when("/:id", {
+            controller: "ArgumentationShowController",
             templateUrl: "argumentation_show.html"
+        }).when("/",{
+            controller: "ArgumentationIndexController",
+            templateUrl: "argumentation_index.html"
         });
+    }
+]);
+
+app.controller("ArgumentationIndexController", [
+    '$scope', '$http', '$location',
+    function($scope, $http, $location){
+
+        var page = 0;
+
+        $scope.argumentations = [];
+        $scope.search = function(searchTerm) {
+            $scope.loading = true;
+            if (searchTerm.length < 3) {
+                return;
+            }
+            $http.get("/argumentations.json",
+                { "params": { "keywords": searchTerm, "page": page } }
+            ).then(
+                function(data,status,headers,config) {
+                    $scope.argumentations = data.data;
+                    $scope.loading = false;
+                });
+        }
+
+        $scope.viewArgumentation = function(argumentation) {
+            $location.path("/" + argumentation.id);
+        }
+
+        $scope.previousPage = function() {
+            if (page > 0) {
+                page = page - 1;
+                $scope.search($scope.keywords);
+            }
+        }
+        $scope.nextPage = function() {
+            page = page + 1;
+            $scope.search($scope.keywords);
+        }
+
+        $scope.viewDetails = function(argumentation) {
+            $location.path("/" + argumentation.id);
+        }
+
     }
 ]);
 
 
 
-app.controller("ArgumentationController", [
-    '$scope', '$resource', '$q','$timeout', '$anchorScroll',
-    function($scope, $resource, $q, $timeout, $anchorScroll) {
+app.controller("ArgumentationShowController", [
+    '$scope', '$resource', '$q','$timeout', '$anchorScroll', '$routeParams',
+    function($scope, $resource, $q, $timeout, $anchorScroll, $routeParams) {
 
         // all vars and assignments
         $scope.main_argumentation_id = 1;
         $scope.loading = false;
-        var argumentationId = 1;
+        var argumentationId =  $routeParams.id;
         var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
         //$scope.argumentation = Argumentation.get({ "argumentationId": argumentationId });
 
@@ -52,7 +98,7 @@ app.controller("ArgumentationController", [
 
                 $timeout(function() {
                     setBoxClass(boxClass);
-                }, 500);
+                }, 1000);
 
             }, function(reason) {
                 alert('Failed: ' + reason);

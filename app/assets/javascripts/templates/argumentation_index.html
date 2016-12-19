@@ -1,0 +1,62 @@
+{{ intro }}
+
+<section class="search-form">
+    <form>
+        <div class="input-group input-group-lg">
+            <label for="keywords" class="sr-only">Keywords</label>
+            <input type="text"
+                   name="keywords"
+                   class="form-control input-lg"
+                   placeholder="Find argumentation"
+                   ng-change="search(keywords)"
+                   ng-model="keywords">
+        </div>
+    </form>
+</section>
+
+<section class="search-results">
+    <header>
+        <h1 class="h3">Results</h1>
+    </header>
+    <nav>
+        <ul class="pager">
+            <li class="previous">
+                <a href="" ng-click="previousPage()">&larr; Previous</a>
+            </li>
+            <li class="next">
+                <a href="" ng-click="nextPage()">Next &rarr;</a>
+            </li>
+        </ul>
+    </nav>
+
+    <ol class="list-group">
+        <li class="list-group-item clearfix"
+            ng-repeat="argumentation in argumentations">
+            <h3 class="pull-right">
+                <small class="text-uppercase">Joined</small>
+                {{ argumentation.id }}
+            </h3>
+            <h2 class="h3">
+                {{ argumentation.title }} {{ argumentation.id }}
+                <small>{{ argumentation.description }}</small>
+            </h2>
+            <div class="pull-right">
+                <button class="btn btn-small btn-primary"
+                        ng-click="viewArgumentation(argumentation)">
+                    View Details...
+                </button>
+            </div>
+            <h4>{{ argumentation.id}}</h4>
+        </li>
+    </ol>
+    <nav>
+        <ul class="pager">
+            <li class="previous">
+                <a href="" ng-click="previousPage()">&larr; Previous</a>
+            </li>
+            <li class="next">
+                <a href="" ng-click="nextPage()">Next &rarr;</a>
+            </li>
+        </ul>
+    </nav>
+</section>
