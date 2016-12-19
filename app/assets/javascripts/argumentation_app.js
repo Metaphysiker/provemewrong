@@ -27,8 +27,14 @@ app.controller("ArgumentationController", [
         $scope.loading = false;
         var argumentationId = 1;
         var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
-        $scope.argumentation = Argumentation.get({ "argumentationId": argumentationId });
-        $scope.argumentcontent = {"description":"<-- choose Argument", "title": "Argument"};
+        //$scope.argumentation = Argumentation.get({ "argumentationId": argumentationId });
+
+        Argumentation.get({ "argumentationId": argumentationId }).$promise.then(function(argumentation){
+            $scope.argumentation = argumentation;
+            $scope.argumentcontent = argumentation.arguments[0];
+        });
+
+       // $scope.argumentcontent = {"description":"<-- choose Argument", "title": "Argument"};
         $scope.boxClass = 1;
 
         //all functionss
@@ -42,7 +48,7 @@ app.controller("ArgumentationController", [
             Argumentation.get({ "argumentationId": id }).$promise.then(function(argumentation) {
                 $scope.argumentation = argumentation;
                 $scope.loading = false;
-                $scope.argumentcontent = {"description":"<-- choose Argument", "title": "Argument"};
+                $scope.argumentcontent = argumentation.arguments[0];
 
                 $timeout(function() {
                     setBoxClass(boxClass);
