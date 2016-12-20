@@ -14,7 +14,22 @@
     </form>
 </section>
 
-<section class="search-results">
+<div class="animate-if waiting" ng-if="loading == true">
+
+    <!-- loading animation will go here -->
+
+    <div class="col-md-10 col-md-offset-1">
+        <aside class="progress">
+            <div class="progress-bar progress-bar-striped active"
+                 style="width: 100%">
+                Loading…
+            </div>
+        </aside>
+    </div>
+    <br>
+</div>
+
+<section class="search-results" ng-if="loading == false">
     <header>
         <h1 class="h3">Results</h1>
     </header>

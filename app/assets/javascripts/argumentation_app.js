@@ -24,6 +24,8 @@ app.controller("ArgumentationIndexController", [
     function($scope, $http, $location){
 
         var page = 0;
+        $scope.loading = false;
+        console.log($scope.loading);
 
         $scope.argumentations = [];
         $scope.search = function(searchTerm) {

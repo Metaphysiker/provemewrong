@@ -11,7 +11,7 @@ if Rails.env == 'development'
   User.create!(email: "s.raess@me.com", password: "password")
 
 
-  2000.times do |i|
+  500.times do |i|
     puts "I is: #{i}"
     argumentation =Argumentation.create!(
                      title: Faker::Lorem.sentence,
