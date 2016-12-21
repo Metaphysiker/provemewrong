@@ -6,8 +6,8 @@ class ArgumentationsController < ApplicationController
       if params[:keywords].present?
         @keywords = params[:keywords]
 
-        @argumentations = Argumentation.searchfor(@keywords).offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
-
+        #@argumentations = Argumentation.searchfor(@keywords).offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
+        @argumentations = SearchResults.searchfor(@keywords).offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
       else
         @argumentations = []
       end

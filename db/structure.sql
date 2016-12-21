@@ -137,6 +137,22 @@ CREATE TABLE schema_migrations (
 
 
 --
+-- Name: search_results; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW search_results AS
+ SELECT argumentations.id AS argumentation_id,
+    argumentations.title AS argumentation_title,
+    argumentations.description AS argumentation_description,
+    arguments.id AS argument_id,
+    arguments.title AS argument_title,
+    arguments.description AS argument_description
+   FROM (argumentations
+     JOIN arguments ON ((argumentations.id = arguments.parent_argumentation_id)))
+  WITH NO DATA;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -275,6 +291,7 @@ INSERT INTO schema_migrations (version) VALUES
 ('20161214120759'),
 ('20161215061613'),
 ('20161215061808'),
-('20161219213632');
+('20161219213632'),
+('20161221092404');
 
 
