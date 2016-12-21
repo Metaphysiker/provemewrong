@@ -14,4 +14,6 @@ class Argumentation < ApplicationRecord
                           :threshold => 0.1
                       }
                   }
+
+
 end

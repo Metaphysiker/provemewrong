@@ -238,20 +238,6 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: argumentation_on_description_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX argumentation_on_description_idx ON argumentations USING gin (description gin_trgm_ops);
-
-
---
--- Name: argumentation_on_title_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX argumentation_on_title_idx ON argumentations USING gin (title gin_trgm_ops);
-
-
---
 -- Name: index_argumentations_on_argument_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -285,6 +271,10 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (re
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20161214120759'), ('20161215061613'), ('20161215061808'), ('20161219213632'), ('20161219213804');
+INSERT INTO schema_migrations (version) VALUES
+('20161214120759'),
+('20161215061613'),
+('20161215061808'),
+('20161219213632');
 
 
