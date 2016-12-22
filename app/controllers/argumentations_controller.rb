@@ -15,7 +15,6 @@ class ArgumentationsController < ApplicationController
 
         @argumentations = foundargumentations.merge(foundargumentationswitharguments).offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
 
-
         #@argumentations = Argument.searchfor(@keywords).offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
 
         #@argumentations = Argumentation.joins(:arguments).where(Argument.searchfor(@keywords))
@@ -48,6 +47,19 @@ class ArgumentationsController < ApplicationController
       respond_to do |format|
         format.json { render json: argumentation.as_json(include: {arguments: { include: :argumentation}}) }
       end
+
+  end
+
+
+  private
+
+  def show_only_important_info(searchresults)
+    finalresult = []
+
+    searchresults.each do |result|
+
+
+    end
 
   end
 
