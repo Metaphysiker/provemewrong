@@ -13,7 +13,9 @@ class ArgumentationsController < ApplicationController
 
         foundargumentationswitharguments = Argumentation.where(id: foundarguments.all.pluck(:parent_argumentation_id))
 
-        @argumentations = foundargumentations.merge(foundargumentationswitharguments).offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
+        argumentations = foundargumentations.merge(foundargumentationswitharguments).offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
+
+        @searchresults = show_only_important_info_of(argumentations, @keywords)
 
         #@argumentations = Argument.searchfor(@keywords).offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
 
@@ -30,8 +32,12 @@ class ArgumentationsController < ApplicationController
         @argumentations = []
       end
 
+      logger.debug @searchresults.last.info.inspect
+      @searchresults = @searchresults.to_json(:methods => :info)
+      logger.debug @searchresults
+
       respond_to do |format|
-        format.json { render json: @argumentations }
+        format.json { render json: @searchresults }
       end
 
     end
@@ -53,14 +59,31 @@ class ArgumentationsController < ApplicationController
 
   private
 
-  def show_only_important_info(searchresults)
-    finalresult = []
+  def show_only_important_info_of(searchresults, keywords)
+
+    return searchresults if searchresults.nil? || searchresults.empty?
 
     searchresults.each do |result|
+      result.arguments.each do |argument|
+        all_relevant_sentences =[]
 
+        sentences = argument.description.split('.')
 
+        keywords.split.each do |keyword|
+
+          sentences.each do |sentence|
+
+            if sentence.include?(keyword)
+              all_relevant_sentences.push("In #{argument.title}: " + sentence)
+            end
+          end
+        end
+
+        result.info = all_relevant_sentences
+      end
     end
 
+    return searchresults
   end
 
 end
