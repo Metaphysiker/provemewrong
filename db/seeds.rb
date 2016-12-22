@@ -15,7 +15,7 @@ if Rails.env == 'development'
     puts "I is: #{i}"
     argumentation =Argumentation.create!(
                      title: Faker::Lorem.sentence,
-                     description: Faker::Lorem.paragraph(80, true, 20)
+                     description: Faker::Lorem.paragraph(20, true, 20)
                     )
     rand(5..12).times do |x|
       argu =Argument.create!(

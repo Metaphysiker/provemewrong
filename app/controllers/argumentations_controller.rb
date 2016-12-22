@@ -32,9 +32,7 @@ class ArgumentationsController < ApplicationController
         @argumentations = []
       end
 
-      logger.debug @searchresults.last.info.inspect
       @searchresults = @searchresults.to_json(:methods => :info)
-      logger.debug @searchresults
 
       respond_to do |format|
         format.json { render json: @searchresults }
@@ -64,26 +62,35 @@ class ArgumentationsController < ApplicationController
     return searchresults if searchresults.nil? || searchresults.empty?
 
     searchresults.each do |result|
-      result.arguments.each do |argument|
-        all_relevant_sentences =[]
-
-        sentences = argument.description.split('.')
-
-        keywords.split.each do |keyword|
-
-          sentences.each do |sentence|
-
-            if sentence.include?(keyword)
-              all_relevant_sentences.push("In #{argument.title}: " + sentence)
-            end
-          end
+      result.info = take_all_relevant_sentences_from_string(result.description, keywords, result.title)
+        result.arguments.each do |argument|
+          result.info.push(*take_all_relevant_sentences_from_string(argument.description, keywords, argument.title))
         end
-
-        result.info = all_relevant_sentences
-      end
     end
 
     return searchresults
+  end
+
+  def take_all_relevant_sentences_from_string(text, keywords, title)
+
+    all_relevant_sentences =[]
+
+    sentences = text.split('.')
+
+    keywords.split.each do |keyword|all_relevant_sentences
+
+      sentences.each do |sentence|
+
+        if sentence.include?(keyword)
+          all_relevant_sentences.push("In #{title} ==> " + sentence)
+        end
+      end
+    end
+
+    all_relevant_sentences = all_relevant_sentences.uniq
+
+    return all_relevant_sentences
+
   end
 
 end
