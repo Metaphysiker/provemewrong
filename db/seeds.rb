@@ -39,6 +39,14 @@ if Rails.env == 'development'
 
   end
 
+  zynix = Argumentation.create!(title: "zynixumik", description: "zynixumik")
+  zynix1 = Argument.create!(title: "zynixumik", description:"zynixumik")
+  zynix2 = Argument.create!(title: "zynixumik", description:"zynixumik")
+  zynix3 = Argument.create!(title: "zynixumik", description:"zynixumik")
+  zynix.arguments << zynix1
+  zynix.arguments << zynix2
+  zynix.arguments << zynix3
+
 
 
   argu1 = Argumentation.create!(title: "Why we should read classics in the school", description: "This argumentation has three arguments: 1. Classics are full of wisdoms, 2. deliver life-experiences, 3. belong to our culture")

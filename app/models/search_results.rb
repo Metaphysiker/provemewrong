@@ -1,10 +1,10 @@
 class SearchResults < ActiveRecord::Base
-  self.primary_key = 'argumentation_id'
+  self.primary_key = 'argument_id'
 
 
   include PgSearch
 
-  pg_search_scope :searchfor, :against => [:argumentation_title, :argumentation_description], :using => {
+  pg_search_scope :searchfor, :against => [:argument_title, :argument_description], :using => {
       :tsearch => {:prefix => true}
   }
 

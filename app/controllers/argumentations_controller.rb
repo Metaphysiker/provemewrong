@@ -6,8 +6,27 @@ class ArgumentationsController < ApplicationController
       if params[:keywords].present?
         @keywords = params[:keywords]
 
+
+        foundargumentations = Argumentation.searchfor(@keywords)
+
+        foundarguments = Argument.searchfor(@keywords)
+
+        foundargumentationswitharguments = Argumentation.where(id: foundarguments.all.pluck(:parent_argumentation_id))
+
+        @argumentations = foundargumentations.merge(foundargumentationswitharguments).offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
+
+
+        #@argumentations = Argument.searchfor(@keywords).offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
+
+        #@argumentations = Argumentation.joins(:arguments).where(Argument.searchfor(@keywords))
+        #
+
         #@argumentations = Argumentation.searchfor(@keywords).offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
-        @argumentations = SearchResults.searchfor(@keywords).offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
+        #@argumentations = SearchResults.searchfor(@keywords).offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
+
+      # argumentations = Argumentation.searchfor(@keywords).offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
+
+        #@argumentations = Argumentation.search_argumentations_and_arguments(@keywords).offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
       else
         @argumentations = []
       end

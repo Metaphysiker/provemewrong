@@ -128,28 +128,45 @@ ALTER SEQUENCE arguments_id_seq OWNED BY arguments.id;
 
 
 --
+-- Name: pg_search_documents; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE pg_search_documents (
+    id integer NOT NULL,
+    content text,
+    searchable_type character varying,
+    searchable_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: pg_search_documents_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE pg_search_documents_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: pg_search_documents_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE pg_search_documents_id_seq OWNED BY pg_search_documents.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE schema_migrations (
     version character varying NOT NULL
 );
-
-
---
--- Name: search_results; Type: MATERIALIZED VIEW; Schema: public; Owner: -
---
-
-CREATE MATERIALIZED VIEW search_results AS
- SELECT argumentations.id AS argumentation_id,
-    argumentations.title AS argumentation_title,
-    argumentations.description AS argumentation_description,
-    arguments.id AS argument_id,
-    arguments.title AS argument_title,
-    arguments.description AS argument_description
-   FROM (argumentations
-     JOIN arguments ON ((argumentations.id = arguments.parent_argumentation_id)))
-  WITH NO DATA;
 
 
 --
@@ -210,6 +227,13 @@ ALTER TABLE ONLY arguments ALTER COLUMN id SET DEFAULT nextval('arguments_id_seq
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY pg_search_documents ALTER COLUMN id SET DEFAULT nextval('pg_search_documents_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
@@ -235,6 +259,14 @@ ALTER TABLE ONLY argumentations
 
 ALTER TABLE ONLY arguments
     ADD CONSTRAINT arguments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: pg_search_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY pg_search_documents
+    ADD CONSTRAINT pg_search_documents_pkey PRIMARY KEY (id);
 
 
 --
@@ -268,6 +300,13 @@ CREATE INDEX index_arguments_on_argumentation_id ON arguments USING btree (argum
 
 
 --
+-- Name: index_pg_search_documents_on_searchable_type_and_searchable_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_pg_search_documents_on_searchable_type_and_searchable_id ON pg_search_documents USING btree (searchable_type, searchable_id);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -292,6 +331,6 @@ INSERT INTO schema_migrations (version) VALUES
 ('20161215061613'),
 ('20161215061808'),
 ('20161219213632'),
-('20161221092404');
+('20161221222256');
 
 
