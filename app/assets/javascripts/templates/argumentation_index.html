@@ -45,19 +45,38 @@
     <div class="panel panel-default" ng-repeat="argumentation in argumentations">
         <div class="panel-heading">{{ argumentation.title}}</div>
         <div class="panel-body">
-            <div ng-repeat="info in argumentation.info">
-                {{info.title}}
-                <ul>
-                    <li ng-repeat="bits in info.bits">
-                        {{bits}}
-                    </li>
-                </ul>
+
+            <div class="panel">
+                    <div ng-repeat="info in argumentation.infomain">
+                            <ul>
+                                <li ng-repeat="bits in info.bits">
+                                    {{bits}}
+                                </li>
+                            </ul>
+                    </div>
             </div>
+
+            In the arguments:<br>
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="panel panel-default" ng-repeat="info in argumentation.info">
+                        <div class="panel-heading">{{info.title}}</div>
+                        <div class="panel-body bg-lightergray">
+                        <ul>
+                            <li ng-repeat="bits in info.bits">
+                                {{bits}}
+                            </li>
+                        </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-small btn-primary pull-right"
+                    ng-click="viewArgumentation(argumentation)">
+                View Argumentation
+            </button>
         </div>
-        <button class="btn btn-small btn-primary"
-                ng-click="viewArgumentation(argumentation)">
-            View Argumentation
-        </button>
+
     </div>
 
     <nav>

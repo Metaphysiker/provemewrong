@@ -1,6 +1,6 @@
 class Argumentation < ApplicationRecord
 
-  attr_accessor :info
+  attr_accessor :info, :infomain
 
   include PgSearch
   belongs_to :argument, inverse_of: :argumentation
