@@ -3,16 +3,16 @@ class Argumentation < ApplicationRecord
   attr_accessor :info, :infomain
 
   include PgSearch
+
   belongs_to :argument, inverse_of: :argumentation
   has_many :arguments, foreign_key: :parent_argumentation_id, inverse_of: :parent_argumentation
 
-  pg_search_scope :tasty_search, :associated_against => {
-      :argumentation => [:title, :description],
-      :argument => [:title, :description]
-  }
+  def self.get_search_attributes_from_argumentation
+    [:title, :description]
+  end
 
-
-  pg_search_scope :searchfor, :against => [:title, :description], :using => {
+  attributes = get_search_attributes_from_argumentation
+  pg_search_scope :searchfor, :against => attributes, :using => {
       :tsearch => {:prefix => true}
   }
 
