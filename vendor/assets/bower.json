@@ -4,6 +4,7 @@
     "bootstrap-sass-official": "latest",
     "angular-animate": "~> 1.6",
     "angular-ui": "latest",
+    "angular-sanitize": "latest",
     "angular-mocks": "~> 1.6",
     "angular-route": "~> 1.6",
     "angular-resource": "~> 1.6",

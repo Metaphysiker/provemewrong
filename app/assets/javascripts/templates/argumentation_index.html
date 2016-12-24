@@ -44,28 +44,33 @@
     </nav>
 
     <div class="panel panel-default" ng-repeat="argumentation in argumentations">
-        <div class="panel-heading">{{ argumentation.title}}</div>
+        <div class="panel-heading">
+            <div ng-bind-html="highlight(argumentation.title, highlightterm)"></div>
+            </div>
         <div class="panel-body">
 
             <div class="panel">
                     <div ng-repeat="info in argumentation.infomain">
                             <ul>
                                 <li ng-repeat="bits in info.bits">
-                                    {{bits}}
+                                    <div ng-bind-html="highlight(bits, highlightterm)"></div>
                                 </li>
                             </ul>
                     </div>
             </div>
 
-            In the arguments:<br>
-            <div class="panel">
+
+            <div class="panel" ng-if="argumentation.info.length != 0 ">
+                In the arguments:<br>
                 <div class="panel-body">
                     <div class="panel panel-default" ng-repeat="info in argumentation.info">
-                        <div class="panel-heading">{{info.title}}</div>
+                        <div class="panel-heading">
+                            <div ng-bind-html="highlight(info.title, highlightterm)"></div>
+                        </div>
                         <div class="panel-body bg-lightergray">
                         <ul>
                             <li ng-repeat="bits in info.bits">
-                                {{bits}}
+                                <div ng-bind-html="highlight(bits, highlightterm)"></div>
                             </li>
                         </ul>
                         </div>

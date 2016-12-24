@@ -21,3 +21,9 @@ body { padding-top: 50px; }
 .bg-lightergray{
     background-color : #6b7283 !important;
 }
+
+.highlightedText {
+    background: #e5eaed;
+    color: orange;
+
+}

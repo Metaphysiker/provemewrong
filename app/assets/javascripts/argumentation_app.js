@@ -20,16 +20,19 @@ app.config([
 ]);
 
 app.controller("ArgumentationIndexController", [
-    '$scope', '$http', '$location',
-    function($scope, $http, $location){
+    '$scope', '$http', '$location', '$sce',
+    function($scope, $http, $location, $sce){
 
+        $scope.languageFilter = "a";
         var page = 0;
         $scope.loading = false;
         console.log($scope.loading);
+        $scope.highlightterm = "";
 
         $scope.argumentations = [];
         $scope.search = function(searchTerm) {
             $scope.loading = true;
+            $scope.highlightterm = searchTerm;
             if (searchTerm.length < 3) {
                 return;
             }
@@ -60,6 +63,15 @@ app.controller("ArgumentationIndexController", [
         $scope.viewDetails = function(argumentation) {
             $location.path("/" + argumentation.id);
         }
+
+        $scope.highlight = function(haystack, needle) {
+            if(!needle) {
+                return $sce.trustAsHtml(haystack);
+            }
+            return $sce.trustAsHtml(haystack.replace(new RegExp(needle, "gi"), function(match) {
+                return '<span class="highlightedText">' + match + '</span>';
+            }));
+        };
 
     }
 ]);

@@ -18,7 +18,7 @@ class ImportantBits
     #argumentations = @foundargumentations.merge(foundargumentationswitharguments) #.offset(@offset).limit(@limit)
     #argumentations = @foundargumentations.or(foundargumentationswitharguments) #.offset(@offset).limit(@limit)
     argumentations = @foundargumentations.union(foundargumentationswitharguments)
-    argumentations.offset(@offset).limit(@limit)
+    argumentations = argumentations.offset(@offset).limit(@limit)
 
 
     Rails.logger.debug argumentations.count.inspect
