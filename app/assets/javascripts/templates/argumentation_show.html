@@ -22,7 +22,7 @@
         <nav>
             <ul class="pager">
                 <li class="previous">
-                    <a href=""  ng-click="nextargumentation(2, argumentation.argument_id)">&larr; Zurück </a>
+                    <a href=""  ng-click="get_argumentation('argument', argumentation.argument_id, 2, 0)">&larr; Zurück </a>
                 </li>
             </ul>
         </nav>
@@ -62,7 +62,7 @@
                             <br>
 
                             <button class="btn btn-small btn-primary"
-                                    ng-click="nextargumentation(4, argumentcontent.argumentation.id )"
+                                    ng-click="get_argumentation('argumentation',argumentcontent.argumentation.id, 4, 0)"
                                     ng-if="argumentcontent.argumentation">
                                 Show full argument
                             </button>

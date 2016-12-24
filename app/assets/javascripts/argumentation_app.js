@@ -88,22 +88,84 @@ app.controller("ArgumentationShowController", [
         $scope.loading = false;
         var argumentationId =  $routeParams.id;
         var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
+        var ParentArgumentation = $resource('/getparentargumentation/:argumentId.json', {"argumentId": "@argument_id"});
+        $scope.boxClass = 1;
         //$scope.argumentation = Argumentation.get({ "argumentationId": argumentationId });
-
         Argumentation.get({ "argumentationId": argumentationId }).$promise.then(function(argumentation){
             $scope.argumentation = argumentation;
             $scope.argumentcontent = argumentation.arguments[0];
         });
 
        // $scope.argumentcontent = {"description":"<-- choose Argument", "title": "Argument"};
-        $scope.boxClass = 1;
+
+        //main-function
+        $scope.get_argumentation = function(type,id,boxClass, argumentcontent){
+            type = type || 'argumentation';
+            id = id || 0;
+            boxClass = boxClass || 2;
+            argumentcontent = argumentcontent || 0;
+
+
+            setBoxClass(boxClass);
+
+            setTimeout(function() {
+                $anchorScroll();
+                toggleLoading();
+
+
+
+            if (type == 'argumentation'){
+
+                Argumentation.get({ "argumentationId": id }).$promise.then(function(argumentation) {
+                    $scope.argumentation = argumentation;
+                    toggleLoading();
+                    $scope.argumentcontent = argumentation.arguments[argumentcontent];
+                    $timeout(function() {
+                        setBoxClass(boxClass + 1);
+                    }, 1000);
+
+                }, function(reason) {
+                    alert('Failed: ' + reason);
+                });
+
+            } else if (type == 'argument'){
+
+                ParentArgumentation.get({ "argumentId": id }).$promise.then(function(argumentation){
+                    $scope.argumentation = argumentation;
+                    toggleLoading();
+                    $scope.argumentcontent = argumentation.arguments[argumentcontent];
+                    $timeout(function() {
+                        setBoxClass(boxClass + 1);
+                    }, 1000);
+                }, function(reason) {
+                    alert('Failed: ' + reason);
+                });
+            }
+
+            }, 1000);
+
+
+        };
+
+
+
+
+
 
         //all functionss
         function setBoxClass(number){
             $scope.boxClass = number;
         }
 
-        function get_argumentation(boxClass, id){
+        function toggleLoading(){
+            if ($scope.loading == true){
+                $scope.loading = false;
+            } else {
+                $scope.loading = true;
+            }
+        }
+
+        function get_argumentation1(boxClass, id){
             $scope.loading = true;
 
             Argumentation.get({ "argumentationId": id }).$promise.then(function(argumentation) {
@@ -123,7 +185,7 @@ app.controller("ArgumentationShowController", [
 
         $scope.getcontent = function(argument){
             $scope.argumentcontent = argument;
-        }
+        };
 
 
 
@@ -135,6 +197,20 @@ app.controller("ArgumentationShowController", [
                 $anchorScroll();
                 get_argumentation(boxClass + 1, id);
             }, 1000);
+        }
+
+        $scope.backtoparentargumentation = function(boxClass, argument_id){
+            $scope.boxClass = boxClass;
+
+            var argumentationId = 0;
+
+            Argumentation.get({ "argumentId": argument_id }).$promise.then(function(argumentation_id) {
+                argumentationId = argumentation_id;
+
+            }, function(reason) {
+                alert('Failed: ' + reason);
+            });
+
         }
 
 

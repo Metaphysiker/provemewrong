@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   get '/test', to: "dashboard#test"
 
   resources :argumentations, only: [ :index, :show]
+  get '/getparentargumentation/:id', to: "argumentations#getparentargumentation"
 
 end

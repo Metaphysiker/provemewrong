@@ -41,4 +41,15 @@ class ArgumentationsController < ApplicationController
 
   end
 
+  def getparentargumentation
+
+    argument = Argument.find(params[:id])
+
+    argumentation = Argumentation.find(argument.parent_argumentation_id)
+
+    respond_to do |format|
+      format.json { render json: argumentation.as_json(include: {arguments: { include: :argumentation}}) }
+    end
+  end
+
 end
