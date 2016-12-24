@@ -68,6 +68,7 @@ app.controller("ArgumentationIndexController", [
             if(!needle) {
                 return $sce.trustAsHtml(haystack);
             }
+            needle = needle.replace(" ", "|")
             return $sce.trustAsHtml(haystack.replace(new RegExp(needle, "gi"), function(match) {
                 return '<span class="highlightedText">' + match + '</span>';
             }));
