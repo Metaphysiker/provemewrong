@@ -20,16 +20,13 @@ class ImportantBits
     argumentations = @foundargumentations.union(foundargumentationswitharguments)
     argumentations = argumentations.offset(@offset).limit(@limit)
 
-
-    Rails.logger.debug argumentations.count.inspect
-    Rails.logger.debug "heeey"
-
     @searchresults = get_important_bits(argumentations, @keywords)
   end
 
   private
 
   def get_important_bits(argumentations, keywords)
+    keywords = keywords.downcase
     argumentations.each do |argumentation|
       argumentation.infomain = []
       argumentation.info = []
@@ -45,6 +42,7 @@ class ImportantBits
   end
 
   def get_bits(title, text, keywords)
+    text = text.downcase
     all_relevant_sentences =[]
     sentences = text.split('.')
     sentences.each do |sentence|

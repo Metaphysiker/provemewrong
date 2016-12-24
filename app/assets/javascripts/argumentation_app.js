@@ -24,7 +24,7 @@ app.controller("ArgumentationIndexController", [
     function($scope, $http, $location, $sce){
 
         $scope.languageFilter = "a";
-        var page = 0;
+        $scope.page = 0;
         $scope.loading = false;
         console.log($scope.loading);
         $scope.highlightterm = "";
@@ -37,7 +37,7 @@ app.controller("ArgumentationIndexController", [
                 return;
             }
             $http.get("/argumentations.json",
-                { "params": { "keywords": searchTerm, "page": page } }
+                { "params": { "keywords": searchTerm, "page": $scope.page } }
             ).then(
                 function(data,status,headers,config) {
                     $scope.argumentations = data.data;
@@ -50,13 +50,13 @@ app.controller("ArgumentationIndexController", [
         }
 
         $scope.previousPage = function() {
-            if (page > 0) {
-                page = page - 1;
+            if ($scope.page > 0) {
+                $scope.page = $scope.page - 1;
                 $scope.search($scope.keywords);
             }
         }
         $scope.nextPage = function() {
-            page = page + 1;
+            $scope.page = $scope.page + 1;
             $scope.search($scope.keywords);
         }
 
@@ -68,7 +68,7 @@ app.controller("ArgumentationIndexController", [
             if(!needle) {
                 return $sce.trustAsHtml(haystack);
             }
-            needle = needle.replace(" ", "|")
+            needle = needle.replace(/\s/g, "|")
             return $sce.trustAsHtml(haystack.replace(new RegExp(needle, "gi"), function(match) {
                 return '<span class="highlightedText">' + match + '</span>';
             }));

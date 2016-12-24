@@ -37,11 +37,11 @@
     </header>
     <nav>
         <ul class="pager">
-            <li class="previous">
+            <li class="previous" ng-if="page > 0">
                 <a href="" ng-click="previousPage()">&larr; Previous</a>
             </li>
             <li class="next">
-                <a href="" ng-click="nextPage()">Next &rarr;</a>
+                <a href="" ng-click="nextPage()" ng-if="argumentations.length > 0">Next &rarr;</a>
             </li>
         </ul>
     </nav>
@@ -91,10 +91,10 @@
     <nav>
         <ul class="pager">
             <li class="previous">
-                <a href="" ng-click="previousPage()">&larr; Previous</a>
+                <a href="" ng-click="previousPage()" ng-if="loading == false">&larr; Previous</a>
             </li>
             <li class="next">
-                <a href="" ng-click="nextPage()">Next &rarr;</a>
+                <a href="" ng-click="nextPage()" ng-if="argumentations.length > 0">Next &rarr;</a>
             </li>
         </ul>
     </nav>
