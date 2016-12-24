@@ -1,16 +1,19 @@
-<section class="search-form">
+<div class="container">
+    <h2>Search Form</h2>
+    <p>Please type in a word or multiple words</p>
     <form>
-        <div class="input-group input-group-lg">
+        <div class="form-group input-lg">
             <label for="keywords" class="sr-only">Keywords</label>
             <input type="text"
                    name="keywords"
                    class="form-control input-lg"
-                   placeholder="Find argumentation"
+                   placeholder="Find argumentations"
                    ng-change="search(keywords)"
                    ng-model="keywords">
         </div>
     </form>
-</section>
+</div>
+<br>
 
 
 <div class="animate-if waiting" ng-if="loading == true">

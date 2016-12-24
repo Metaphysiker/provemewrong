@@ -28,8 +28,8 @@ app.controller("ArgumentationIndexController", [
         $scope.loading = false;
         console.log($scope.loading);
         $scope.highlightterm = "";
+        $scope.argumentations = []
 
-        $scope.argumentations = [];
         $scope.search = function(searchTerm) {
             $scope.loading = true;
             $scope.highlightterm = searchTerm;
