@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+gem 'active_record_union'
 gem 'faker'
 
 gem 'sprockets'

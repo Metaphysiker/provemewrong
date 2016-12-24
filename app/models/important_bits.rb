@@ -2,7 +2,9 @@ class ImportantBits
 
   def initialize(foundargumentations, foundarguments, offset, limit, keywords)
     @foundargumentations = foundargumentations
+    Rails.logger.debug @foundargumentations.count.inspect
     @foundarguments = foundarguments
+    Rails.logger.debug "foundarguments: #{@foundarguments.count.inspect}"
     @offset = offset
     @limit = limit
     @keywords = keywords
@@ -11,8 +13,16 @@ class ImportantBits
 
   def get_all_bits
     foundargumentationswitharguments = Argumentation.where(id: @foundarguments.all.pluck(:parent_argumentation_id))
+    Rails.logger.debug "all-pluck #{foundargumentationswitharguments.count.inspect}"
 
-    argumentations = @foundargumentations.merge(foundargumentationswitharguments).offset(@offset).limit(@limit)
+    #argumentations = @foundargumentations.merge(foundargumentationswitharguments) #.offset(@offset).limit(@limit)
+    #argumentations = @foundargumentations.or(foundargumentationswitharguments) #.offset(@offset).limit(@limit)
+    argumentations = @foundargumentations.union(foundargumentationswitharguments)
+    argumentations.offset(@offset).limit(@limit)
+
+
+    Rails.logger.debug argumentations.count.inspect
+    Rails.logger.debug "heeey"
 
     @searchresults = get_important_bits(argumentations, @keywords)
   end
