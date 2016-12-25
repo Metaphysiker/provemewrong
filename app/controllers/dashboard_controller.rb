@@ -4,5 +4,6 @@ class DashboardController < ApplicationController
   end
 
   def test
+    @searchterm = params[:searchterm]
   end
 end

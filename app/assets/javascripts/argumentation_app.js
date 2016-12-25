@@ -23,12 +23,6 @@ app.controller("ArgumentationIndexController", [
     '$scope', '$http', '$location', '$sce',
     function($scope, $http, $location, $sce){
 
-        $scope.languageFilter = "a";
-        $scope.page = 0;
-        $scope.loading = false;
-        console.log($scope.loading);
-        $scope.highlightterm = "";
-        $scope.argumentations = []
 
         $scope.search = function(searchTerm) {
             $scope.loading = true;
@@ -43,32 +37,45 @@ app.controller("ArgumentationIndexController", [
                     $scope.argumentations = data.data;
                     $scope.loading = false;
                 });
+        };
+
+        $scope.languageFilter = "";
+        $scope.page = 0;
+        $scope.loading = false;
+        console.log($scope.loading);
+        $scope.highlightterm = "";
+        $scope.argumentations = [];
+        var div = document.getElementById('div-item-data');
+        $scope.searchword = div.getAttribute("data-item-name");
+        if ($scope.searchword.length >= 3){
+            $scope.search($scope.searchword);
         }
+
 
         $scope.viewArgumentation = function(argumentation) {
             $location.path("/" + argumentation.id);
-        }
+        };
 
         $scope.previousPage = function() {
             if ($scope.page > 0) {
                 $scope.page = $scope.page - 1;
                 $scope.search($scope.keywords);
             }
-        }
+        };
         $scope.nextPage = function() {
             $scope.page = $scope.page + 1;
             $scope.search($scope.keywords);
-        }
+        };
 
         $scope.viewDetails = function(argumentation) {
             $location.path("/" + argumentation.id);
-        }
+        };
 
         $scope.highlight = function(haystack, needle) {
             if(!needle) {
                 return $sce.trustAsHtml(haystack);
             }
-            needle = needle.replace(/\s/g, "|")
+            needle = needle.replace(/\s/g, "|");
             return $sce.trustAsHtml(haystack.replace(new RegExp(needle, "gi"), function(match) {
                 return '<span class="highlightedText">' + match + '</span>';
             }));
