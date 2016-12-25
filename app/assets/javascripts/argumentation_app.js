@@ -39,10 +39,8 @@ app.controller("ArgumentationIndexController", [
                 });
         };
 
-        $scope.languageFilter = "";
-        $scope.page = 0;
         $scope.loading = false;
-        console.log($scope.loading);
+        $scope.page = 0;
         $scope.highlightterm = "";
         $scope.argumentations = [];
         var div = document.getElementById('div-item-data');
