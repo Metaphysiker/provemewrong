@@ -1,4 +1,4 @@
-
+<form novalidate name="form">
 <div class="animate-if waiting" ng-if="!argumentation.$resolved || loading">
 
     <!-- loading animation will go here -->
@@ -58,7 +58,7 @@
                             <div ng-repeat="argument in argumentation.arguments">
                                 <a class="list-group-item" ng-click="getcontent(argument)" ng-class="{'higha': argument == argumentcontent} ">
                                     <h4 class="list-group-item-heading">
-                                        <textarea type="text" class="form-control" rows="3" required
+                                        <textarea type="text" class="form-control" rows="4" required
                                                   name="argument_title" ng-model="argument.title" ng-if="argument == argumentcontent"></textarea>
                                         <p class="help-block" ng-messages="form.argument_title.$error">
                                             <span ng-message="required"></span>
@@ -77,7 +77,15 @@
                             <h3 class="panel-title">{{ argumentcontent.title }}</h3>
                         </div>
                         <div class="panel-body text-justify">
-                            {{ argumentcontent.description }}
+
+                            <textarea type="text" class="form-control" rows="40" required
+                                  name="argumentcontent_description" ng-model="argumentcontent.description"></textarea>
+                            <p class="help-block" ng-messages="form.argumentcontent_description.$error">
+                                <span ng-message="required"></span>
+                            </p>
+                            <div class="lead text-justify white-space-pre-line">
+                                {{ argumentcontent.description }}
+                            </div>
                             <br>
                             <br>
 
@@ -105,3 +113,10 @@
 
 </div>
 
+    <button ng-click="save()"
+            class="btn btn-lg btn-primary"
+            ng-disabled="form.$invalid || form.$pristine">
+        Save Changes
+    </button>
+
+</form>

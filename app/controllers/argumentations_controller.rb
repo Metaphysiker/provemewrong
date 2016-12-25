@@ -56,6 +56,13 @@ class ArgumentationsController < ApplicationController
 
   def update
 
+    argumentation = Argumentation.find(params[:id])
+    Rails::logger.debug params.inspect
+    Rails::logger.debug argumentation_params.inspect
+    argumentation.update(argumentation_params)
+    Rails::logger.debug argumentation.inspect
+    head :ok
+
   end
 
   def getparentargumentation
@@ -67,6 +74,12 @@ class ArgumentationsController < ApplicationController
     respond_to do |format|
       format.json { render json: argumentation.as_json(include: {arguments: { include: :argumentation}}) }
     end
+  end
+
+  private
+
+  def argumentation_params
+    params.require(:params).permit(:title, :description)
   end
 
 end

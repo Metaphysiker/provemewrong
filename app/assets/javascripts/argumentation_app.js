@@ -24,15 +24,16 @@ app.config([
 
 
 app.controller("ArgumentationEditController",[
-    '$scope', '$routeParams', '$resource', function($scope, $routeParams, $resource){
+    '$scope', '$routeParams', '$resource', '$http', function($scope, $routeParams, $resource,  $http){
         var argumentationId =  $routeParams.id;
         var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
         var newArgumentation = $resource('/argumentations.json/',{}, {'save':   {'method':'POST'}});
 
         if (argumentationId == 0){
            newArgumentation.save().$promise.then(function(argumentation){
-               $scope.argumentation = argumentation;}
-               );
+               $scope.argumentation = argumentation;
+                argumentationId = argumentation.id;
+           });
         } else {
             Argumentation.get({ "argumentationId": argumentationId }).$promise.then(function(argumentation){
                 $scope.argumentation = argumentation;
@@ -42,6 +43,18 @@ app.controller("ArgumentationEditController",[
 
         $scope.getcontent = function(argument){
             $scope.argumentcontent = argument;
+        };
+
+        $scope.save = function() {
+            if ($scope.form.$valid) {
+                alert($scope.argumentation);
+                $http.put("/argumentations/500.json",
+                    { "params": $scope.argumentation }
+                ).then(
+                    function(data,status,headers,config) {
+                        alert("heureka");
+                    });
+            }
         };
 
     }
