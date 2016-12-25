@@ -29,3 +29,12 @@ body { padding-top: 50px; }
 }
 
 .big-input{width:100%}
+
+/* in the css file or in a style block */
+.angular-with-newlines {
+    white-space: pre-wrap;
+}
+div.white-space-pre-line {
+    white-space: pre-line;
+}
+

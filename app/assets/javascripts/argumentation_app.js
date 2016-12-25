@@ -28,17 +28,21 @@ app.controller("ArgumentationEditController",[
         var argumentationId =  $routeParams.id;
         var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
         var newArgumentation = $resource('/argumentations.json/',{}, {'save':   {'method':'POST'}});
-        var Customer = $resource('/argumentations/:customerId.json', {"customerId": "@customer_id"}, {"save": {"method": "POST"}});
 
         if (argumentationId == 0){
            newArgumentation.save().$promise.then(function(argumentation){
                $scope.argumentation = argumentation;}
                );
         } else {
-            newArgumentation.save().$promise.then(function(argumentation){
-                $scope.argumentation = argumentation;}
-                );
+            Argumentation.get({ "argumentationId": argumentationId }).$promise.then(function(argumentation){
+                $scope.argumentation = argumentation;
+                $scope.argumentcontent = argumentation.arguments[0];
+            });
         }
+
+        $scope.getcontent = function(argument){
+            $scope.argumentcontent = argument;
+        };
 
     }
 ]);

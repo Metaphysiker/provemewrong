@@ -27,8 +27,22 @@
             </ul>
         </nav>
 
-        <h1 class="display-3">{{ argumentation.title }}</h1>
-        <p class="lead text-justify">{{ argumentation.description }}</p>
+        <h1 class="display-3">
+            <input type="text" class="form-control" required
+                   name="argumentation_title" ng-model="argumentation.title">
+            <p class="help-block" ng-messages="form.argumentation_title.$error">
+                <span ng-message="required"></span>
+            </p>
+            {{ argumentation.title }}</h1>
+
+            <textarea type="text" class="form-control" rows="9" required
+                name="argumentation_description" ng-model="argumentation.description"></textarea>
+             <p class="help-block" ng-messages="form.argumentation_description.$error">
+              <span ng-message="required"></span>
+              </p>
+        <div class="lead text-justify white-space-pre-line">
+            {{ argumentation.description }}
+        </div>
         <div class="container-fluid">
 
             <div class="row">
@@ -43,7 +57,13 @@
                         <div class="list-group">
                             <div ng-repeat="argument in argumentation.arguments">
                                 <a class="list-group-item" ng-click="getcontent(argument)" ng-class="{'higha': argument == argumentcontent} ">
-                                    <h4 class="list-group-item-heading">{{ argument.title }}</h4>
+                                    <h4 class="list-group-item-heading">
+                                        <textarea type="text" class="form-control" rows="3" required
+                                                  name="argument_title" ng-model="argument.title" ng-if="argument == argumentcontent"></textarea>
+                                        <p class="help-block" ng-messages="form.argument_title.$error">
+                                            <span ng-message="required"></span>
+                                        </p>
+                                        {{ argument.title }}</h4>
                                 </a>
                             </div>
                         </div>
