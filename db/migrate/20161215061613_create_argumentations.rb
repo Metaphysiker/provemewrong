@@ -5,6 +5,7 @@ class CreateArgumentations < ActiveRecord::Migration[5.0]
       t.text :description, null: false
       t.integer :main, default: nil
       t.belongs_to :argument, index: true
+      t.belongs_to :user, index: true
 
       t.timestamps
     end

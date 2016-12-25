@@ -69,6 +69,7 @@ CREATE TABLE argumentations (
     description text NOT NULL,
     main integer,
     argument_id integer,
+    user_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -290,6 +291,13 @@ ALTER TABLE ONLY users
 --
 
 CREATE INDEX index_argumentations_on_argument_id ON argumentations USING btree (argument_id);
+
+
+--
+-- Name: index_argumentations_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_argumentations_on_user_id ON argumentations USING btree (user_id);
 
 
 --

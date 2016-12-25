@@ -13,11 +13,14 @@ if Rails.env == 'development'
 
   500.times do |i|
     puts "I is: #{i}"
+    user = User.create!(email: Faker::Internet.email, password: "password")
+
     argumentation =Argumentation.create!(
                      title: Faker::Lorem.sentence,
                      description: Faker::Lorem.paragraph(20, true, 20)
                     )
     argumentation.update(main: argumentation.id)
+    user.argumentations << argumentation
     rand(5..12).times do |x|
       argu =Argument.create!(
           title: Faker::Lorem.sentence,
@@ -33,6 +36,7 @@ if Rails.env == 'development'
         )
         childargumentation.update(main: argumentation.id)
 
+        user.argumentations << childargumentation
         argu.argumentation = childargumentation
       end
 

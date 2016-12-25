@@ -44,9 +44,9 @@ app.controller("ArgumentationIndexController", [
         $scope.highlightterm = "";
         $scope.argumentations = [];
         var div = document.getElementById('div-item-data');
-        $scope.searchword = div.getAttribute("data-item-name");
-        if ($scope.searchword.length >= 3){
-            $scope.search($scope.searchword);
+        $scope.keywords = div.getAttribute("data-item-name");
+        if ($scope.keywords.length >= 3){
+            $scope.search($scope.keywords);
         }
 
 
