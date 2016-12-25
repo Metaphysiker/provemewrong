@@ -3,7 +3,7 @@ class CreateArgumentations < ActiveRecord::Migration[5.0]
     create_table :argumentations do |t|
       t.string :title, null: false
       t.text :description, null: false
-      t.boolean :main, default: false
+      t.integer :main, default: nil
       t.belongs_to :argument, index: true
 
       t.timestamps

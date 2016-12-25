@@ -67,7 +67,7 @@ CREATE TABLE argumentations (
     id integer NOT NULL,
     title character varying NOT NULL,
     description text NOT NULL,
-    main boolean DEFAULT false,
+    main integer,
     argument_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL

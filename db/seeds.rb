@@ -17,6 +17,7 @@ if Rails.env == 'development'
                      title: Faker::Lorem.sentence,
                      description: Faker::Lorem.paragraph(20, true, 20)
                     )
+    argumentation.update(main: argumentation.id)
     rand(5..12).times do |x|
       argu =Argument.create!(
           title: Faker::Lorem.sentence,
@@ -30,6 +31,7 @@ if Rails.env == 'development'
             title: Faker::Lorem.sentence,
             description: Faker::Lorem.paragraph(80, true, 20)
         )
+        childargumentation.update(main: argumentation.id)
 
         argu.argumentation = childargumentation
       end
