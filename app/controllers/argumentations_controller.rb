@@ -41,6 +41,23 @@ class ArgumentationsController < ApplicationController
 
   end
 
+  def create
+    argumentation = Argumentation.create!(title: "Insert title here!", description: "Insert description here!")
+    argumentation.update(main: argumentation.id)
+    current_user.argumentations << argumentation
+
+    argument = Argument.create!(title: "Insert argument-title here!", description: "Insert description of argument here!")
+    argumentation.arguments << argument
+
+    respond_to do |format|
+      format.json { render json: argumentation.as_json(include: {arguments: { include: :argumentation}}) }
+    end
+  end
+
+  def update
+
+  end
+
   def getparentargumentation
 
     argument = Argument.find(params[:id])

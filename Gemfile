@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
+
+gem 'angular_rails_csrf'
+
 gem 'active_record_union'
+
 gem 'faker'
 
 gem 'sprockets'

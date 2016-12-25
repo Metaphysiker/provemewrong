@@ -15,7 +15,31 @@ app.config([
         }).when("/",{
             controller: "ArgumentationIndexController",
             templateUrl: "argumentation_index.html"
+        }).when("/edit/:id", {
+            controller: "ArgumentationEditController",
+            templateUrl: "argumentation_edit.html"
         });
+    }
+]);
+
+
+app.controller("ArgumentationEditController",[
+    '$scope', '$routeParams', '$resource', function($scope, $routeParams, $resource){
+        var argumentationId =  $routeParams.id;
+        var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
+        var newArgumentation = $resource('/argumentations.json/',{}, {'save':   {'method':'POST'}});
+        var Customer = $resource('/argumentations/:customerId.json', {"customerId": "@customer_id"}, {"save": {"method": "POST"}});
+
+        if (argumentationId == 0){
+           newArgumentation.save().$promise.then(function(argumentation){
+               $scope.argumentation = argumentation;}
+               );
+        } else {
+            newArgumentation.save().$promise.then(function(argumentation){
+                $scope.argumentation = argumentation;}
+                );
+        }
+
     }
 ]);
 
@@ -89,7 +113,7 @@ app.controller("ArgumentationShowController", [
     function($scope, $resource, $q, $timeout, $anchorScroll, $routeParams) {
 
         // all vars and assignments
-        $scope.main_argumentation_id = 1;
+       // $scope.main_argumentation_id = 1;
         $scope.loading = false;
         var argumentationId =  $routeParams.id;
         var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
