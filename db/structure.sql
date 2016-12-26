@@ -104,6 +104,7 @@ CREATE TABLE arguments (
     description text NOT NULL,
     parent_argumentation_id integer,
     argumentation_id integer,
+    place integer DEFAULT 0,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );

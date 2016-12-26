@@ -41,7 +41,7 @@
 
 
                         <div class="list-group">
-                            <div ng-repeat="argument in argumentation.arguments">
+                            <div ng-repeat="argument in argumentation.arguments | orderBy:'place'">
                                 <a class="list-group-item" ng-click="getcontent(argument)" ng-class="{'higha': argument == argumentcontent} ">
                                     <h4 class="list-group-item-heading">{{ argument.title }}</h4>
                                 </a>

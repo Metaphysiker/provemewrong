@@ -5,6 +5,7 @@ class CreateArguments < ActiveRecord::Migration[5.0]
       t.text :description, null: false
       t.integer :parent_argumentation_id
       t.belongs_to :argumentation, index: true
+      t.integer :place, default: 0
 
       t.timestamps
     end

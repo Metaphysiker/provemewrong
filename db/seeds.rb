@@ -28,6 +28,7 @@ if Rails.env == 'development'
       )
 
       argumentation.arguments << argu
+      argu.add_place
 
       if x.odd?
         childargumentation =Argumentation.create!(

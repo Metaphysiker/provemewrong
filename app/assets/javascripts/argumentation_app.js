@@ -28,6 +28,7 @@ app.controller("ArgumentationEditController",[
         var argumentationId =  $routeParams.id;
         var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
         var newArgumentation = $resource('/argumentations.json/',{}, {'save':   {'method':'POST'}});
+        $scope.selectedArguments = [];
 
         if (argumentationId == 0){
            newArgumentation.save().$promise.then(function(argumentation){
@@ -56,6 +57,32 @@ app.controller("ArgumentationEditController",[
                     });
             }
         };
+
+        $scope.invertorder = function (){
+
+            //first_argument = $scope.argumentation.arguments[0]
+            //second_argument = $scope.argumentation.arguments[1]
+
+            var first_argument = $scope.selectedArguments[0];
+            var second_argument = $scope.selectedArguments[1];
+
+            var first_place = first_argument.place;
+            alert(first_place);
+            var second_place = second_argument.place;
+
+            first_argument.place = second_place;
+            alert(first_argument.place);
+            second_argument.place = first_place;
+
+            $scope.selectedArguments = [];
+
+           // $scope.argumentation.arguments[second_argument].place = first_argument;
+        }
+
+
+        $scope.toggleSelection = function(argument){
+            $scope.selectedArguments.push(argument);
+        }
 
     }
 ]);
