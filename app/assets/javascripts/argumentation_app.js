@@ -48,7 +48,7 @@ app.controller("ArgumentationEditController",[
         $scope.save = function() {
             if ($scope.form.$valid) {
                 alert($scope.argumentation);
-                $http.put("/argumentations/500.json",
+                $http.put("/argumentations/" + argumentationId + ".json",
                     { "params": $scope.argumentation }
                 ).then(
                     function(data,status,headers,config) {

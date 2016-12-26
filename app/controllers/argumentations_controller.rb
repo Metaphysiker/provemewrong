@@ -57,10 +57,10 @@ class ArgumentationsController < ApplicationController
   def update
 
     argumentation = Argumentation.find(params[:id])
-    Rails::logger.debug params.inspect
-    Rails::logger.debug argumentation_params.inspect
+
+    updatearguments(params[:params][:arguments])
+
     argumentation.update(argumentation_params)
-    Rails::logger.debug argumentation.inspect
     head :ok
 
   end
@@ -78,8 +78,25 @@ class ArgumentationsController < ApplicationController
 
   private
 
+  def updatearguments(list_of_arguments)
+    Rails::logger.debug "list_of_arguments: #{list_of_arguments.inspect}"
+    list_of_arguments.each do |argument|
+      argumentu = Argument.find(argument[:id])
+      #argument_hash = {"title" => argument[:title], "description" => argument[:description]}
+      argument_params = ActionController::Parameters.new({
+                                                        title: argument[:title],
+                                                        description:  argument[:description]
+                                                })
+      argumentu.update(argument_params.permit(:title, :description))
+    end
+  end
+
   def argumentation_params
-    params.require(:params).permit(:title, :description)
+    params.require(:params).permit(:title, :description, :arguments, pets_attributes: [:id, :title, :description])
+  end
+
+  def argument_params
+    params.permit(:title, :description)
   end
 
 end
