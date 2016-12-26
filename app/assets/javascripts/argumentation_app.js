@@ -48,17 +48,17 @@ app.controller("ArgumentationEditController",[
 
         $scope.save = function() {
             if ($scope.form.$valid) {
-                alert($scope.argumentation);
                 $http.put("/argumentations/" + argumentationId + ".json",
                     { "params": $scope.argumentation }
                 ).then(
                     function(data,status,headers,config) {
-                        alert("heureka");
+                        $scope.form.$setPristine();
+                        $scope.form.$setUntouched();
                     });
             }
         };
 
-        $scope.invertorder = function (){
+        $scope.switcharguments = function (){
 
             //first_argument = $scope.argumentation.arguments[0]
             //second_argument = $scope.argumentation.arguments[1]
@@ -73,6 +73,9 @@ app.controller("ArgumentationEditController",[
             second_argument.place = first_place;
 
             $scope.selectedArguments = [];
+
+            $scope.form.$setDirty();
+            $scope.form.$setTouched();
 
            // $scope.argumentation.arguments[second_argument].place = first_argument;
         }
