@@ -85,9 +85,10 @@ class ArgumentationsController < ApplicationController
       #argument_hash = {"title" => argument[:title], "description" => argument[:description]}
       argument_params = ActionController::Parameters.new({
                                                         title: argument[:title],
-                                                        description:  argument[:description]
+                                                        description:  argument[:description],
+                                                        place: argument[:place]
                                                 })
-      argumentu.update(argument_params.permit(:title, :description))
+      argumentu.update(argument_params.permit(:title, :description, :place))
     end
   end
 

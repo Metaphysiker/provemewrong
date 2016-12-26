@@ -67,11 +67,9 @@ app.controller("ArgumentationEditController",[
             var second_argument = $scope.selectedArguments[1];
 
             var first_place = first_argument.place;
-            alert(first_place);
             var second_place = second_argument.place;
 
             first_argument.place = second_place;
-            alert(first_argument.place);
             second_argument.place = first_place;
 
             $scope.selectedArguments = [];
@@ -81,7 +79,22 @@ app.controller("ArgumentationEditController",[
 
 
         $scope.toggleSelection = function(argument){
-            $scope.selectedArguments.push(argument);
+            var idx = $scope.selectedArguments.indexOf(argument);
+
+            // is currently selected
+            if (idx > -1) {
+                $scope.selectedArguments.splice(idx, 1);
+            }
+
+            // is newly selected
+            else {
+                if($scope.selectedArguments.length > 1){
+                    $scope.selectedArguments.splice(0, 1);
+                    $scope.selectedArguments.push(argument);
+                } else {
+                    $scope.selectedArguments.push(argument);
+                }
+            }
         }
 
     }

@@ -43,6 +43,11 @@
         <div class="lead text-justify white-space-pre-line">
             {{ argumentation.description }}
         </div>
+
+        <button ng-click="invertorder()"
+                class="btn btn-lg btn-primary">
+            Invert Order
+        </button>
         <div class="container-fluid">
 
             <div class="row">
@@ -125,11 +130,6 @@
             class="btn btn-lg btn-primary"
             ng-disabled="form.$invalid || form.$pristine">
         Save Changes
-    </button>
-
-    <button ng-click="invertorder()"
-            class="btn btn-lg btn-primary">
-        Invert Order
     </button>
 
 </form>
