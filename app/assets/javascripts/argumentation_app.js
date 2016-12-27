@@ -80,7 +80,6 @@ app.controller("ArgumentationEditController",[
             $scope.selectedArguments = [];
 
             $scope.form.$setDirty();
-            $scope.form.$setTouched();
 
            // $scope.argumentation.arguments[second_argument].place = first_argument;
         }

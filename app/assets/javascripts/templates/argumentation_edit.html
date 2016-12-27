@@ -44,10 +44,6 @@
             {{ argumentation.description }}
         </div>
 
-        <button ng-click="switcharguments()"
-                class="btn btn-lg btn-primary">
-            Choose and switch arguments
-        </button>
         <div class="container-fluid">
 
             <div class="row">
@@ -77,10 +73,24 @@
                                         value="{{argument}}"
                                         ng-checked="selectedArguments.indexOf(argument) > -1"
                                         ng-click="toggleSelection(argument)"
-                                > {{argument.title}}
+                                >
                             </div>
                         </div>
                     </div>
+
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Switch arguments</h3>
+                        </div>
+                        <div class="panel-body">
+                            Check two arguments and press: <br><br>
+                            <button ng-click="switcharguments()"
+                                    class="btn btn-lg btn-primary">
+                                Switch
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="col-md-9">
