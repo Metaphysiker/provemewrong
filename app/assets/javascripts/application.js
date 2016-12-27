@@ -16,8 +16,8 @@
 //= require angular-animate
 //= require angular-route
 //= require angular-resource
-//= require angular-material
-//= require angular-aria
+//= require sweetalert
+//= require ng-sweet-alert
 //= require angular-messages
 //= require angular-rails-templates
 //= require_tree ./templates

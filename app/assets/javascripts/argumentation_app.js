@@ -4,7 +4,8 @@ var app = angular.module(
     'ngResource',
     'templates',
     'ngAnimate',
-    'ngMessages'
+    'ngMessages',
+    'ng-sweet-alert'
 ]);
 
 app.config([
@@ -26,6 +27,7 @@ app.config([
 
 app.controller("ArgumentationEditController",[
     '$scope', '$routeParams', '$resource', '$http', function($scope, $routeParams, $resource,  $http){
+
         var argumentationId =  $routeParams.id;
         var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
         var newArgumentation = $resource('/argumentations.json/',{}, {'save':   {'method':'POST'}});
@@ -53,13 +55,11 @@ app.controller("ArgumentationEditController",[
                     { "params": $scope.argumentation }
                 ).then(
                     function(data,status,headers,config) {
-                        alert('Saved!')
+                        swal("Saved!", "", "success")
                         $scope.form.$setPristine();
                         $scope.form.$setUntouched();
                     });
             }
-
-
         };
 
 
