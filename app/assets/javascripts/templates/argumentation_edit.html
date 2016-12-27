@@ -67,13 +67,15 @@
                                         {{ argument.title }}</h4>
 
                                 </a>
-                                <input
-                                        type="checkbox"
-                                        name="selectedArguments[]"
-                                        value="{{argument}}"
-                                        ng-checked="selectedArguments.indexOf(argument) > -1"
-                                        ng-click="toggleSelection(argument)"
-                                >
+                                <div style="text-align: center">
+                                    <input
+                                            type="checkbox"
+                                            name="selectedArguments[]"
+                                            value="{{argument}}"
+                                            ng-checked="selectedArguments.indexOf(argument) > -1"
+                                            ng-click="toggleSelection(argument)"
+                                    >
+                                </div>
                             </div>
                         </div>
                     </div>
