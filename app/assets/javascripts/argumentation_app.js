@@ -3,7 +3,8 @@ var app = angular.module(
     'ngRoute',
     'ngResource',
     'templates',
-    'ngAnimate'
+    'ngAnimate',
+    'ngMessages'
 ]);
 
 app.config([
@@ -52,11 +53,15 @@ app.controller("ArgumentationEditController",[
                     { "params": $scope.argumentation }
                 ).then(
                     function(data,status,headers,config) {
+                        alert('Saved!')
                         $scope.form.$setPristine();
                         $scope.form.$setUntouched();
                     });
             }
+
+
         };
+
 
         $scope.switcharguments = function (){
 
