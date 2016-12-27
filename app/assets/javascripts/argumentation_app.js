@@ -28,6 +28,7 @@ app.config([
 app.controller("ArgumentationEditController",[
     '$scope', '$routeParams', '$resource', '$http', function($scope, $routeParams, $resource,  $http){
 
+        $scope.switchmode = false;
         var argumentationId =  $routeParams.id;
         var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
         var newArgumentation = $resource('/argumentations.json/',{}, {'save':   {'method':'POST'}});
@@ -41,13 +42,32 @@ app.controller("ArgumentationEditController",[
         } else {
             Argumentation.get({ "argumentationId": argumentationId }).$promise.then(function(argumentation){
                 $scope.argumentation = argumentation;
-                $scope.argumentcontent = argumentation.arguments[0];
+                getfirstargument(argumentation);
             });
+        }
+
+        function getfirstargument(argumentation){
+            var firstargument;
+            for (var i = 0; i < argumentation.arguments.length; i++) {
+                if(argumentation.arguments[i].place == 1) {
+                    firstargument = argumentation.arguments[i];
+                }
+            }
+            $scope.argumentcontent = firstargument;
         }
 
         $scope.getcontent = function(argument){
             $scope.argumentcontent = argument;
         };
+
+        $scope.toggleSwitchMode = function(){
+            if($scope.switchmode == false){
+                $scope.switchmode = true;
+            } else {
+                $scope.switchmode = false;
+            }
+        };
+
 
         $scope.save = function() {
             if ($scope.form.$valid) {
@@ -186,7 +206,7 @@ app.controller("ArgumentationShowController", [
         //$scope.argumentation = Argumentation.get({ "argumentationId": argumentationId });
         Argumentation.get({ "argumentationId": argumentationId }).$promise.then(function(argumentation){
             $scope.argumentation = argumentation;
-            $scope.argumentcontent = argumentation.arguments[0];
+            getfirstargument(argumentation);
         });
 
        // $scope.argumentcontent = {"description":"<-- choose Argument", "title": "Argument"};
@@ -264,7 +284,7 @@ app.controller("ArgumentationShowController", [
             Argumentation.get({ "argumentationId": id }).$promise.then(function(argumentation) {
                 $scope.argumentation = argumentation;
                 $scope.loading = false;
-                $scope.argumentcontent = argumentation.arguments[0];
+                getfirstargument(argumentation);
 
                 $timeout(function() {
                     setBoxClass(boxClass);
@@ -274,6 +294,16 @@ app.controller("ArgumentationShowController", [
                 alert('Failed: ' + reason);
             });
 
+        }
+
+        function getfirstargument(argumentation){
+            var firstargument;
+            for (var i = 0; i < argumentation.arguments.length; i++) {
+                if(argumentation.arguments[i].place == 1) {
+                    firstargument = argumentation.arguments[i];
+                }
+            }
+            $scope.argumentcontent = firstargument;
         }
 
         $scope.getcontent = function(argument){

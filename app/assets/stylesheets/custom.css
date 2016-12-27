@@ -66,4 +66,10 @@ div.white-space-pre-line {
     margin-bottom: 0; }
 
 
+.pokemon {
+    background-color: pink;
+    position: absolute;
+    z-index: 100;
+    width: 200px;
+}
 

@@ -49,6 +49,21 @@
             <div class="row">
 
                 <div class="col-md-3">
+
+                    <div class="panel panel-warning">
+                        <div class="panel-heading" ng-click="toggleSwitchMode()">
+                            <h3 class="panel-title">Switch arguments</h3>
+                        </div>
+                        <div class="panel-body" ng-if="switchmode == true">
+                            Check two arguments and press: <br><br>
+                            <button ng-click="switcharguments()"
+                                    class="btn btn-lg btn-primary">
+                                Switch
+                            </button>
+                        </div>
+                    </div>
+
+
                     <div class="panel panel-primary">
                         <div class="panel-heading text-justify">
                             <h3 class="panel-title">Arguments</h3>
@@ -57,7 +72,7 @@
 
                         <div class="list-group">
                             <div ng-repeat="argument in argumentation.arguments | orderBy:'place'">
-                                <a class="list-group-item" ng-click="getcontent(argument)" ng-class="{'higha': argument == argumentcontent} ">
+                                <a class="list-group-item" ng-click="getcontent(argument)" ng-if="switchmode == false" ng-class="{'higha': argument == argumentcontent} ">
                                     <h4 class="list-group-item-heading">
                                         <textarea type="text" class="form-control" rows="4" required
                                                   name="argument_title" ng-model="argument.title" ng-if="argument == argumentcontent"></textarea>
@@ -67,32 +82,19 @@
                                         {{ argument.title }}</h4>
 
                                 </a>
-                                <div style="text-align: center">
+                                <div style="text-align: left" ng-if="switchmode == true">
                                     <input
                                             type="checkbox"
                                             name="selectedArguments[]"
                                             value="{{argument}}"
                                             ng-checked="selectedArguments.indexOf(argument) > -1"
                                             ng-click="toggleSelection(argument)"
-                                    >
+                                    > {{ argument.title}}
+                                    <hr>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="panel panel-warning">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Switch arguments</h3>
-                        </div>
-                        <div class="panel-body">
-                            Check two arguments and press: <br><br>
-                            <button ng-click="switcharguments()"
-                                    class="btn btn-lg btn-primary">
-                                Switch
-                            </button>
-                        </div>
-                    </div>
-
                 </div>
 
                 <div class="col-md-9">
@@ -145,3 +147,4 @@
     </button>
 
 </form>
+
