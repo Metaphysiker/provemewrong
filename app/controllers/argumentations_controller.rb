@@ -59,7 +59,7 @@ class ArgumentationsController < ApplicationController
 
     argumentation = Argumentation.find(params[:id])
 
-    updatearguments(params[:params][:arguments])
+    updatearguments(params[:arguments])
 
     argumentation.update(argumentation_params)
     head :ok
@@ -106,7 +106,7 @@ class ArgumentationsController < ApplicationController
   end
 
   def argumentation_params
-    params.require(:params).permit(:title, :description, :arguments, pets_attributes: [:id, :title, :description])
+    params.permit(:title, :description, :arguments, pets_attributes: [:id, :title, :description])
   end
 
   def argument_params

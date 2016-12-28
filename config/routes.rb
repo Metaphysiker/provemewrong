@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root 'dashboard#index'
   get "angular_test", to: "angular_test#index"
   get '/test', to: "dashboard#test", as: 'test'
+  post '/test', to: "dashboard#test"
 
   resources :argumentations, only: [ :index, :show, :create, :update]
   get '/getparentargumentation/:id', to: "argumentations#getparentargumentation"

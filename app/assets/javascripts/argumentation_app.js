@@ -11,76 +11,72 @@ var app = angular.module(
 app.config([
     "$routeProvider",
     function($routeProvider) {
-        $routeProvider.when("/:id", {
-            controller: "ArgumentationShowController",
-            templateUrl: "argumentation_show.html"
-        }).when("/",{
-            controller: "ArgumentationIndexController",
-            templateUrl: "argumentation_index.html"
+        $routeProvider.when("/search",{
+            controller: "ArgumentationSearchController",
+            templateUrl: "argumentation_search.html"
         }).when("/edit/:id", {
             controller: "ArgumentationEditController",
             templateUrl: "argumentation_edit.html"
+        }).when("/:id", {
+            controller: "ArgumentationShowController",
+            templateUrl: "argumentation_show.html"
         });
     }
 ]);
 
-app.factory('myService', function() {
+app.factory('argumentationMethods',['$resource', function($resource) {
     return {
         foo: function() {
             alert("I'm foo!");
         },
-
-        faa: function() {
-            alert("I'm faa!");
-        }
-    };
-});
-
-app.factory('argumentation', function() {
-    return {
-        foo: function() {
-            alert("I'm foo!");
-        },
-
-        faa: function() {
-            alert("I'm faa!");
-        }
-    };
-});
-
-
-app.controller("ArgumentationEditController",[
-    '$scope', '$routeParams', '$resource', '$http', 'myService', function($scope, $routeParams, $resource,  $http, myService){
-
-        myService.foo();
-        myService.faa();
-        $scope.switchmode = false;
-        $scope.deletemode = false;
-        var argumentationId =  $routeParams.id;
-        var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
-        var newArgumentation = $resource('/argumentations.json/',{}, {'save':   {'method':'POST'}});
-        $scope.selectedArguments = [];
-
-        if (argumentationId == 0){
-           newArgumentation.save().$promise.then(function(argumentation){
-               $scope.argumentation = argumentation;
-                argumentationId = argumentation.id;
-           });
-        } else {
-            Argumentation.get({ "argumentationId": argumentationId }).$promise.then(function(argumentation){
-                $scope.argumentation = argumentation;
-                getfirstargument(argumentation);
-            });
-        }
-
-        function getfirstargument(argumentation){
+        getfirstargument: function(argumentation){
             var firstargument;
             for (var i = 0; i < argumentation.arguments.length; i++) {
                 if(argumentation.arguments[i].place == 1) {
                     firstargument = argumentation.arguments[i];
                 }
             }
-            $scope.argumentcontent = firstargument;
+            return firstargument;
+        }
+    };
+}]);
+
+app.factory('argumentationResource', ['$resource', function($resource) {
+    return $resource('/argumentations/:argumentationId.json', null,
+        {
+            'update': { method:'PUT' }
+        });
+}]);
+
+app.factory('newArgumentationResource', ['$resource', function($resource) {
+    return $resource('/argumentations.json', null,
+        {
+            'create': { method:'POST' }
+        });
+}]);
+
+
+app.controller("ArgumentationEditController",[
+    '$scope', '$routeParams', '$resource', '$http', 'argumentationMethods', 'argumentationResource', 'newArgumentationResource', function($scope, $routeParams, $resource,  $http, argumentationMethods, argumentationResource, newArgumentationResource){
+
+        $scope.switchmode = false;
+        $scope.deletemode = false;
+        var argumentationId =  $routeParams.id;
+        //var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
+        //var newArgumentation = $resource('/argumentations.json/',{}, {'save':   {'method':'POST'}});
+        $scope.selectedArguments = [];
+
+        if (argumentationId == 0){
+           newArgumentationResource.create().$promise.then(function(argumentation){
+               $scope.argumentation = argumentation;
+                argumentationId = argumentation.id;
+               $scope.argumentcontent = argumentationMethods.getfirstargument(argumentation);
+           });
+        } else {
+            argumentationResource.get({ "argumentationId": argumentationId }).$promise.then(function(argumentation){
+                $scope.argumentation = argumentation;
+                $scope.argumentcontent = argumentationMethods.getfirstargument(argumentation);
+            });
         }
 
         $scope.addArgument = function(){
@@ -135,22 +131,17 @@ app.controller("ArgumentationEditController",[
 
         $scope.save = function() {
             if ($scope.form.$valid) {
-                $http.put("/argumentations/" + argumentationId + ".json",
-                    { "params": $scope.argumentation }
-                ).then(
-                    function(data,status,headers,config) {
-                        swal("Saved!", "", "success");
-                        $scope.form.$setPristine();
-                        $scope.form.$setUntouched();
-                    });
+                console.log($scope.argumentation);
+                argumentationResource.update({ "argumentationId": argumentationId },$scope.argumentation).$promise.then(function(){
+                    swal("Saved!", "", "success");
+                    $scope.form.$setPristine();
+                    $scope.form.$setUntouched();
+                });
             }
         };
 
 
         $scope.switcharguments = function (){
-
-            //first_argument = $scope.argumentation.arguments[0]
-            //second_argument = $scope.argumentation.arguments[1]
 
             var first_argument = $scope.selectedArguments[0];
             var second_argument = $scope.selectedArguments[1];
@@ -164,9 +155,7 @@ app.controller("ArgumentationEditController",[
             $scope.selectedArguments = [];
 
             $scope.form.$setDirty();
-
-           // $scope.argumentation.arguments[second_argument].place = first_argument;
-        }
+        };
 
 
         $scope.toggleSelection = function(argument){
@@ -191,89 +180,21 @@ app.controller("ArgumentationEditController",[
     }
 ]);
 
-app.controller("ArgumentationIndexController", [
-    '$scope', '$http', '$location', '$sce',
-    function($scope, $http, $location, $sce){
-
-
-        $scope.search = function(searchTerm) {
-            $scope.loading = true;
-            $scope.highlightterm = searchTerm;
-            if (searchTerm.length < 3) {
-                return;
-            }
-            $http.get("/argumentations.json",
-                { "params": { "keywords": searchTerm, "page": $scope.page } }
-            ).then(
-                function(data,status,headers,config) {
-                    $scope.argumentations = data.data;
-                    $scope.loading = false;
-                });
-        };
-
-        $scope.loading = false;
-        $scope.page = 0;
-        $scope.highlightterm = "";
-        $scope.argumentations = [];
-        var div = document.getElementById('div-item-data');
-        $scope.keywords = div.getAttribute("data-item-name");
-        if ($scope.keywords.length >= 3){
-            $scope.search($scope.keywords);
-        }
-
-
-        $scope.viewArgumentation = function(argumentation) {
-            $location.path("/" + argumentation.id);
-        };
-
-        $scope.previousPage = function() {
-            if ($scope.page > 0) {
-                $scope.page = $scope.page - 1;
-                $scope.search($scope.keywords);
-            }
-        };
-        $scope.nextPage = function() {
-            $scope.page = $scope.page + 1;
-            $scope.search($scope.keywords);
-        };
-
-        $scope.viewDetails = function(argumentation) {
-            $location.path("/" + argumentation.id);
-        };
-
-        $scope.highlight = function(haystack, needle) {
-            if(!needle) {
-                return $sce.trustAsHtml(haystack);
-            }
-            needle = needle.replace(/\s/g, "|");
-            return $sce.trustAsHtml(haystack.replace(new RegExp(needle, "gi"), function(match) {
-                return '<span class="highlightedText">' + match + '</span>';
-            }));
-        };
-
-    }
-]);
-
-
-
 app.controller("ArgumentationShowController", [
-    '$scope', '$resource', '$q','$timeout', '$anchorScroll', '$routeParams',
-    function($scope, $resource, $q, $timeout, $anchorScroll, $routeParams) {
+    '$scope', '$resource', '$q','$timeout', '$anchorScroll', '$routeParams', 'argumentationMethods',
+    function($scope, $resource, $q, $timeout, $anchorScroll, $routeParams, argumentationMethods) {
 
-        // all vars and assignments
-       // $scope.main_argumentation_id = 1;
         $scope.loading = false;
         var argumentationId =  $routeParams.id;
         var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
         var ParentArgumentation = $resource('/getparentargumentation/:argumentId.json', {"argumentId": "@argument_id"});
         $scope.boxClass = 1;
-        //$scope.argumentation = Argumentation.get({ "argumentationId": argumentationId });
+
         Argumentation.get({ "argumentationId": argumentationId }).$promise.then(function(argumentation){
             $scope.argumentation = argumentation;
-            getfirstargument(argumentation);
+            $scope.argumentcontent = argumentationMethods.getfirstargument(argumentation);
         });
 
-       // $scope.argumentcontent = {"description":"<-- choose Argument", "title": "Argument"};
 
         //main-function
         $scope.get_argumentation = function(type,id,boxClass, argumentcontent){
@@ -290,44 +211,38 @@ app.controller("ArgumentationShowController", [
                 toggleLoading();
 
 
+                if (type == 'argumentation'){
 
-            if (type == 'argumentation'){
+                    Argumentation.get({ "argumentationId": id }).$promise.then(function(argumentation) {
+                        $scope.argumentation = argumentation;
+                        toggleLoading();
+                        $scope.argumentcontent = argumentation.arguments[argumentcontent];
+                        $timeout(function() {
+                            setBoxClass(boxClass + 1);
+                        }, 1000);
 
-                Argumentation.get({ "argumentationId": id }).$promise.then(function(argumentation) {
-                    $scope.argumentation = argumentation;
-                    toggleLoading();
-                    $scope.argumentcontent = argumentation.arguments[argumentcontent];
-                    $timeout(function() {
-                        setBoxClass(boxClass + 1);
-                    }, 1000);
+                    }, function(reason) {
+                        alert('Failed: ' + reason);
+                    });
 
-                }, function(reason) {
-                    alert('Failed: ' + reason);
-                });
+                } else if (type == 'argument'){
 
-            } else if (type == 'argument'){
-
-                ParentArgumentation.get({ "argumentId": id }).$promise.then(function(argumentation){
-                    $scope.argumentation = argumentation;
-                    toggleLoading();
-                    $scope.argumentcontent = argumentation.arguments[argumentcontent];
-                    $timeout(function() {
-                        setBoxClass(boxClass + 1);
-                    }, 1000);
-                }, function(reason) {
-                    alert('Failed: ' + reason);
-                });
-            }
+                    ParentArgumentation.get({ "argumentId": id }).$promise.then(function(argumentation){
+                        $scope.argumentation = argumentation;
+                        toggleLoading();
+                        $scope.argumentcontent = argumentation.arguments[argumentcontent];
+                        $timeout(function() {
+                            setBoxClass(boxClass + 1);
+                        }, 1000);
+                    }, function(reason) {
+                        alert('Failed: ' + reason);
+                    });
+                }
 
             }, 1000);
 
 
         };
-
-
-
-
-
 
         //all functionss
         function setBoxClass(number){
@@ -360,16 +275,6 @@ app.controller("ArgumentationShowController", [
 
         }
 
-        function getfirstargument(argumentation){
-            var firstargument;
-            for (var i = 0; i < argumentation.arguments.length; i++) {
-                if(argumentation.arguments[i].place == 1) {
-                    firstargument = argumentation.arguments[i];
-                }
-            }
-            $scope.argumentcontent = firstargument;
-        }
-
         $scope.getcontent = function(argument){
             $scope.argumentcontent = argument;
         };
@@ -400,6 +305,66 @@ app.controller("ArgumentationShowController", [
 
         }
 
+
+    }
+]);
+
+
+app.controller("ArgumentationSearchController", [
+    '$scope', '$http', '$location', '$sce',
+    function($scope, $http, $location, $sce){
+
+
+        $scope.search = function(searchTerm) {
+            $scope.loading = true;
+            $scope.highlightterm = searchTerm;
+
+            if (searchTerm.length < 3) {
+                return;
+            }
+            $http.get("/argumentations.json",
+                        { "params": { "keywords": searchTerm, "page": $scope.page } }
+                    ).then(function(data,status,headers,config) {
+                        $scope.argumentations = data.data;
+                        $scope.loading = false;
+                    });
+            };
+
+        $scope.loading = false;
+        $scope.page = 0;
+        $scope.highlightterm = "";
+        $scope.argumentations = [];
+        var div = document.getElementById('div-item-data');
+        $scope.keywords = div.getAttribute("data-item-name");
+
+        if ($scope.keywords.length >= 3){
+            $scope.search($scope.keywords);
+        }
+
+        $scope.viewArgumentation = function(argumentation) {
+            $location.path("/" + argumentation.id);
+        };
+
+        $scope.previousPage = function() {
+            if ($scope.page > 0) {
+                $scope.page = $scope.page - 1;
+                $scope.search($scope.keywords);
+            }
+        };
+        $scope.nextPage = function() {
+            $scope.page = $scope.page + 1;
+            $scope.search($scope.keywords);
+        };
+
+        $scope.highlight = function(haystack, needle) {
+            if(!needle) {
+                return $sce.trustAsHtml(haystack);
+            }
+            needle = needle.replace(/\s/g, "|");
+            return $sce.trustAsHtml(haystack.replace(new RegExp(needle, "gi"), function(match) {
+                return '<span class="highlightedText">' + match + '</span>';
+            }));
+        };
 
     }
 ]);
