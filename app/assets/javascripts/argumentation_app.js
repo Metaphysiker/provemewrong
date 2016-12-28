@@ -29,6 +29,7 @@ app.controller("ArgumentationEditController",[
     '$scope', '$routeParams', '$resource', '$http', function($scope, $routeParams, $resource,  $http){
 
         $scope.switchmode = false;
+        $scope.deletemode = false;
         var argumentationId =  $routeParams.id;
         var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
         var newArgumentation = $resource('/argumentations.json/',{}, {'save':   {'method':'POST'}});
@@ -60,7 +61,17 @@ app.controller("ArgumentationEditController",[
             $scope.argumentcontent = argument;
         };
 
+        $scope.toggleDeleteMode = function(){
+            $scope.switchmode = false;
+            if($scope.deletemode == false){
+                $scope.deletemode = true;
+            } else {
+                $scope.deletemode = false;
+            }
+        };
+
         $scope.toggleSwitchMode = function(){
+            $scope.deletemode = false;
             if($scope.switchmode == false){
                 $scope.switchmode = true;
             } else {

@@ -50,43 +50,43 @@
 
                 <div class="col-md-3">
 
-                    <div class="panel panel-warning">
-                        <div class="panel-heading" ng-click="toggleSwitchMode()">
-                            <h3 class="panel-title">Switch arguments <i class="fa fa-refresh pull-right" aria-hidden="true"></i></h3>
-                        </div>
-                        <div class="panel-body" ng-if="switchmode == true">
-                            Check two arguments and press: <br><br>
-                            <button ng-click="switcharguments()"
-                                    class="btn btn-lg btn-primary">
-                                Switch
-                            </button>
+                    <div class="panel panel-success">
+                        <div class="panel-heading" ng-click="save()" ng-disabled="form.$invalid || form.$pristine">
+                            <h3 class="panel-title">Save <i class="fa fa-floppy-o pull-right" aria-hidden="true"></i>
+                            </h3>
                         </div>
                     </div>
 
-                    <div class="panel panel-warning">
+                    <div class="panel panel-info">
+                        <div class="panel-heading" ng-click="addArgument()">
+                            <h3 class="panel-title">Add Argument <i class="fa fa-plus pull-right" aria-hidden="true"></i></h3>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-info">
                         <div class="panel-heading" ng-click="toggleSwitchMode()">
-                            <h3 class="panel-title">Add Argument <i class="fa fa-plus pull-right" aria-hidden="true"></i>
+                            <h3 class="panel-title">Switch arguments <i class="fa fa-refresh pull-right" aria-hidden="true"></i>
                             </h3>
                         </div>
                         <div class="panel-body" ng-if="switchmode == true">
                             Check two arguments and press: <br><br>
                             <button ng-click="switcharguments()"
-                                    class="btn btn-lg btn-primary">
+                                    class="btn btn-lg btn-info">
                                 Switch
                             </button>
                         </div>
                     </div>
 
                     <div class="panel panel-danger">
-                        <div class="panel-heading" ng-click="toggleSwitchMode()">
+                        <div class="panel-heading" ng-click="toggleDeleteMode()">
                             <h3 class="panel-title">Destroy Argument <i class="fa fa-times pull-right" aria-hidden="true"></i>
                             </h3>
                         </div>
-                        <div class="panel-body" ng-if="switchmode == true">
-                            Check two arguments and press: <br><br>
-                            <button ng-click="switcharguments()"
-                                    class="btn btn-lg btn-primary">
-                                Switch
+                        <div class="panel-body" ng-if="deletemode == true">
+                            Check argument and press: <br><br>
+                            <button ng-click="destroyargument()"
+                                    class="btn btn-lg btn-danger">
+                                Destroy
                             </button>
                         </div>
                     </div>
@@ -100,7 +100,7 @@
 
                         <div class="list-group">
                             <div ng-repeat="argument in argumentation.arguments | orderBy:'place'">
-                                <a class="list-group-item" ng-click="getcontent(argument)" ng-if="switchmode == false" ng-class="{'higha': argument == argumentcontent} ">
+                                <a class="list-group-item" ng-click="getcontent(argument)" ng-if="switchmode == false && deletemode == false" ng-class="{'higha': argument == argumentcontent} ">
                                     <h4 class="list-group-item-heading">
                                         <textarea type="text" class="form-control" rows="4" required
                                                   name="argument_title" ng-model="argument.title" ng-if="argument == argumentcontent"></textarea>
@@ -120,6 +120,18 @@
                                     > {{ argument.title}}
                                     <hr>
                                 </div>
+
+                                <div style="text-align: left" ng-if="deletemode == true">
+                                    <input
+                                            type="checkbox"
+                                            name="selectedArguments[]"
+                                            value="{{argument}}"
+                                            ng-checked="selectedArguments.indexOf(argument) > -1"
+                                            ng-click="toggleSelection(argument)"
+                                    > {{ argument.title}}
+                                    <hr>
+                                </div>
+
                             </div>
                         </div>
                     </div>
