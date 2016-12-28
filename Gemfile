@@ -4,6 +4,12 @@ gem 'angular_rails_csrf'
 
 gem 'active_record_union'
 
+gem "font-awesome-rails"
+
+gem 'bootstrap-sass'
+
+gem 'autoprefixer-rails'
+
 gem 'faker'
 
 gem 'sprockets'
