@@ -38,12 +38,28 @@ app.factory('argumentationMethods',['$resource','$location', 'parentArgumentatio
             }
             return firstargument;
         },
-        get_argumentation: function(argumentation_id, startingposition){
-           $location.path("/" + argumentation_id).search({"sp": startingposition});
+        get_argumentation: function(argumentation_id, startingposition, edit){
+            startingposition = startingposition || 1;
+            edit = edit || false;
+
+            if (edit == true){
+                $location.path("/edit/" + argumentation_id).search({"sp": startingposition});
+            } else {
+                $location.path("/" + argumentation_id).search({"sp": startingposition});
+            }
+
+
         },
-        get_parent_argumentation: function(argument_id, startingposition){
+        get_parent_argumentation: function(argument_id, startingposition, edit){
+            startingposition = startingposition || 1;
+            edit = edit || false;
             parentArgumentationResource.get({ "argumentId": argument_id }).$promise.then(function(argumentation){
-                $location.path("/" + argumentation.id).search({"sp": startingposition});
+
+                if (edit = true){
+                    $location.path("/edit/" + argumentation.id).search({"sp": startingposition});
+                } else {
+                    $location.path("/" + argumentation.id).search({"sp": startingposition});
+                }
             });
 
         }
@@ -74,25 +90,56 @@ app.factory('newArgumentationResource', ['$resource', function($resource) {
 
 
 app.controller("ArgumentationEditController",[
-    '$scope', '$routeParams', '$resource', '$http', 'argumentationMethods', 'argumentationResource', 'newArgumentationResource', function($scope, $routeParams, $resource,  $http, argumentationMethods, argumentationResource, newArgumentationResource){
+    '$scope', '$routeParams', '$resource', '$http', 'argumentationMethods', 'argumentationResource', 'newArgumentationResource','$timeout', '$anchorScroll', function($scope, $routeParams, $resource,  $http, argumentationMethods, argumentationResource, newArgumentationResource, $timeout, $anchorScroll){
 
         $scope.switchmode = false;
         $scope.deletemode = false;
-        var argumentationId =  $routeParams.id;
         $scope.selectedArguments = [];
 
-        if (argumentationId == 0){
-           newArgumentationResource.create().$promise.then(function(argumentation){
-               $scope.argumentation = argumentation;
-                argumentationId = argumentation.id;
-               $scope.argumentcontent = argumentationMethods.getfirstargument(argumentation);
-           });
+//COPY PASTE INTO EDIT! TILL //END
+        $scope.loading = false;
+        var argumentationId =  $routeParams.id;
+        var startingposition = $routeParams.sp;
+        if(startingposition != undefined){
+            $scope.boxClass = startingposition;
         } else {
-            argumentationResource.get({ "argumentationId": argumentationId }).$promise.then(function(argumentation){
-                $scope.argumentation = argumentation;
-                $scope.argumentcontent = argumentationMethods.getfirstargument(argumentation);
-            });
+            $scope.boxClass = 1;
         }
+
+
+        argumentationResource.get({ "argumentationId": argumentationId }).$promise.then(function(argumentation){
+            $scope.argumentation = argumentation;
+            $scope.argumentcontent = argumentationMethods.getfirstargument(argumentation);
+            $timeout(function() {
+                setBoxClass(1);
+            }, 1000);
+        });
+
+        $scope.get_next_argumentation = function(argumentation_id,startingposition, test){
+            setBoxClass($scope.boxClass + 3);
+            $timeout(function() {
+                $anchorScroll();
+                argumentationMethods.get_argumentation(argumentation_id,startingposition,test);
+            }, 1000);
+
+        };
+
+        $scope.get_parent_argumentation = function(argument_id,startingposition){
+            setBoxClass($scope.boxClass + 1);
+            $timeout(function() {
+                $anchorScroll();
+                argumentationMethods.get_parent_argumentation(argument_id,startingposition);
+            }, 1000);
+        };
+
+        function setBoxClass(number){
+            $scope.boxClass = number;
+        }
+
+        $scope.getcontent = function(argument){
+            $scope.argumentcontent = argument;
+        };
+        //END
 
         $scope.addArgument = function(){
             if(!$scope.form.$pristine) {
@@ -199,6 +246,7 @@ app.controller("ArgumentationShowController", [
     '$scope', '$resource', '$q','$timeout', '$anchorScroll', '$routeParams', 'argumentationMethods', 'argumentationResource', 'parentArgumentationResource',
     function($scope, $resource, $q, $timeout, $anchorScroll, $routeParams, argumentationMethods, argumentationResource, parentArgumentationResource) {
 
+    //COPY PASTE INTO EDIT! TILL //END
         $scope.loading = false;
         var argumentationId =  $routeParams.id;
         var startingposition = $routeParams.sp;
@@ -241,6 +289,7 @@ app.controller("ArgumentationShowController", [
         $scope.getcontent = function(argument){
             $scope.argumentcontent = argument;
         };
+        //END
     }
 ]);
 

@@ -8,7 +8,7 @@
         <nav>
             <ul class="pager">
                 <li class="previous">
-                    <a href="" ng-if="argumentation.id != argumentation.main" ng-click="get_argumentation('argument', argumentation.argument_id, 2, 0)">&larr; Zurück </a>
+                    <a href="" ng-if="argumentation.id != argumentation.main" ng-click="get_parent_argumentation(argumentation.argument_id,4,true)">&larr; Zurück </a>
                 </li>
             </ul>
         </nav>
@@ -143,7 +143,7 @@
                             <br>
 
                             <button class="btn btn-small btn-primary"
-                                    ng-click="get_argumentation('argumentation',argumentcontent.argumentation.id, 4, 0)"
+                                    ng-click="get_next_argumentation(argumentcontent.argumentation.id,2,true)"
                                     ng-if="argumentcontent.argumentation">
                                 Show full argument
                             </button>
