@@ -24,10 +24,36 @@ app.config([
     }
 ]);
 
+app.factory('myService', function() {
+    return {
+        foo: function() {
+            alert("I'm foo!");
+        },
+
+        faa: function() {
+            alert("I'm faa!");
+        }
+    };
+});
+
+app.factory('argumentation', function() {
+    return {
+        foo: function() {
+            alert("I'm foo!");
+        },
+
+        faa: function() {
+            alert("I'm faa!");
+        }
+    };
+});
+
 
 app.controller("ArgumentationEditController",[
-    '$scope', '$routeParams', '$resource', '$http', function($scope, $routeParams, $resource,  $http){
+    '$scope', '$routeParams', '$resource', '$http', 'myService', function($scope, $routeParams, $resource,  $http, myService){
 
+        myService.foo();
+        myService.faa();
         $scope.switchmode = false;
         $scope.deletemode = false;
         var argumentationId =  $routeParams.id;
@@ -56,6 +82,33 @@ app.controller("ArgumentationEditController",[
             }
             $scope.argumentcontent = firstargument;
         }
+
+        $scope.addArgument = function(){
+            if(!$scope.form.$pristine) {
+                swal("In order to add an argument, you need to save first.");
+            } else {
+                swal("Argument added!", "", "success");
+            }
+        };
+
+        $scope.destroyArgument = function(){
+            if(!$scope.form.$pristine) {
+                swal("In order to delete an argument, you need to save first.");
+            } else {
+                swal({
+                        title: "Are you sure?",
+                        text: "You will not be able to recover this argument!",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Yes, delete it!",
+                        closeOnConfirm: false
+                    },
+                    function(){
+                        swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                    });
+            }
+        };
 
         $scope.getcontent = function(argument){
             $scope.argumentcontent = argument;
@@ -86,7 +139,7 @@ app.controller("ArgumentationEditController",[
                     { "params": $scope.argumentation }
                 ).then(
                     function(data,status,headers,config) {
-                        swal("Saved!", "", "success")
+                        swal("Saved!", "", "success");
                         $scope.form.$setPristine();
                         $scope.form.$setUntouched();
                     });

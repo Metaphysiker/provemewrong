@@ -48,6 +48,7 @@ class ArgumentationsController < ApplicationController
 
     argument = Argument.create!(title: "Insert argument-title here!", description: "Insert description of argument here!")
     argumentation.arguments << argument
+    argument.add_place
 
     respond_to do |format|
       format.json { render json: argumentation.as_json(include: {arguments: { include: :argumentation}}) }
@@ -74,6 +75,18 @@ class ArgumentationsController < ApplicationController
     respond_to do |format|
       format.json { render json: argumentation.as_json(include: {arguments: { include: :argumentation}}) }
     end
+  end
+
+  def addargumenttoargumentation
+    argumentation = Argumentation.find(params[:id])
+    argument = Argument.create(title: "Insert Title here!", description: "Insert argument here!")
+    argumentation.arguments << argument
+    argument.add_place
+
+    respond_to do |format|
+      format.json { render json: argumentation.as_json(include: {arguments: { include: :argumentation}}) }
+    end
+
   end
 
   private
