@@ -1,19 +1,5 @@
 <form novalidate name="form">
-<div class="animate-if waiting" ng-if="!argumentation.$resolved || loading">
-
-    <!-- loading animation will go here -->
-
-    <div class="col-md-10 col-md-offset-1">
-        <aside class="progress">
-            <div class="progress-bar progress-bar-striped active"
-                 style="width: 100%">
-                Loading…
-            </div>
-        </aside>
-    </div>
-    <br>
-</div>
-
+<div ng-include=" 'loading_bar.html' "></div>
 
 <div class="box move" ng-class="{'box': boxClass == 1, 'to-right': boxClass == 2, 'back-to-left': boxClass == 3, 'to-left': boxClass == 4, 'back-to-right': boxClass == 5} ">
 

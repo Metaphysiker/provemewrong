@@ -24,7 +24,7 @@ app.config([
     }
 ]);
 
-app.factory('argumentationMethods',['$resource', function($resource) {
+app.factory('argumentationMethods',['$resource','$location', 'parentArgumentationResource', function($resource, $location, parentArgumentationResource) {
     return {
         foo: function() {
             alert("I'm foo!");
@@ -37,12 +37,29 @@ app.factory('argumentationMethods',['$resource', function($resource) {
                 }
             }
             return firstargument;
+        },
+        get_argumentation: function(argumentation_id, startingposition){
+           $location.path("/" + argumentation_id).search({"sp": startingposition});
+        },
+        get_parent_argumentation: function(argument_id, startingposition){
+            parentArgumentationResource.get({ "argumentId": argument_id }).$promise.then(function(argumentation){
+                $location.path("/" + argumentation.id).search({"sp": startingposition});
+            });
+
         }
     };
 }]);
 
+
 app.factory('argumentationResource', ['$resource', function($resource) {
     return $resource('/argumentations/:argumentationId.json', null,
+        {
+            'update': { method:'PUT' }
+        });
+}]);
+
+app.factory('parentArgumentationResource', ['$resource', function($resource) {
+    return $resource('/getparentargumentation/:argumentId.json', null,
         {
             'update': { method:'PUT' }
         });
@@ -62,8 +79,6 @@ app.controller("ArgumentationEditController",[
         $scope.switchmode = false;
         $scope.deletemode = false;
         var argumentationId =  $routeParams.id;
-        //var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
-        //var newArgumentation = $resource('/argumentations.json/',{}, {'save':   {'method':'POST'}});
         $scope.selectedArguments = [];
 
         if (argumentationId == 0){
@@ -181,138 +196,58 @@ app.controller("ArgumentationEditController",[
 ]);
 
 app.controller("ArgumentationShowController", [
-    '$scope', '$resource', '$q','$timeout', '$anchorScroll', '$routeParams', 'argumentationMethods',
-    function($scope, $resource, $q, $timeout, $anchorScroll, $routeParams, argumentationMethods) {
+    '$scope', '$resource', '$q','$timeout', '$anchorScroll', '$routeParams', 'argumentationMethods', 'argumentationResource', 'parentArgumentationResource',
+    function($scope, $resource, $q, $timeout, $anchorScroll, $routeParams, argumentationMethods, argumentationResource, parentArgumentationResource) {
 
         $scope.loading = false;
         var argumentationId =  $routeParams.id;
-        var Argumentation = $resource('/argumentations/:argumentationId.json', {"argumentationId": "@argumentation_id"});
-        var ParentArgumentation = $resource('/getparentargumentation/:argumentId.json', {"argumentId": "@argument_id"});
-        $scope.boxClass = 1;
+        var startingposition = $routeParams.sp;
+        if(startingposition != undefined){
+            $scope.boxClass = startingposition;
+        } else {
+            $scope.boxClass = 1;
+        }
 
-        Argumentation.get({ "argumentationId": argumentationId }).$promise.then(function(argumentation){
+
+        argumentationResource.get({ "argumentationId": argumentationId }).$promise.then(function(argumentation){
             $scope.argumentation = argumentation;
             $scope.argumentcontent = argumentationMethods.getfirstargument(argumentation);
+            $timeout(function() {
+                setBoxClass(1);
+            }, 1000);
         });
 
-
-        //main-function
-        $scope.get_argumentation = function(type,id,boxClass, argumentcontent){
-            type = type || 'argumentation';
-            id = id || 0;
-            boxClass = boxClass || 2;
-            argumentcontent = argumentcontent || 0;
-
-
-            setBoxClass(boxClass);
-
-            setTimeout(function() {
+        $scope.get_next_argumentation = function(argumentation_id,startingposition){
+            setBoxClass($scope.boxClass + 3);
+            $timeout(function() {
                 $anchorScroll();
-                toggleLoading();
-
-
-                if (type == 'argumentation'){
-
-                    Argumentation.get({ "argumentationId": id }).$promise.then(function(argumentation) {
-                        $scope.argumentation = argumentation;
-                        toggleLoading();
-                        $scope.argumentcontent = argumentation.arguments[argumentcontent];
-                        $timeout(function() {
-                            setBoxClass(boxClass + 1);
-                        }, 1000);
-
-                    }, function(reason) {
-                        alert('Failed: ' + reason);
-                    });
-
-                } else if (type == 'argument'){
-
-                    ParentArgumentation.get({ "argumentId": id }).$promise.then(function(argumentation){
-                        $scope.argumentation = argumentation;
-                        toggleLoading();
-                        $scope.argumentcontent = argumentation.arguments[argumentcontent];
-                        $timeout(function() {
-                            setBoxClass(boxClass + 1);
-                        }, 1000);
-                    }, function(reason) {
-                        alert('Failed: ' + reason);
-                    });
-                }
-
+                argumentationMethods.get_argumentation(argumentation_id,startingposition);
             }, 1000);
-
 
         };
 
-        //all functionss
+        $scope.get_parent_argumentation = function(argument_id,startingposition){
+            setBoxClass($scope.boxClass + 1);
+            $timeout(function() {
+                $anchorScroll();
+                argumentationMethods.get_parent_argumentation(argument_id,startingposition);
+            }, 1000);
+        };
+
         function setBoxClass(number){
             $scope.boxClass = number;
-        }
-
-        function toggleLoading(){
-            if ($scope.loading == true){
-                $scope.loading = false;
-            } else {
-                $scope.loading = true;
-            }
-        }
-
-        function get_argumentation1(boxClass, id){
-            $scope.loading = true;
-
-            Argumentation.get({ "argumentationId": id }).$promise.then(function(argumentation) {
-                $scope.argumentation = argumentation;
-                $scope.loading = false;
-                getfirstargument(argumentation);
-
-                $timeout(function() {
-                    setBoxClass(boxClass);
-                }, 1000);
-
-            }, function(reason) {
-                alert('Failed: ' + reason);
-            });
-
         }
 
         $scope.getcontent = function(argument){
             $scope.argumentcontent = argument;
         };
-
-
-
-        $scope.nextargumentation = function(boxClass, id) {
-
-            $scope.boxClass = boxClass;
-
-            setTimeout(function() {
-                $anchorScroll();
-                get_argumentation(boxClass + 1, id);
-            }, 1000);
-        }
-
-        $scope.backtoparentargumentation = function(boxClass, argument_id){
-            $scope.boxClass = boxClass;
-
-            var argumentationId = 0;
-
-            Argumentation.get({ "argumentId": argument_id }).$promise.then(function(argumentation_id) {
-                argumentationId = argumentation_id;
-
-            }, function(reason) {
-                alert('Failed: ' + reason);
-            });
-
-        }
-
-
     }
 ]);
 
 
 app.controller("ArgumentationSearchController", [
-    '$scope', '$http', '$location', '$sce',
-    function($scope, $http, $location, $sce){
+    '$scope', '$http', '$location', '$sce','argumentationMethods',
+    function($scope, $http, $location, $sce, argumentationMethods){
 
 
         $scope.search = function(searchTerm) {
@@ -342,7 +277,8 @@ app.controller("ArgumentationSearchController", [
         }
 
         $scope.viewArgumentation = function(argumentation) {
-            $location.path("/" + argumentation.id);
+            //$location.path("/" + argumentation.id);
+            argumentationMethods.get_argumentation();
         };
 
         $scope.previousPage = function() {
