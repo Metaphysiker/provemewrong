@@ -327,7 +327,7 @@ app.controller("ArgumentationSearchController", [
 
         $scope.viewArgumentation = function(argumentation) {
             //$location.path("/" + argumentation.id);
-            argumentationMethods.get_argumentation();
+            argumentationMethods.get_argumentation(argumentation.id,1,false);
         };
 
         $scope.previousPage = function() {
