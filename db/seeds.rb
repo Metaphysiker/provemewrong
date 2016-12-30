@@ -6,43 +6,69 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-if Rails.env == 'development'
-
-  User.create!(email: "s.raess@me.com", password: "password")
+def add_child_argumentation_with_arguments(user, argument, main_argumentation_id)
 
 
-  500.times do |i|
-    puts "I is: #{i}"
-    user = User.create!(email: Faker::Internet.email, password: "password")
+  argumentation = Argumentation.create!(
+      title: Faker::Lorem.sentence,
+      description: Faker::Lorem.paragraph(20, true, 20)
+  )
+  argumentation.update(main: main_argumentation_id)
 
-    argumentation =Argumentation.create!(
-                     title: Faker::Lorem.sentence,
-                     description: Faker::Lorem.paragraph(20, true, 20)
-                    )
+  user.argumentations << argumentation
+
+  argument.argumentation = argumentation
+
+  rand(5..12).times do |x|
+    childargument =Argument.create!(
+        title: Faker::Lorem.sentence,
+        description: Faker::Lorem.paragraph(80, true, 20)
+    )
+    argumentation.arguments << childargument
+    childargument.add_place
+  end
+end
+
+def add_argumentations_with_arguments(user)
+
+  rand(5..12).times do |i|
+    argumentation = Argumentation.create!(
+        title: Faker::Lorem.sentence,
+        description: Faker::Lorem.paragraph(20, true, 20)
+    )
     argumentation.update(main: argumentation.id)
+
     user.argumentations << argumentation
+
     rand(5..12).times do |x|
-      argu =Argument.create!(
+      argument = Argument.create!(
           title: Faker::Lorem.sentence,
           description: Faker::Lorem.paragraph(80, true, 20)
       )
-
-      argumentation.arguments << argu
-      argu.add_place
+      argumentation.arguments << argument
+      argument.add_place
 
       if x.odd?
-        childargumentation =Argumentation.create!(
-            title: Faker::Lorem.sentence,
-            description: Faker::Lorem.paragraph(80, true, 20)
-        )
-        childargumentation.update(main: argumentation.id)
-
-        user.argumentations << childargumentation
-        argu.argumentation = childargumentation
+        add_child_argumentation_with_arguments(user, argument, argumentation.id)
       end
 
-
     end
+  end
+end
+
+
+
+
+if Rails.env == 'development'
+
+  mainuser = User.create!(email: "s.raess@me.com", password: "password")
+
+
+  100.times do |i|
+    puts "I is: #{i}"
+    user = User.create!(email: Faker::Internet.email, password: "password")
+
+    add_argumentations_with_arguments(user)
 
   end
 
@@ -53,6 +79,10 @@ if Rails.env == 'development'
   zynix.arguments << zynix1
   zynix.arguments << zynix2
   zynix.arguments << zynix3
+  zynix1.add_place
+  zynix2.add_place
+  zynix3.add_place
+  mainuser.argumentations << zynix
 
 
 
@@ -80,15 +110,25 @@ Note that while most types of capability analysis require interpersonal comparis
   argu1.arguments << a2
   argu1.arguments << a3
 
+  a1.add_place
+  a2.add_place
+  a3.add_place
+
   argu2 = Argumentation.create!(title: "Someone is rational, if the person is responsive for good reasons", description: "This argumentation has two arguments: 1. Everyone makes mistakes, but if one repeats them, he is acting irrationally. 2. Good reasons are necessary")
-  a2 = Argument.create!(title: "Making mistakes is nothing special, but repeating them, knowingly is irrationally", description: " Another important idea in the capability approach, especially in the work by Amartya Sen (1992: 19–21, 26–30, 37–38) and scholars influenced by his writings, is the notion of conversion factors. Resources, such as marketable goods and services, but also goods and services emerging from the non-market economy, including household production, have certain characteristics that make them of interest to people. For example, we may be interested in a bike not because it is an object made from certain materials with a specific shape and color, but because it can take us to places where we want to go, and in a faster way than if we were walking. These characteristics of a good or commodity enable or contribute to a functioning. A bike enables the functioning of mobility, to be able to move oneself freely and more rapidly than walking. The relation between a good and the achievement of certain beings and doings is captured with the term ‘conversion factor’: the degree in which a person can transform a resource into a functioning. For example, an able bodied person who was taught to ride a bicycle when he was a child has a high conversion factor enabling him to turn the bicycle into the ability to move around efficiently, whereas a person with a physical impairment or someone who was never taught to ride a bike has a very low conversion factor. The conversion factors thus represent how much functioning one can get out of a good or service; in our example, how much mobility the person can get out of a bicycle.
+  a4 = Argument.create!(title: "Making mistakes is nothing special, but repeating them, knowingly is irrationally", description: " Another important idea in the capability approach, especially in the work by Amartya Sen (1992: 19–21, 26–30, 37–38) and scholars influenced by his writings, is the notion of conversion factors. Resources, such as marketable goods and services, but also goods and services emerging from the non-market economy, including household production, have certain characteristics that make them of interest to people. For example, we may be interested in a bike not because it is an object made from certain materials with a specific shape and color, but because it can take us to places where we want to go, and in a faster way than if we were walking. These characteristics of a good or commodity enable or contribute to a functioning. A bike enables the functioning of mobility, to be able to move oneself freely and more rapidly than walking. The relation between a good and the achievement of certain beings and doings is captured with the term ‘conversion factor’: the degree in which a person can transform a resource into a functioning. For example, an able bodied person who was taught to ride a bicycle when he was a child has a high conversion factor enabling him to turn the bicycle into the ability to move around efficiently, whereas a person with a physical impairment or someone who was never taught to ride a bike has a very low conversion factor. The conversion factors thus represent how much functioning one can get out of a good or service; in our example, how much mobility the person can get out of a bicycle.
 
 There are several different types of conversion factors, and the conversion factors discussed are often categorized into three groups (Robeyns 2005: 99). All conversion factors influence how a person can be or is free to convert the characteristics of the resources into a functioning, yet the sources of these factors may differ. Personal conversion factors are internal to the person, such as metabolism, physical condition, sex, reading skills, or intelligence. If a person is disabled, is in bad physical condition, or has never learned to cycle, then the bike will be of limited help in enabling the functioning of mobility. Social conversion factors are factors from the society in which one lives, such as public policies, social norms, practices that unfairly discriminate, societal hierarchies, or power relations related to class, gender, race, or caste. Environmental conversion factors emerge from the physical or built environment in which a person lives. Among aspects of one's geographical location are climate, pollution, the proneness to earthquakes, and the presence or absence of seas and oceans. Among aspects of the built environment are the stability of buildings, roads, and bridges, and the means of transportation and communication. Take the example of the bicycle. How much a bicycle contributes to a person's mobility depends on that person's physical condition (a personal conversion factor), the social mores including whether women are socially allowed to ride a bicycle (a social conversion factor), and the available of decent roads or bike paths (an environmental conversion factor).
 
 The three types of conversion factors all stress that it is not sufficient to know the resources a person owns or can use in order to be able to assess the well-being that he or she has achieved or could achieve; rather, we need to know much more about the person and the circumstances in which he or she is living. Sen uses “capability” not to refer exclusively to a person's abilities or other internal powers but to refer to an opportunity made feasible, and constrained by, both internal (personal) and external (social and environmental) conversion factors (Crocker 2008: 171–2; Robeyns 2005: 99).")
-  argu2.arguments << a2
+  argu2.arguments << a4
+  a4.add_place
 
   a1.argumentation = argu2
 
+  mainuser.argumentations << argu1
+  mainuser.argumentations << argu2
+
 
 end
+
+

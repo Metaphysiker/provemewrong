@@ -62,15 +62,17 @@ class ArgumentationsController < ApplicationController
   def update
 
     argumentation = Argumentation.find(params[:id])
+    updatearguments(params[:arguments])
+    head :ok
 
-    if user_allowed?(argumentation.user_id)
-      updatearguments(params[:arguments])
+    #if user_allowed?(argumentation.user_id)
+      #updatearguments(params[:arguments])
 
-      argumentation.update(argumentation_params)
-      head :ok
-    else
-      head :forbidden
-    end
+      #argumentation.update(argumentation_params)
+     # head :ok
+    #else
+     # head :forbidden
+    #end
   end
 
   def getparentargumentation

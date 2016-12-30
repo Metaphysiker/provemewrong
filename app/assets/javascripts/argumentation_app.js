@@ -90,6 +90,15 @@ app.factory('newArgumentationResource', ['$resource', function($resource) {
 
 app.factory('argumentationMainMethods', ['$resource', '$http','$timeout', 'argumentationResource', '$anchorScroll', '$location', function($resource, $http,$timeout, argumentationResource, $anchorScroll, $location) {
     return{
+        getlastargument: function(argumentation){
+            var lastargument;
+            for (var i = 0; i < argumentation.arguments.length; i++) {
+                if(argumentation.arguments[i].place ==argumentation.arguments.length ) {
+                    lastargument = argumentation.arguments[i];
+                }
+            }
+            return lastargument;
+        },
         start: function(scope, argumentationId,startingposition) {
 
             function getfirstargument(argumentation){
@@ -192,7 +201,7 @@ app.controller("ArgumentationEditController",[
             } else {
                 addArgumentto.create().$promise.then(function(argumentation){
                     $scope.argumentation = argumentation;
-                    $scope.argumentcontent = argumentationMethods.getfirstargument(argumentation);
+                    $scope.argumentcontent = argumentationMainMethods.getlastargument(argumentation);
                     swal("Argument added!", "", "success");
                 });
             }
