@@ -10,5 +10,6 @@ Rails.application.routes.draw do
   resources :argumentations, only: [ :index, :show, :create, :update]
   get '/getparentargumentation/:id', to: "argumentations#getparentargumentation"
   post '/addargumenttoargumentation/:id', to: "argumentations#addargumenttoargumentation"
+  post'/deleteargumenttoargumentation/:id/', to: "argumentations#deleteargumenttoargumentation"
 
 end

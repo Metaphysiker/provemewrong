@@ -96,6 +96,28 @@ class ArgumentationsController < ApplicationController
 
   end
 
+  def deleteargumenttoargumentation
+    argumentation = Argumentation.find(params[:id])
+    Rails::logger.debug params.inspect
+
+    Rails::logger.debug argumentation.inspect
+
+    place = params[:place]
+
+    argument = argumentation.arguments.where(place: place)
+    Rails::logger.debug argument.first.inspect
+
+
+    Argument.destroy(argument.first.id)
+
+    argumentation.reorder_place(place)
+
+    respond_to do |format|
+      format.json { render json: argumentation.as_json(include: {arguments: { include: :argumentation}}) }
+    end
+
+  end
+
   private
 
   def updatearguments(list_of_arguments)

@@ -173,23 +173,24 @@ app.controller("ArgumentationEditController",[
         $scope.switchmode = false;
         $scope.deletemode = false;
         $scope.selectedArguments = [];
+        $scope.selectedArgumentToDestroy;
 
         $scope.addArgument = function(){
             var addArgumentto = $resource('/addargumenttoargumentation/:argumentationId.json', {"argumentationId": argumentationId}, {'create': { method:'POST' }});
             if(!$scope.form.$pristine) {
                 swal("In order to add an argument, you need to save first.");
             } else {
-
                 addArgumentto.create().$promise.then(function(argumentation){
                     $scope.argumentation = argumentation;
                     $scope.argumentcontent = argumentationMethods.getfirstargument(argumentation);
                     swal("Argument added!", "", "success");
                 });
-
             }
         };
 
         $scope.destroyArgument = function(){
+            var place = $scope.selectedArgumentToDestroy.place;
+            var deleteArgumentfrom = $resource('/deleteargumenttoargumentation/:argumentationId.json', {"argumentationId": argumentationId, "place": place}, {'post': { method:'POST' }});
             if(!$scope.form.$pristine) {
                 swal("In order to delete an argument, you need to save first.");
             } else {
@@ -203,9 +204,18 @@ app.controller("ArgumentationEditController",[
                         closeOnConfirm: false
                     },
                     function(){
-                        swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                        deleteArgumentfrom.post().$promise.then(function(argumentation){
+                            $scope.argumentation = argumentation;
+                            $scope.argumentcontent = argumentationMethods.getfirstargument(argumentation);
+                            swal("Deleted!", "Argument has been removed.", "success");
+                        });
                     });
             }
+        };
+
+        $scope.toggleSelectionForDeletion = function(argument){
+            $scope.selectedArgumentToDestroy = argument;
+            console.log($scope.selectedArgumentToDestroy);
         };
 
         $scope.toggleDeleteMode = function(){
@@ -254,7 +264,6 @@ app.controller("ArgumentationEditController",[
 
             $scope.form.$setDirty();
         };
-
 
         $scope.toggleSelection = function(argument){
             var idx = $scope.selectedArguments.indexOf(argument);

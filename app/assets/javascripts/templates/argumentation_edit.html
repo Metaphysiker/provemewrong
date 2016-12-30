@@ -111,11 +111,10 @@
 
                                 <div style="text-align: left" ng-if="deletemode == true">
                                     <input
-                                            type="checkbox"
-                                            name="selectedArguments[]"
+                                            type="radio"
+                                            name="selectedArgumentToDestroy"
                                             value="{{argument}}"
-                                            ng-checked="selectedArguments.indexOf(argument) > -1"
-                                            ng-click="toggleSelection(argument)"
+                                            ng-click="toggleSelectionForDeletion(argument)"
                                     > {{ argument.title}}
                                     <hr>
                                 </div>
