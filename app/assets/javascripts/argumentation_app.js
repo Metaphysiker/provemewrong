@@ -92,6 +92,16 @@ app.factory('argumentationMainMethods', ['$resource', '$http','$timeout', 'argum
     return{
         start: function(scope, argumentationId,startingposition) {
 
+            function getfirstargument(argumentation){
+                var firstargument;
+                for (var i = 0; i < argumentation.arguments.length; i++) {
+                    if(argumentation.arguments[i].place == 1) {
+                        firstargument = argumentation.arguments[i];
+                    }
+                }
+                return firstargument;
+            }
+
             $http.get("/get_current_user.json").then(function(data,status,headers,config) {
                 scope.userid = data.data;
             });
@@ -106,7 +116,7 @@ app.factory('argumentationMainMethods', ['$resource', '$http','$timeout', 'argum
 
             argumentationResource.get({ "argumentationId": argumentationId }).$promise.then(function(argumentation){
                 scope.argumentation = argumentation;
-                scope.argumentcontent = argumentation.arguments[0];
+                scope.argumentcontent = getfirstargument(argumentation);
                 $timeout(function() {
                     scope.boxClass = 1;
                 }, 1000);
