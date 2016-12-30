@@ -5,9 +5,10 @@ Rails.application.routes.draw do
   get "angular_test", to: "angular_test#index"
   get '/test', to: "dashboard#test", as: 'test'
   post '/test', to: "dashboard#test"
+  get '/get_current_user', to: "dashboard#get_current_user"
 
   resources :argumentations, only: [ :index, :show, :create, :update]
   get '/getparentargumentation/:id', to: "argumentations#getparentargumentation"
-  get '/addargumenttoargumentation/:id', to: "argumentations#addargumenttoargumentation"
+  post '/addargumenttoargumentation/:id', to: "argumentations#addargumenttoargumentation"
 
 end

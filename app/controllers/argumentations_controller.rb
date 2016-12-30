@@ -92,7 +92,6 @@ class ArgumentationsController < ApplicationController
   private
 
   def updatearguments(list_of_arguments)
-    Rails::logger.debug "list_of_arguments: #{list_of_arguments.inspect}"
     list_of_arguments.each do |argument|
       argumentu = Argument.find(argument[:id])
       #argument_hash = {"title" => argument[:title], "description" => argument[:description]}
