@@ -35,8 +35,12 @@ class ArgumentationsController < ApplicationController
     #both = {argumentation: argumentation, arguments: arguments}
       argumentation = Argumentation.find(params[:id])
 
+      user_allowed?(argumentation.user_id)
+
       respond_to do |format|
-        format.json { render json: argumentation.as_json(include: {arguments: { include: :argumentation}}) }
+        format.json {
+            render json: argumentation.as_json(include: {arguments: { include: :argumentation}})
+        }
       end
 
   end
@@ -59,11 +63,14 @@ class ArgumentationsController < ApplicationController
 
     argumentation = Argumentation.find(params[:id])
 
-    updatearguments(params[:arguments])
+    if user_allowed?(argumentation.user_id)
+      updatearguments(params[:arguments])
 
-    argumentation.update(argumentation_params)
-    head :ok
-
+      argumentation.update(argumentation_params)
+      head :ok
+    else
+      head :forbidden
+    end
   end
 
   def getparentargumentation
@@ -110,6 +117,10 @@ class ArgumentationsController < ApplicationController
 
   def argument_params
     params.permit(:title, :description)
+  end
+
+  def user_allowed?(user_id)
+    current_user.id == user_id
   end
 
 end
