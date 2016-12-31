@@ -120,6 +120,15 @@ class ArgumentationsController < ApplicationController
 
   end
 
+  def myargumentations
+
+    @argumentations = current_user.argumentations.where('id = main')
+
+    respond_to do |format|
+      format.json { render json: @argumentations }
+    end
+  end
+
   private
 
   def updatearguments(list_of_arguments)

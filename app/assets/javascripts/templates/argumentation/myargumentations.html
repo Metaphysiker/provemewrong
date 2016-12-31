@@ -1,0 +1,22 @@
+<div class="container">
+    <h2>Overview</h2>
+    <p>All your argumentations and comments</p>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Argumentations</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="argumentation in argumentations">
+            <td><h3>{{ argumentation.title }}</h3></td>
+            <td><a ng-click="get_next_argumentation(argumentation.id, 4, false)" class="btn btn-success">Show</a></td>
+            <td><a ng-click="get_next_argumentation(argumentation.id, 4, true)" class="btn btn-primary">Edit</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
