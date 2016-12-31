@@ -28,8 +28,11 @@
     0% {
         transform: translate(200%, 0%);
     }
-    100% {
+    90% {
         transform: translate(0%, 0%);
+    }
+    100%{
+        display: none;
     }
 }
 
@@ -37,12 +40,13 @@
     0% {
         transform: translate(-200%, 0%);
     }
-    100% {
+    90% {
         transform: translate(0%, 0%);
     }
+    100%{
+        display: none;
+    }
 }
-
-
 
 
 .animate-if {

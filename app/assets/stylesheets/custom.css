@@ -1,4 +1,7 @@
-body { padding-top: 50px; }
+body {
+    padding-top: 50px;
+    overflow-x:hidden;
+}
 
 .bg-pink{
     background-color:pink;

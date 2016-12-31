@@ -1,27 +1,11 @@
 var app = angular.module(
-    'argumentation',[
+    'argumentationcontroller',[
     'ngRoute',
     'ngResource',
     'templates',
     'ngAnimate',
     'ngMessages',
     'ng-sweet-alert'
-]);
-
-app.config([
-    "$routeProvider",
-    function($routeProvider) {
-        $routeProvider.when("/search",{
-            controller: "ArgumentationSearchController",
-            templateUrl: "argumentation_search.html"
-        }).when("/edit/:id", {
-            controller: "ArgumentationEditController",
-            templateUrl: "argumentation_edit.html"
-        }).when("/:id", {
-            controller: "ArgumentationShowController",
-            templateUrl: "argumentation_show.html"
-        });
-    }
 ]);
 
 app.factory('argumentationMethods',['$resource','$location', 'parentArgumentationResource', function($resource, $location, parentArgumentationResource) {
@@ -100,6 +84,12 @@ app.factory('argumentationMainMethods', ['$resource', '$http','$timeout', 'argum
             return lastargument;
         },
         start: function(scope, argumentationId,startingposition) {
+
+            if(/edit/.test($location.$$path)){
+                scope.environment = "edit";
+            } else {
+                scope.environment = "show";
+            }
 
             function getfirstargument(argumentation){
                 var firstargument;
