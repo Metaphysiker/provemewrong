@@ -62,6 +62,7 @@ class ArgumentationsController < ApplicationController
   def update
 
     argumentation = Argumentation.find(params[:id])
+    argumentation.update(argumentation_params)
     updatearguments(params[:arguments])
     head :ok
 
@@ -118,6 +119,12 @@ class ArgumentationsController < ApplicationController
       format.json { render json: argumentation.as_json(include: {arguments: { include: :argumentation}}) }
     end
 
+  end
+
+  def deletefullargumentation
+    argumentation = Argumentation.find(params[:id])
+    argumentation.destroy
+    head :ok
   end
 
   def myargumentations

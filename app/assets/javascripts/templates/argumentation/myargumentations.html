@@ -1,22 +1,23 @@
 <div class="container">
     <h2>Overview</h2>
     <p>All your argumentations and comments</p>
+    <a ng-click="create_argumentation()" class="btn btn-success vcenter">Create Argumentation</a>
     <table class="table table-striped">
         <thead>
         <tr>
             <th>Argumentations</th>
             <th></th>
             <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="argumentation in argumentations">
-            <td><h3>{{ argumentation.title }}</h3></td>
-            <td><a ng-click="get_next_argumentation(argumentation.id, 4, false)" class="btn btn-success">Show</a></td>
-            <td><a ng-click="get_next_argumentation(argumentation.id, 4, true)" class="btn btn-primary">Edit</a></td>
+            <td><h4>{{ argumentation.title }}</h4></td>
+            <td><a ng-click="get_next_argumentation(argumentation.id, 4, false)" class="btn btn-success vcenter">Show</a></td>
+            <td><a ng-click="get_next_argumentation(argumentation.id, 4, true)" class="btn btn-primary vcenter">Edit</a></td>
+            <td><a ng-click="delete_full_argumentation(argumentation.id)" class="btn btn-danger">Delete</a></td>
         </tr>
         </tbody>
     </table>
 </div>
-
-

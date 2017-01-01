@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   post '/addargumenttoargumentation/:id', to: "argumentations#addargumenttoargumentation"
   post'/deleteargumenttoargumentation/:id/', to: "argumentations#deleteargumenttoargumentation"
   get'/myargumentations', to: "argumentations#myargumentations"
+  post'/deletefullargumentation/:id', to: "argumentations#deletefullargumentation"
 end

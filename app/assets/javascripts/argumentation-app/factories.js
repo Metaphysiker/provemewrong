@@ -23,6 +23,32 @@ app.factory('newArgumentationResource', ['$resource', function($resource) {
         });
 }]);
 
+app.factory('CreateAndRedirectArgumentation', ['$resource', '$location', function($resource, $location) {
+    return{
+        createArgumentation: function() {
+            var newArgumentation = $resource('/argumentations.json', null,
+                {
+                    'create': { method:'POST' }
+                });
+            newArgumentation.create(function(response){
+                $location.path("/edit/" + response.id)
+            });
+        }
+    }
+}]);
+
+app.factory('DeleteFullArgumentation', ['$resource', '$location', '$http', function($resource, $location, $http) {
+    return{
+        DeletingFullArgumentation: function(argumentation_id) {
+           return $http({
+                method: 'POST',
+                url: '/deletefullargumentation/' + argumentation_id
+            });
+        }
+    }
+}]);
+
+
 app.factory('argumentationMethods',['$resource','$location', 'parentArgumentationResource', function($resource, $location, parentArgumentationResource) {
     return {
         foo: function() {
@@ -133,6 +159,10 @@ app.factory('argumentationMainMethods', ['$resource', '$http','$timeout', 'argum
 
                 }, 1000);
 
+            };
+
+            scope.to_the_overview = function(){
+                $location.path("/overview");
             };
 
             scope.get_parent_argumentation = function(argument_id,startingposition, edit){

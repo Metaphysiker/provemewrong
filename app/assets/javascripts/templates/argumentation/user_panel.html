@@ -1,10 +1,10 @@
 <br>
 <br>
-<div class="col-md-10 col-md-offset-2">
+<div class="col-md-9 col-md-offset-3">
     <ul class="nav nav-pills">
         <li ng-show="environment == 'show'" ><a ng-click="get_next_argumentation(argumentation.id, 4, true)">Edit This Argumentation</a></li>
         <li ng-show="environment == 'edit'" ><a ng-click="get_next_argumentation(argumentation.id, 4, false)">Leave Edit-Mode</a></li>
-        <li><a href="#">Profile</a></li>
+        <li><a ng-click="to_the_overview()">Overview</a></li>
     </ul>
 </div>
 <br>

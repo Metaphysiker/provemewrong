@@ -61,7 +61,6 @@ app.controller("ArgumentationEditController",[
 
         $scope.toggleSelectionForDeletion = function(argument){
             $scope.selectedArgumentToDestroy = argument;
-            console.log($scope.selectedArgumentToDestroy);
         };
 
         $scope.toggleDeleteMode = function(){
@@ -207,8 +206,8 @@ app.controller("ArgumentationSearchController", [
 ]);
 
 app.controller("MyArgumentationShowController", [
-    '$scope', '$resource', '$q','$timeout', '$anchorScroll', '$routeParams', 'argumentationMethods', 'argumentationResource', 'parentArgumentationResource', 'argumentationMainMethods', '$http','$location',
-    function($scope, $resource, $q, $timeout, $anchorScroll, $routeParams, argumentationMethods, argumentationResource, parentArgumentationResource, argumentationMainMethods, $http, $location) {
+    '$scope', '$resource', '$q','$timeout', '$anchorScroll', '$routeParams', 'argumentationMethods', 'argumentationResource', 'parentArgumentationResource', 'argumentationMainMethods', '$http','$location','CreateAndRedirectArgumentation', 'DeleteFullArgumentation',
+    function($scope, $resource, $q, $timeout, $anchorScroll, $routeParams, argumentationMethods, argumentationResource, parentArgumentationResource, argumentationMainMethods, $http, $location, CreateAndRedirectArgumentation,DeleteFullArgumentation) {
 
     $scope.argumentations = [];
 
@@ -232,5 +231,35 @@ app.controller("MyArgumentationShowController", [
 
         };
 
+        $scope.create_argumentation = function(){
+            CreateAndRedirectArgumentation.createArgumentation();
+        };
+
+        $scope.delete_full_argumentation = function(id){
+            swal({
+                    title: "Are you sure?",
+                    text: "You will not be able to recover this argumentation!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, delete it!",
+                    closeOnConfirm: false
+                },
+                function(){
+                    DeleteFullArgumentation.DeletingFullArgumentation(id).then(function () {
+                        $http({
+                            method: 'GET',
+                            url: '/myargumentations.json'
+                        }).then(function successCallback(response) {
+                            $scope.argumentations = response.data;
+                        });
+
+                            swal("Deleted!", "Argument has been removed.", "success");
+                        });
+                });
+        }
+
     }
 ]);
+
+
