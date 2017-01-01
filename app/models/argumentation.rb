@@ -5,7 +5,7 @@ class Argumentation < ApplicationRecord
   include PgSearch
 
   belongs_to :argument, inverse_of: :argumentation
-  has_many :arguments, foreign_key: :parent_argumentation_id, inverse_of: :parent_argumentation
+  has_many :arguments, foreign_key: :parent_argumentation_id, inverse_of: :parent_argumentation, dependent: :destroy
   belongs_to :user
 
   def self.get_search_attributes_from_argumentation

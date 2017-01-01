@@ -1,5 +1,5 @@
 class Argument < ApplicationRecord
-  has_one :argumentation, inverse_of: :argument
+  has_one :argumentation, inverse_of: :argument, dependent: :destroy
   belongs_to :parent_argumentation, class_name: 'Argumentation', inverse_of: :arguments
 
   def self.get_search_attributes_from_argument
