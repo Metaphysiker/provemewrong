@@ -1,4 +1,6 @@
 class ArgumentationsController < ApplicationController
+  before_action :find_argumentation, only: [:show]
+
   PAGE_SIZE = 10
 
     def index
@@ -33,13 +35,13 @@ class ArgumentationsController < ApplicationController
     #sleep 2
 
     #both = {argumentation: argumentation, arguments: arguments}
-      argumentation = Argumentation.find(params[:id])
-
-      user_allowed?(argumentation.user_id)
+      Rails::logger.debug @argumentation.user_id.inspect
+      Rails::logger.debug current_user.id
+      user_allowed?(@argumentation.user_id)
 
       respond_to do |format|
         format.json {
-            render json: argumentation.as_json(include: {arguments: { include: :argumentation}})
+            render json: @argumentation.as_json(include: {arguments: { include: :argumentation}})
         }
       end
 
@@ -85,6 +87,10 @@ class ArgumentationsController < ApplicationController
     respond_to do |format|
       format.json { render json: argumentation.as_json(include: {arguments: { include: :argumentation}}) }
     end
+  end
+
+  def addargumentationtoargument
+    argumentation = Argumentation.find(params[:id])
   end
 
   def addargumenttoargumentation
@@ -160,7 +166,15 @@ class ArgumentationsController < ApplicationController
   end
 
   def user_allowed?(user_id)
-    current_user.id == user_id
+
+    if current_user.id != user_id
+      Rails::logger.debug "yolo"
+      @argumentation = {title: "you are not allowed"}
+    end
+  end
+
+  def find_argumentation
+    @argumentation = Argumentation.find(params[:id])
   end
 
 end
