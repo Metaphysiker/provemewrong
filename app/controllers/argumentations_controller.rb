@@ -1,5 +1,5 @@
 class ArgumentationsController < ApplicationController
-  before_action :find_argumentation, only: [:show]
+  before_action :find_argumentation, only: [:show, :update, :deleteargumenttoargumentation, :addargumentationtoargument, :addargumenttoargumentation, :deletefullargumentation]
 
   PAGE_SIZE = 10
 
@@ -35,8 +35,6 @@ class ArgumentationsController < ApplicationController
     #sleep 2
 
     #both = {argumentation: argumentation, arguments: arguments}
-      Rails::logger.debug @argumentation.user_id.inspect
-      Rails::logger.debug current_user.id
       user_allowed?(@argumentation.user_id)
 
       respond_to do |format|
@@ -63,8 +61,7 @@ class ArgumentationsController < ApplicationController
 
   def update
 
-    argumentation = Argumentation.find(params[:id])
-    argumentation.update(argumentation_params)
+    @argumentation.update(argumentation_params)
     updatearguments(params[:arguments])
     head :ok
 
@@ -94,42 +91,34 @@ class ArgumentationsController < ApplicationController
   end
 
   def addargumenttoargumentation
-    argumentation = Argumentation.find(params[:id])
     argument = Argument.create(title: "Insert Title here!", description: "Insert argument here!")
-    argumentation.arguments << argument
+    @argumentation.arguments << argument
     argument.add_place
 
     respond_to do |format|
-      format.json { render json: argumentation.as_json(include: {arguments: { include: :argumentation}}) }
+      format.json { render json: @argumentation.as_json(include: {arguments: { include: :argumentation}}) }
     end
 
   end
 
   def deleteargumenttoargumentation
-    argumentation = Argumentation.find(params[:id])
-    Rails::logger.debug params.inspect
-
-    Rails::logger.debug argumentation.inspect
 
     place = params[:place]
 
-    argument = argumentation.arguments.where(place: place)
-    Rails::logger.debug argument.first.inspect
-
+    argument = @argumentation.arguments.where(place: place)
 
     Argument.destroy(argument.first.id)
 
-    argumentation.reorder_place(place)
+    @argumentation.reorder_place(place)
 
     respond_to do |format|
-      format.json { render json: argumentation.as_json(include: {arguments: { include: :argumentation}}) }
+      format.json { render json: @argumentation.as_json(include: {arguments: { include: :argumentation}}) }
     end
 
   end
 
   def deletefullargumentation
-    argumentation = Argumentation.find(params[:id])
-    argumentation.destroy
+    @argumentation.destroy
     head :ok
   end
 
@@ -166,9 +155,7 @@ class ArgumentationsController < ApplicationController
   end
 
   def user_allowed?(user_id)
-
     if current_user.id != user_id
-      Rails::logger.debug "yolo"
       @argumentation = {title: "you are not allowed"}
     end
   end

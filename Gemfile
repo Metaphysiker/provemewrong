@@ -55,7 +55,10 @@ group :development, :test do
   gem 'poltergeist'
   gem 'database_cleaner'
   gem 'teaspoon-jasmine'
+  gem 'factory_girl_rails'
+  gem 'capybara'
 end
+
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
