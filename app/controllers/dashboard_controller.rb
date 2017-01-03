@@ -3,7 +3,7 @@ class DashboardController < ApplicationController
     @argumentation = Argumentation.all
   end
 
-  def test
+  def argumentation
     @searchterm = params[:searchterm]
   end
 
