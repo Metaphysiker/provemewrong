@@ -147,7 +147,7 @@ class ArgumentationsController < ApplicationController
   end
 
   def argumentation_params
-    params.permit(:title, :description, :arguments, pets_attributes: [:id, :title, :description])
+    params.permit(:title, :description, :arguments, pets_attributes: [:id, :title, :description, :place])
   end
 
   def argument_params
