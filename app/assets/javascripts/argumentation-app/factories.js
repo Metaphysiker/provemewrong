@@ -23,6 +23,7 @@ app.factory('newArgumentationResource', ['$resource', function($resource) {
         });
 }]);
 
+
 app.factory('CreateAndRedirectArgumentation', ['$resource', '$location', function($resource, $location) {
     return{
         createArgumentation: function() {
@@ -33,9 +34,19 @@ app.factory('CreateAndRedirectArgumentation', ['$resource', '$location', functio
             newArgumentation.create(function(response){
                 $location.path("/edit/" + response.id)
             });
+        },
+        createMainArgumentation: function(argumentid, id){
+            var newArgumentation = $resource('/argumentations.json', {"main": id, "argumentid": argumentid},
+                {
+                    'create': { method:'POST' }
+                });
+            newArgumentation.create(function(response){
+                $location.path("/edit/" + response.id)
+            });
         }
     }
 }]);
+
 
 app.factory('DeleteFullArgumentation', ['$resource', '$location', '$http', function($resource, $location, $http) {
     return{

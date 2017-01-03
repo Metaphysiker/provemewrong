@@ -39,6 +39,11 @@ app.controller("ArgumentationEditController",[
             CreateAndRedirectArgumentation.createArgumentation();
         };
 
+        $scope.create_child_argumentation = function(argumentid, id){
+            CreateAndRedirectArgumentation.createMainArgumentation(argumentid, id)
+        };
+
+
         $scope.destroyArgument = function(){
             var place = $scope.selectedArgumentToDestroy.place;
             var deleteArgumentfrom = $resource('/deleteargumenttoargumentation/:argumentationId.json', {"argumentationId": argumentationId, "place": place}, {'post': { method:'POST' }});

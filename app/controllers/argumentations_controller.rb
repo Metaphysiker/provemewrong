@@ -51,6 +51,8 @@ class ArgumentationsController < ApplicationController
 
     if params[:main].present?
       main = params[:main]
+      argument = Argument.find(params[:argumentid])
+      argument.argumentation = argumentation
     else
       main = argumentation.id
     end
