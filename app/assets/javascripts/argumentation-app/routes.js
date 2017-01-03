@@ -2,8 +2,7 @@ angular.module(
     'argumentationcontroller').config([
     "$routeProvider",
     function($routeProvider) {
-        $routeProvider.when("/overview",{
-            controller: "ArgumentationSearchController",
+        $routeProvider.when("/overview/",{
             templateUrl: "argumentation/overview.html"
         }).when("/search",{
             controller: "ArgumentationSearchController",
@@ -14,6 +13,8 @@ angular.module(
         }).when("/:id", {
             controller: "ArgumentationShowController",
             templateUrl: "argumentation/show.html"
+        }).otherwise("/overview",{
+            templateUrl: "argumentation/overview.html"
         });
     }
 ]);

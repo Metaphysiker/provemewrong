@@ -9,7 +9,8 @@ var app = angular.module(
 ]);
 
 app.controller("ArgumentationEditController",[
-    '$scope', '$routeParams', '$resource', '$http', 'argumentationMethods', 'argumentationResource', 'newArgumentationResource','$timeout', '$anchorScroll', 'argumentationMainMethods', function($scope, $routeParams, $resource,  $http, argumentationMethods, argumentationResource, newArgumentationResource, $timeout, $anchorScroll, argumentationMainMethods){
+    '$scope', '$routeParams', '$resource', '$http', 'argumentationMethods', 'argumentationResource', 'newArgumentationResource','$timeout', '$anchorScroll', 'argumentationMainMethods', 'CreateAndRedirectArgumentation',
+    function($scope, $routeParams, $resource,  $http, argumentationMethods, argumentationResource, newArgumentationResource, $timeout, $anchorScroll, argumentationMainMethods, CreateAndRedirectArgumentation){
 
         var argumentationId =  $routeParams.id;
         var startingposition = $routeParams.sp;
@@ -32,6 +33,10 @@ app.controller("ArgumentationEditController",[
                     swal("Argument added!", "", "success");
                 });
             }
+        };
+
+        $scope.create_argumentation = function(){
+            CreateAndRedirectArgumentation.createArgumentation();
         };
 
         $scope.destroyArgument = function(){
@@ -171,6 +176,7 @@ app.controller("ArgumentationSearchController", [
         $scope.argumentations = [];
         var div = document.getElementById('div-item-data');
         $scope.keywords = div.getAttribute("data-item-name");
+        console.log("triggered!")
 
         if ($scope.keywords.length >= 3){
             $scope.search($scope.keywords);

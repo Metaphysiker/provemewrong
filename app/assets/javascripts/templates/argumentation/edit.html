@@ -142,7 +142,11 @@
                             </div>
                             <br>
                             <br>
-
+                            <button ng-click="create_argumentation()"
+                                    class="btn btn-lg btn-success"
+                                    ng-if="!argumentcontent.argumentation">
+                                Create Argumentation
+                            </button>
                             <button class="btn btn-small btn-primary"
                                     ng-click="get_next_argumentation(argumentcontent.argumentation.id,2,true)"
                                     ng-if="argumentcontent.argumentation">

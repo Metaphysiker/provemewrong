@@ -46,8 +46,16 @@ class ArgumentationsController < ApplicationController
   end
 
   def create
+
     argumentation = Argumentation.create!(title: "Insert title here!", description: "Insert description here!")
-    argumentation.update(main: argumentation.id)
+
+    if params[:main].present?
+      main = params[:main]
+    else
+      main = argumentation.id
+    end
+
+    argumentation.update(main: main)
     current_user.argumentations << argumentation
 
     argument = Argument.create!(title: "Insert argument-title here!", description: "Insert description of argument here!")

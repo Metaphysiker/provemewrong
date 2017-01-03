@@ -4,6 +4,7 @@ class DashboardController < ApplicationController
   end
 
   def argumentation
+    #@searchterm = "abcd"
     @searchterm = params[:searchterm]
   end
 

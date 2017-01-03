@@ -22,7 +22,22 @@ feature "angular test" do
   end
 
   scenario "User visits overview and creates argumentation" do
-    visit
+    visit "/argumentation#!/overview"
+
+    fill_in "Email", with: "jonas@gmail.com"
+    fill_in "Password", with: "password123"
+    click_button "Log in"
+
+    click_button "Create Argumentation"
+
+    fill_in "argumentation_title", with: "Philosophie"
+    fill_in "argumentation_description", with: "Was machen Philosophen?"
+
+    click_button "Save"
+
+    visit "/argumentation#!/overview"
+    expect(page).to have_content("Philosophie")
+
   end
 
 
