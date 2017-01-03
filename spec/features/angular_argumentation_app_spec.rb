@@ -33,7 +33,7 @@ feature "angular test" do
     fill_in "argumentation_title", with: "Philosophie"
     fill_in "argumentation_description", with: "Was machen Philosophen?"
 
-    click_button "Save"
+    find('h3', :text => 'Save').click
 
     visit "/argumentation#!/overview"
     expect(page).to have_content("Philosophie")
