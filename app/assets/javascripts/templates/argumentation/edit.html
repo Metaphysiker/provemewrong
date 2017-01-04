@@ -15,6 +15,10 @@
             </ul>
         </nav>
 
+        <button ng-click="delete_full_argumentation(argumentation.id)" class="btn btn-danger">
+            Delete this argumentation with all its arguments and childargumentations
+        </button>
+
         <h1 class="display-3">
             <input type="text" class="form-control" required
                    name="argumentation_title" ng-model="argumentation.title">
@@ -152,6 +156,7 @@
                                     ng-if="argumentcontent.argumentation">
                                 Show full argument
                             </button>
+
                         </div>
                     </div>
 

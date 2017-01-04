@@ -41,4 +41,33 @@ feature "angular test" do
   end
 
 
+  scenario "User visits overview, creates argumentation and deletes it" do
+    visit "/argumentation#!/overview"
+
+    fill_in "Email", with: "jonas@gmail.com"
+    fill_in "Password", with: "password123"
+    click_button "Log in"
+
+    click_button "Create Argumentation"
+
+    fill_in "argumentation_title", with: "Philosophie"
+    fill_in "argumentation_description", with: "Was machen Philosophen?"
+
+    find('h3', :text => 'Save').click
+
+    visit "/argumentation#!/overview"
+    expect(page).to have_content("Philosophie")
+
+    #save_screenshot
+    #click_button "Delete"
+    #save_screenshot
+    #click_button "Yes, delete it!"
+    #save_screenshot
+    #sleep 5
+    #save_screenshot
+    page.driver.browser.switch_to.alert.accept
+
+    expect(page).not_to have_content("Philosophie")
+  end
+
 end

@@ -17,10 +17,23 @@
         <tbody>
         <tr ng-repeat="argumentation in argumentations">
             <td><h4>{{ argumentation.title }}</h4></td>
-            <td><a ng-click="get_next_argumentation(argumentation.id, 4, false)" class="btn btn-success vcenter">Show</a></td>
-            <td><a ng-click="get_next_argumentation(argumentation.id, 4, true)" class="btn btn-primary vcenter">Edit</a></td>
-            <td><a ng-click="delete_full_argumentation(argumentation.id)" class="btn btn-danger">Delete</a></td>
+            <td>
+            <button ng-click="get_next_argumentation(argumentation.id, 4, false)" class="btn btn-success">
+                Show
+            </button>
+            </td>
+            <td>
+                <button ng-click="get_next_argumentation(argumentation.id, 4, true)" class="btn btn-primary">
+                    Edit
+                </button>
+            </td>
+            <td>
+                <button ng-click="delete_full_argumentation(argumentation.id)" class="btn btn-danger">
+                    Delete
+                </button>
+            </td>
         </tr>
         </tbody>
     </table>
 </div>
+

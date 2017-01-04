@@ -9,8 +9,8 @@ var app = angular.module(
 ]);
 
 app.controller("ArgumentationEditController",[
-    '$scope', '$routeParams', '$resource', '$http', 'argumentationMethods', 'argumentationResource', 'newArgumentationResource','$timeout', '$anchorScroll', 'argumentationMainMethods', 'CreateAndRedirectArgumentation',
-    function($scope, $routeParams, $resource,  $http, argumentationMethods, argumentationResource, newArgumentationResource, $timeout, $anchorScroll, argumentationMainMethods, CreateAndRedirectArgumentation){
+    '$scope', '$routeParams', '$resource', '$http', 'argumentationMethods', 'argumentationResource', 'newArgumentationResource','$timeout', '$anchorScroll', 'argumentationMainMethods', 'CreateAndRedirectArgumentation', 'DeleteFullArgumentation', '$location',
+    function($scope, $routeParams, $resource,  $http, argumentationMethods, argumentationResource, newArgumentationResource, $timeout, $anchorScroll, argumentationMainMethods, CreateAndRedirectArgumentation, DeleteFullArgumentation, $location){
 
         var argumentationId =  $routeParams.id;
         var startingposition = $routeParams.sp;
@@ -94,7 +94,6 @@ app.controller("ArgumentationEditController",[
 
         $scope.save = function() {
             if ($scope.form.$valid) {
-                console.log($scope.argumentation);
                 argumentationResource.update({ "argumentationId": argumentationId },$scope.argumentation).$promise.then(function(){
                     swal("Saved!", "", "success");
                     $scope.form.$setPristine();
@@ -137,7 +136,32 @@ app.controller("ArgumentationEditController",[
                     $scope.selectedArguments.push(argument);
                 }
             }
-        }
+        };
+
+        $scope.delete_full_argumentation = function(id){
+            swal({
+                    title: "Are you sure?",
+                    text: "You will not be able to recover this argumentation!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, delete it!",
+                    closeOnConfirm: false
+                },
+                function(){
+                    DeleteFullArgumentation.DeletingFullArgumentation(id).then(function () {
+                        $http({
+                            method: 'GET',
+                            url: '/myargumentations.json'
+                        }).then(function successCallback(response) {
+                            $scope.argumentations = response.data;
+                        });
+
+                        swal("Deleted!", "Argument has been removed.", "success");
+                    });
+                    $location.path("/overview");
+                });
+        };
 
     }
 ]);
@@ -181,7 +205,6 @@ app.controller("ArgumentationSearchController", [
         $scope.argumentations = [];
         var div = document.getElementById('div-item-data');
         $scope.keywords = div.getAttribute("data-item-name");
-        console.log("triggered!")
 
         if ($scope.keywords.length >= 3){
             $scope.search($scope.keywords);
@@ -267,7 +290,7 @@ app.controller("MyArgumentationShowController", [
 
                             swal("Deleted!", "Argument has been removed.", "success");
                         });
-                });
+                 });
         }
 
     }
