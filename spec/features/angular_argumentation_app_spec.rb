@@ -33,7 +33,7 @@ feature "angular test" do
     fill_in "argumentation_title", with: "Philosophie"
     fill_in "argumentation_description", with: "Was machen Philosophen?"
 
-    find('h3', :text => 'Save').click
+    click_button "Save"
 
     visit "/argumentation#!/overview"
     expect(page).to have_content("Philosophie")
@@ -53,19 +53,41 @@ feature "angular test" do
     fill_in "argumentation_title", with: "Philosophie"
     fill_in "argumentation_description", with: "Was machen Philosophen?"
 
+    click_button "Save"
+
+    visit "/argumentation#!/overview"
+    expect(page).to have_content("Philosophie")
+
+    click_button "Delete"
+    sleep 1
+    click_button "Yes, delete it!"
+
+
+    expect(page).not_to have_content("Philosophie")
+  end
+
+
+  scenario "User visits overview, creates argumentation, adds arguments to it" do
+    visit "/argumentation#!/overview"
+
+    fill_in "Email", with: "jonas@gmail.com"
+    fill_in "Password", with: "password123"
+    click_button "Log in"
+
+    click_button "Create Argumentation"
+
+    fill_in "argumentation_title", with: "Philosophie"
+    fill_in "argumentation_description", with: "Was machen Philosophen?"
+
     find('h3', :text => 'Save').click
 
     visit "/argumentation#!/overview"
     expect(page).to have_content("Philosophie")
 
-    #save_screenshot
-    #click_button "Delete"
-    #save_screenshot
-    #click_button "Yes, delete it!"
-    #save_screenshot
-    #sleep 5
-    #save_screenshot
-    page.driver.browser.switch_to.alert.accept
+    click_button "Delete"
+    sleep 1
+    click_button "Yes, delete it!"
+
 
     expect(page).not_to have_content("Philosophie")
   end

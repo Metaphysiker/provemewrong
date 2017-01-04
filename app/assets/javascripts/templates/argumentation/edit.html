@@ -15,10 +15,6 @@
             </ul>
         </nav>
 
-        <button ng-click="delete_full_argumentation(argumentation.id)" class="btn btn-danger">
-            Delete this argumentation with all its arguments and childargumentations
-        </button>
-
         <h1 class="display-3">
             <input type="text" class="form-control" required
                    name="argumentation_title" ng-model="argumentation.title">
@@ -43,23 +39,17 @@
                 <div class="col-md-3">
 
                     <div class="panel panel-success">
-                        <div class="panel-heading" ng-click="save()" ng-disabled="form.$invalid || form.$pristine">
-                            <h3 class="panel-title">Save <i class="fa fa-floppy-o pull-right" aria-hidden="true"></i>
-                            </h3>
-                        </div>
+                        <button ng-click="save()" ng-disabled="form.$invalid || form.$pristine" type="button" class="btn btn-success btn-block">
+                            <h3 class="panel-title pull-left">Save</h3><i class="fa fa-floppy-o pull-right" aria-hidden="true"></i></button>
                     </div>
 
                     <div class="panel panel-info">
-                        <div class="panel-heading" ng-click="addArgument()">
-                            <h3 class="panel-title">Add Argument <i class="fa fa-plus pull-right" aria-hidden="true"></i></h3>
-                        </div>
+                        <button ng-click="addArgument()" type="button" class="btn btn-info btn-block"><h3 class="panel-title pull-left">Add Argument</h3><i class="fa fa-plus pull-right" aria-hidden="true"></i></button>
                     </div>
 
                     <div class="panel panel-info">
-                        <div class="panel-heading" ng-click="toggleSwitchMode()">
-                            <h3 class="panel-title">Switch arguments <i class="fa fa-refresh pull-right" aria-hidden="true"></i>
-                            </h3>
-                        </div>
+                        <button ng-click="toggleSwitchMode()" type="button" class="btn btn-info btn-block"><h3 class="panel-title pull-left">Switch arguments</h3><i class="fa fa-refresh pull-right" aria-hidden="true"></i></button>
+
                         <div class="panel-body" ng-if="switchmode == true">
                             Check two arguments and press: <br><br>
                             <button ng-click="switcharguments()"
@@ -70,10 +60,8 @@
                     </div>
 
                     <div class="panel panel-danger">
-                        <div class="panel-heading" ng-click="toggleDeleteMode()">
-                            <h3 class="panel-title">Destroy Argument <i class="fa fa-times pull-right" aria-hidden="true"></i>
-                            </h3>
-                        </div>
+                        <button ng-click="toggleDeleteMode()" type="button" class="btn btn-danger btn-block"><h3 class="panel-title pull-left">Delete Argument</h3><i class="fa fa-times pull-right" aria-hidden="true"></i></button>
+
                         <div class="panel-body" ng-if="deletemode == true">
                             Check argument and press: <br><br>
                             <button ng-click="destroyArgument()"
@@ -171,6 +159,10 @@
         <p class="lead">
             <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
         </p>
+
+        <button ng-click="delete_full_argumentation(argumentation.id)" class="btn btn-danger">
+            Delete this argumentation with all its arguments and childargumentations
+        </button>
     </div>
     <br>
 

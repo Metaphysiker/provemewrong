@@ -74,14 +74,14 @@ RSpec.describe ArgumentationsController, type: :controller do
       expect(before_delete_count - 1).to eql(after_delete_count)
     end
 
-    it "updates argumentation and argumentats" do
+    it "updates argumentation and arguments" do
       get :create, :format => :json
       body = JSON.parse(response.body)
       id = body["id"]
       argument_id = body["arguments"][0]["id"]
 
       updatedbody ={"id"=>id, "title"=>"Glurak!", "description"=>"Glurak and Digimon", "main"=>120, "argument_id"=>nil, "user_id"=>@testuser.id, "created_at"=>"2017-01-02T18:55:31.552Z", "updated_at"=>"2017-01-02T18:55:31.560Z",
-                    "arguments"=>[{"id"=>argument_id, "title"=>"Pikachu", "description"=>"Pikachu!", "parent_argumentation_id"=>120, "argumentation_id"=>nil, "place"=>1, "created_at"=>"2017-01-02T18:55:31.566Z", "updated_at"=>"2017-01-02T18:55:31.577Z"}]}
+                    "arguments"=>[{"id"=>argument_id, "title"=>"Pikachu", "description"=>"Pikachu!", "parent_argumentation_id"=>120, "argumentation_id"=>nil, "place"=>2, "created_at"=>"2017-01-02T18:55:31.566Z", "updated_at"=>"2017-01-02T18:55:31.577Z"}]}
 
       put :update, params: updatedbody
 
@@ -91,6 +91,7 @@ RSpec.describe ArgumentationsController, type: :controller do
       expect(showbody["description"]).to eql("Glurak and Digimon")
       expect(showbody["arguments"][0]["title"]).to eql("Pikachu")
       expect(showbody["arguments"][0]["description"]).to eql("Pikachu!")
+      expect(showbody["arguments"][0]["place"]).to eql(2)
     end
 
   end
