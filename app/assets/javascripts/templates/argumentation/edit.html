@@ -83,7 +83,7 @@
                                 <a class="list-group-item" ng-click="getcontent(argument)" ng-if="switchmode == false && deletemode == false" ng-class="{'higha': argument == argumentcontent} ">
                                     <h4 class="list-group-item-heading">
                                         <textarea type="text" class="form-control" rows="4" required
-                                                  name="argument_title" ng-model="argument.title" ng-if="argument == argumentcontent"></textarea>
+                                                  name="argumentcontent_title" ng-model="argument.title" ng-if="argument == argumentcontent"></textarea>
                                         <p class="help-block" ng-messages="form.argument_title.$error">
                                             <span ng-message="required"></span>
                                         </p>
