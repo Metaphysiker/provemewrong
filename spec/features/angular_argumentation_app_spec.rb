@@ -48,13 +48,14 @@ feature "angular test" do
 
     #click_button "Save"
     find('button', :text => "Save").trigger('click')
+    click_button "OK"
 
-    save_screenshot
     find('a', :text => "Leave Edit-Mode").trigger('click')
     sleep 4
+    expect(page).to have_content("This is the second argument")
+    find('h4', :text => "This is the second argument").trigger('click')
     save_screenshot
-    find('h4', :text => "This is the second argument")
-    expect(page).not_to have_content("This is the second description")
+    expect(page).to have_content("This is the second description")
   end
 
 end

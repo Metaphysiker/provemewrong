@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b9898a81-838c-4d50-8115-6ceb98bd451d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/templates/argumentation/edit.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/templates/argumentation/edit.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/features/angular_argumentation_app_spec.rb" afterPath="$PROJECT_DIR$/spec/features/angular_argumentation_app_spec.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/rails_helper.rb" afterPath="$PROJECT_DIR$/spec/rails_helper.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/spec_helper.rb" afterPath="$PROJECT_DIR$/spec/spec_helper.rb" />
     </list>
     <ignored path="$PROJECT_DIR$/.bundle/" />
     <ignored path="$PROJECT_DIR$/components/" />
@@ -39,10 +35,17 @@
       <file leaf-file-name="angular_argumentation_app_spec.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/spec/features/angular_argumentation_app_spec.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="41" column="23" lean-forward="true" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="23" />
+            <state relative-caret-position="466">
+              <caret line="57" column="19" lean-forward="true" selection-start-line="57" selection-start-column="19" selection-end-line="57" selection-end-column="19" />
               <folding />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="capybara-201701042142147011705983.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tmp/capybara/capybara-201701042142147011705983.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
           </provider>
         </entry>
       </file>
@@ -859,12 +862,12 @@
       <workItem from="1482877316996" duration="46338000" />
       <workItem from="1482997430760" duration="38925000" />
       <workItem from="1483189064409" duration="68906000" />
-      <workItem from="1483527521160" duration="20941000" />
+      <workItem from="1483527521160" duration="21367000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="528941000" />
+    <option name="totallyTimeSpent" value="529367000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -932,21 +935,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/tmp/capybara/capybara-201701041240594562123098.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tmp/capybara/capybara-201701041242004105314071.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tmp/capybara/capybara-201701041242009962638944.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tmp/capybara/capybara-201701041242007232295197.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -1230,10 +1218,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tmp/capybara/capybara-201701042139057115305150.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tmp/capybara/capybara-201701042140006730969426.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tmp/capybara/capybara-201701042142147011705983.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/spec/features/angular_argumentation_app_spec.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="41" column="23" lean-forward="true" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="23" />
+        <state relative-caret-position="466">
+          <caret line="57" column="19" lean-forward="true" selection-start-line="57" selection-start-column="19" selection-end-line="57" selection-end-column="19" />
           <folding />
         </state>
       </provider>
