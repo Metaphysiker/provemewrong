@@ -10,7 +10,7 @@
         <nav>
             <ul class="pager">
                 <li class="previous">
-                    <a href="" ng-if="argumentation.id != argumentation.main" ng-click="get_parent_argumentation(argumentation.argument_id,4,true)">&larr; Zurück </a>
+                    <a href="" ng-if="argumentation.id != argumentation.main" ng-click="get_parent_argumentation(argumentation.argument_id,4,true)">&larr; To The Parent-Argumentation</a>
                 </li>
             </ul>
         </nav>
@@ -93,7 +93,7 @@
                                 <div style="text-align: left" ng-if="switchmode == true">
                                     <input
                                             type="checkbox"
-                                            name="selectedArguments[]"
+                                            name="{{argument.title}}"
                                             value="{{argument}}"
                                             ng-checked="selectedArguments.indexOf(argument) > -1"
                                             ng-click="toggleSelection(argument)"
@@ -104,7 +104,7 @@
                                 <div style="text-align: left" ng-if="deletemode == true">
                                     <input
                                             type="radio"
-                                            name="selectedArgumentToDestroy"
+                                            name="{{argument.title}}"
                                             value="{{argument}}"
                                             ng-click="toggleSelectionForDeletion(argument)"
                                     > {{ argument.title}}
