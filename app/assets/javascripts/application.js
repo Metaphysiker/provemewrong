@@ -12,11 +12,14 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap-sprockets
 //= require angular
 //= require angular-animate
 //= require angular-route
 //= require angular-resource
-//= require angular-resource
+//= require sweetalert
+//= require ng-sweet-alert
+//= require angular-messages
 //= require angular-rails-templates
 //= require_tree ./templates
 //= require_tree .

@@ -1,0 +1,171 @@
+<form novalidate name="form">
+<div ng-include=" 'loading_bar.html' "></div>
+
+<div class="box move" ng-class="{'box': boxClass == 1, 'to-right': boxClass == 2, 'back-to-left': boxClass == 3, 'to-left': boxClass == 4, 'back-to-right': boxClass == 5} ">
+
+    <div ng-if="userid == argumentation.user_id" ng-include=" 'argumentation/user_panel.html' "></div>
+
+    <div ng-if="argumentation.$resolved">
+
+        <nav>
+            <ul class="pager">
+                <li class="previous">
+                    <a href="" ng-if="argumentation.id != argumentation.main" ng-click="get_parent_argumentation(argumentation.argument_id,4,true)">&larr; To The Parent-Argumentation</a>
+                </li>
+            </ul>
+        </nav>
+
+        <h1 class="display-3">
+            <input type="text" class="form-control" required
+                   name="argumentation_title" ng-model="argumentation.title">
+            <p class="help-block" ng-messages="form.argumentation_title.$error">
+                <span ng-message="required"></span>
+            </p>
+            {{ argumentation.title }}</h1>
+
+            <textarea type="text" class="form-control" rows="9" required
+                name="argumentation_description" ng-model="argumentation.description"></textarea>
+             <p class="help-block" ng-messages="form.argumentation_description.$error">
+              <span ng-message="required"></span>
+              </p>
+        <div class="lead text-justify white-space-pre-line">
+            {{ argumentation.description }}
+        </div>
+
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <div class="col-md-3">
+
+                    <div class="panel panel-success">
+                        <button ng-click="save()" ng-disabled="form.$invalid || form.$pristine" type="button" class="btn btn-success btn-block">
+                            <h3 class="panel-title pull-left">Save</h3><i class="fa fa-floppy-o pull-right" aria-hidden="true"></i></button>
+                    </div>
+
+                    <div class="panel panel-info">
+                        <button ng-click="addArgument()" type="button" class="btn btn-info btn-block"><h3 class="panel-title pull-left">Add Argument</h3><i class="fa fa-plus pull-right" aria-hidden="true"></i></button>
+                    </div>
+
+                    <div class="panel panel-info">
+                        <button ng-click="toggleSwitchMode()" type="button" class="btn btn-info btn-block"><h3 class="panel-title pull-left">Switch arguments</h3><i class="fa fa-refresh pull-right" aria-hidden="true"></i></button>
+
+                        <div class="panel-body" ng-if="switchmode == true">
+                            Check two arguments and press: <br><br>
+                            <button ng-click="switcharguments()"
+                                    class="btn btn-lg btn-info">
+                                Switch
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-danger">
+                        <button ng-click="toggleDeleteMode()" type="button" class="btn btn-danger btn-block"><h3 class="panel-title pull-left">Delete Argument</h3><i class="fa fa-times pull-right" aria-hidden="true"></i></button>
+
+                        <div class="panel-body" ng-if="deletemode == true">
+                            Check argument and press: <br><br>
+                            <button ng-click="destroyArgument()"
+                                    class="btn btn-lg btn-danger">
+                                Destroy
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading text-justify">
+                            <h3 class="panel-title">Arguments</h3>
+                        </div>
+
+
+                        <div class="list-group">
+                            <div ng-repeat="argument in argumentation.arguments | orderBy:'place'">
+                                <a class="list-group-item" ng-click="getcontent(argument)" ng-if="switchmode == false && deletemode == false" ng-class="{'higha': argument == argumentcontent} ">
+                                    <h4 class="list-group-item-heading">
+                                        <textarea type="text" class="form-control" rows="4" required
+                                                  name="argumentcontent_title" ng-model="argument.title" ng-if="argument == argumentcontent"></textarea>
+                                        <p class="help-block" ng-messages="form.argument_title.$error">
+                                            <span ng-message="required"></span>
+                                        </p>
+                                        {{ argument.title }}</h4>
+
+                                </a>
+                                <div style="text-align: left" ng-if="switchmode == true">
+                                    <input
+                                            type="checkbox"
+                                            name="{{argument.title}}"
+                                            value="{{argument}}"
+                                            ng-checked="selectedArguments.indexOf(argument) > -1"
+                                            ng-click="toggleSelection(argument)"
+                                    > {{ argument.title}}
+                                    <hr>
+                                </div>
+
+                                <div style="text-align: left" ng-if="deletemode == true">
+                                    <input
+                                            type="radio"
+                                            name="{{argument.title}}"
+                                            value="{{argument}}"
+                                            ng-click="toggleSelectionForDeletion(argument)"
+                                    > {{ argument.title}}
+                                    <hr>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading text-justify">
+                            <h3 class="panel-title">{{ argumentcontent.title }}</h3>
+                        </div>
+                        <div class="panel-body text-justify">
+
+                            <textarea type="text" class="form-control" rows="40" required
+                                  name="argumentcontent_description" ng-model="argumentcontent.description"></textarea>
+                            <p class="help-block" ng-messages="form.argumentcontent_description.$error">
+                                <span ng-message="required"></span>
+                            </p>
+                            <div class="lead text-justify white-space-pre-line">
+                                {{ argumentcontent.description }}
+                            </div>
+                            <br>
+                            <br>
+                            <button ng-click="create_child_argumentation(argumentcontent.id, argumentation.main)"
+                                    class="btn btn-lg btn-success"
+                                    ng-if="!argumentcontent.argumentation">
+                                Create Argumentation
+                            </button>
+                            <button class="btn btn-small btn-primary"
+                                    ng-click="get_next_argumentation(argumentcontent.argumentation.id,2,true)"
+                                    ng-if="argumentcontent.argumentation">
+                                Show full argument
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <hr class="my-2">
+        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </p>
+
+        <button ng-click="delete_full_argumentation(argumentation.id)" class="btn btn-danger">
+            Delete this argumentation with all its arguments and childargumentations
+        </button>
+    </div>
+    <br>
+
+</div>
+</form>
+

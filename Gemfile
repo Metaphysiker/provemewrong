@@ -4,6 +4,12 @@ gem 'angular_rails_csrf'
 
 gem 'active_record_union'
 
+gem "font-awesome-rails"
+
+gem 'bootstrap-sass'
+
+gem 'autoprefixer-rails'
+
 gem 'faker'
 
 gem 'sprockets'
@@ -49,7 +55,10 @@ group :development, :test do
   gem 'poltergeist'
   gem 'database_cleaner'
   gem 'teaspoon-jasmine'
+  gem 'factory_girl_rails'
+  gem 'capybara'
 end
+
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.

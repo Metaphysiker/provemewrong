@@ -3,7 +3,19 @@ class DashboardController < ApplicationController
     @argumentation = Argumentation.all
   end
 
-  def test
+  def argumentation
+    #@searchterm = "abcd"
     @searchterm = params[:searchterm]
+  end
+
+  def get_current_user
+    @id = 0
+    if current_user
+      @id = current_user.id
+    end
+
+    respond_to do |format|
+      format.json { render json: @id}
+    end
   end
 end

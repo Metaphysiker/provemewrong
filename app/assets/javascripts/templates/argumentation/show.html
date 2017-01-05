@@ -1,0 +1,77 @@
+
+    <div ng-include=" 'loading_bar.html' "></div>
+
+
+    <div class="box move" ng-class="{'box': boxClass == 1, 'to-right': boxClass == 2, 'back-to-left': boxClass == 3, 'to-left': boxClass == 4, 'back-to-right': boxClass == 5} ">
+
+        <div ng-if="userid == argumentation.user_id" ng-include=" 'argumentation/user_panel.html' "></div>
+
+    <div ng-if="argumentation.$resolved">
+
+        <nav>
+            <ul class="pager">
+                <li class="previous">
+                    <a href="" ng-if="argumentation.id != argumentation.main" ng-click="get_parent_argumentation(argumentation.argument_id,4)">&larr; Zurück </a>
+                </li>
+            </ul>
+        </nav>
+
+        <h1 class="display-3">{{ argumentation.title }}</h1>
+        <p class="lead text-justify">{{ argumentation.description }}</p>
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <div class="col-md-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading text-justify">
+                            <h3 class="panel-title">Arguments</h3>
+                        </div>
+
+
+                        <div class="list-group">
+                            <div ng-repeat="argument in argumentation.arguments | orderBy:'place'">
+                                <a class="list-group-item" ng-click="getcontent(argument)" ng-class="{'higha': argument == argumentcontent} ">
+                                    <h4 class="list-group-item-heading">{{ argument.title }}</h4>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading text-justify">
+                            <h3 class="panel-title">{{ argumentcontent.title }}</h3>
+                        </div>
+                        <div class="panel-body text-justify">
+                            <div class="lead text-justify white-space-pre-line">
+                                {{ argumentcontent.description }}
+                            </div>
+                            <br>
+                            <br>
+
+                            <button class="btn btn-small btn-primary"
+                                    ng-click="get_next_argumentation(argumentcontent.argumentation.id,2)"
+                                    ng-if="argumentcontent.argumentation">
+                                Show full argument
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <hr class="my-2">
+        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </p>
+    </div>
+    <br>
+
+    </div>

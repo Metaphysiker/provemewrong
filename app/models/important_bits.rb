@@ -44,7 +44,8 @@ class ImportantBits
   def get_bits(title, text, keywords)
     text = text.downcase
     all_relevant_sentences =[]
-    sentences = text.split('.')
+    #sentences = text.split('.')
+    sentences = text.split(/[\.\!\:\?]/)
     sentences.each do |sentence|
       keywords.split.each do |keyword|
         if sentence.include?(keyword)

@@ -6,6 +6,10 @@
 
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
+
+    <link rel="stylesheet" href="http://rawgit.com/t4t5/sweetalert/master/dist/sweetalert.css">
+    <script src="http://rawgit.com/t4t5/sweetalert/master/dist/sweetalert.min.js"></script>
+    <script src="http://rawgit.com/tushariscoolster/ng-sweet-alert/master/ng-sweet-alert.js"></script>
   </head>
 
   <body class="container">
@@ -26,6 +30,7 @@
         <ul class="nav navbar-nav">
           <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
           <li><a href="#">Link</a></li>
+          <li><a href="/argumentation#!/overview">Overview</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
@@ -40,7 +45,7 @@
           </li>
         </ul>
 
-        <%= form_tag("/test", method: "get", :class => 'navbar-form navbar-left', :role => 'search') do %>
+        <%= form_tag("/argumentation#!/search", method: "post", :class => 'navbar-form navbar-left', :role => 'search') do %>
             <div class="form-group">
               <%= text_field_tag(:searchterm, "", :class => 'form-control') %>
             </div>
