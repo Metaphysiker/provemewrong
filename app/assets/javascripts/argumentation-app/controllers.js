@@ -105,6 +105,7 @@ app.controller("ArgumentationEditController",[
 
         $scope.switcharguments = function (){
 
+            var first_argument = {};
             var first_argument = $scope.selectedArguments[0];
             var second_argument = $scope.selectedArguments[1];
 
